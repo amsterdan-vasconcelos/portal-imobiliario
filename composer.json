@@ -1,0 +1,17 @@
+{
+  "name": "amsterdan/portal-imobiliario",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Amsterdan Vasconcelos",
+      "email": "amsterdan.email@gmail.com"
+    }
+  ],
+  "require": {}
+}
