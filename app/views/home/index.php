@@ -2,12 +2,13 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php require_once __DIR__ . '/../shared/head.php' ?>
   <title>Página Principal</title>
 </head>
 
 <body>
+  <?php require_once __DIR__ . '/../shared/header.php' ?>
+  <?php require_once __DIR__ . '/hero.php' ?>
   <h1>Página Principal</h1>
   <p>Nome: <?= $name ?></p>
   <p>Idade: <?= $age ?></p>
