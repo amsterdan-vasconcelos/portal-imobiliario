@@ -10,3 +10,4 @@
 <link rel="stylesheet" href="public/css/global.css">
 <link rel="stylesheet" href="public/css/header.css">
 <link rel="stylesheet" href="public/css/hero.css">
+<link rel="stylesheet" href="public/css/cta.css">
