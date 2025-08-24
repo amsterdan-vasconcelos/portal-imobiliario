@@ -1,10 +1,26 @@
 :root {
   --max-width: 70rem;
   --font-family: "Roboto", sans-serif;
+
+  --color-background: oklch(22% 0.02 270);
+  --color-text: oklch(98% 0.01 270);
+
+  --color-primary: oklch(45% 0.1 265);
+  --color-primary-hover: oklch(40% 0.12 265);
+
+  --color-accent: oklch(60% 0.22 27);
+  --color-accent-hover: oklch(55% 0.25 27);
+
+  --color-border: oklch(35% 0.05 270);
+  --color-surface: oklch(94% 0.02 270);
+
+  --color-primary-transparent: oklch(from var(--color-primary) l c h / 80%);
+  --color-accent-transparent: oklch(from var(--color-accent) l c h / 80%);
 }
 
 body {
   font-family: var(--font-family);
+  color: var(--color-text);
 }
 
 * {

@@ -9,8 +9,6 @@
 }
 
 .hero__content {
-  color: white;
-
   position: absolute;
   inset: 0;
   margin: auto;
@@ -35,8 +33,14 @@
   display: inline-block;
   margin-top: 1rem;
 
-  background-color: red;
+  background-color: var(--color-primary);
 
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
+
+  text-decoration: underline;
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
 }
