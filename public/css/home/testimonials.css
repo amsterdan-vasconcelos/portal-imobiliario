@@ -1,5 +1,11 @@
 .testimonials {
-  background-color: var(--color-background);
+  background: linear-gradient(oklch(0 0 0 / 0.6)),
+    url(../../imgs/hero-image.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
   max-width: var(--max-width);
   padding-block: 4rem;
   padding-inline: 1rem;
