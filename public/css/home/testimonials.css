@@ -1,0 +1,29 @@
+.testimonials {
+  background-color: var(--color-background);
+  max-width: var(--max-width);
+  padding-block: 4rem;
+  padding-inline: 1rem;
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+
+  overflow-x: auto;
+
+  .testimonials__item {
+    flex: 0 0 100%;
+
+    > * {
+      display: block;
+      max-width: 25rem;
+      margin-inline: auto;
+      text-align: justify;
+    }
+
+    .testimonials__cite {
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--color-accent);
+    }
+  }
+}

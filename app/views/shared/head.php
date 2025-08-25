@@ -13,3 +13,4 @@
 <link rel="stylesheet" href="public/css/home/cta.css">
 <link rel="stylesheet" href="public/css/home/available.css">
 <link rel="stylesheet" href="public/css/home/card.css">
+<link rel="stylesheet" href="public/css/home/testimonials.css">
