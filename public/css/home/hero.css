@@ -2,7 +2,7 @@
   position: relative;
   height: 80svh;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../imgs/hero-image.jpg");
+    url("../../imgs/hero-image.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

@@ -31,7 +31,7 @@
         var(--color-primary-transparent),
         var(--color-primary-transparent)
       ),
-      url("../imgs/cta-buy.jpg");
+      url("../../imgs/cta-buy.jpg");
 
     &:hover {
       .cta__link {
@@ -45,7 +45,7 @@
         var(--color-accent-transparent),
         var(--color-accent-transparent)
       ),
-      url("../imgs/cta-rent.jpg");
+      url("../../imgs/cta-rent.jpg");
 
     &:hover {
       .cta__link {

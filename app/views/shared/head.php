@@ -9,5 +9,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="public/css/global.css">
 <link rel="stylesheet" href="public/css/header.css">
-<link rel="stylesheet" href="public/css/hero.css">
-<link rel="stylesheet" href="public/css/cta.css">
+<link rel="stylesheet" href="public/css/home/hero.css">
+<link rel="stylesheet" href="public/css/home/cta.css">
+<link rel="stylesheet" href="public/css/home/available.css">
+<link rel="stylesheet" href="public/css/home/card.css">
