@@ -1,0 +1,23 @@
+.l-contact {
+  padding-block: 4rem;
+  padding-inline: 1rem;
+  margin-inline: auto;
+  max-width: var(--max-width);
+  color: var(--color-border);
+}
+
+.l-contact__title {
+  text-align: center;
+  font-weight: 300;
+}
+
+.l-contact__content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8rem;
+
+  > * {
+    flex-basis: 33%;
+  }
+}

@@ -14,3 +14,5 @@
 <link rel="stylesheet" href="public/css/home/available.css">
 <link rel="stylesheet" href="public/css/home/card.css">
 <link rel="stylesheet" href="public/css/home/testimonials.css">
+<link rel="stylesheet" href="public/css/home/l-contact.css">
+<link rel="stylesheet" href="public/css/home/c-card-contact.css">
