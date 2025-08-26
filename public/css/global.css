@@ -18,6 +18,10 @@
   --color-accent-transparent: oklch(from var(--color-accent) l c h / 80%);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-family);
   color: var(--color-text);

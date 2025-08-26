@@ -8,7 +8,7 @@ $array = [
 
 ?>
 
-<section class="available">
+<section class="available" id="buy">
   <p class="available__subtitle">NOVAS OPORTUNIDADES</p>
   <h2 class="available__title">COMPRAR</h2>
 

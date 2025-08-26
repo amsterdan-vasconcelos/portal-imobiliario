@@ -23,16 +23,16 @@
     <nav class="header__nav">
       <ul class="header__nav-itens">
         <li>
-          <a href="">Link</a>
+          <a href="#buy">Comprar</a>
         </li>
         <li>
-          <a href="">Link</a>
+          <a href="#rent">Alugar</a>
         </li>
         <li>
-          <a href="">Link</a>
+          <a href="#testimonials">Depoimentos</a>
         </li>
         <li>
-          <a href="">Link</a>
+          <a href="#contact">Contato</a>
         </li>
       </ul>
     </nav>

@@ -1,4 +1,4 @@
-<section class="l-contact">
+<section class="l-contact" id="contact">
   <h2 class="l-contact__title">O IMÓVEL QUE VOCÊ PROCURA ESTÁ AQUI!</h2>
 
   <div class="l-contact__content">

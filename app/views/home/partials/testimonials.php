@@ -1,4 +1,4 @@
-<section class="testimonials">
+<section class="testimonials" id="testimonials">
   <div class="testimonials__item">
     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam nesciunt perspiciatis nostrum, consequatur porro in dicta at reiciendis omnis suscipit rerum maiores illo. Molestiae adipisci expedita ullam repellendus, alias ea!</p>
     <cite class="testimonials__cite">Amsterdan Vasconcelos, São Paulo</cite>
