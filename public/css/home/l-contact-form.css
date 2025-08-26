@@ -3,7 +3,7 @@
   padding-block: 2rem;
   padding-inline: 1rem;
   max-width: var(--max-width);
-  background-color: var(--color-background);
+  background-color: oklch(from var(--color-background) l c h / 0.98);
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);

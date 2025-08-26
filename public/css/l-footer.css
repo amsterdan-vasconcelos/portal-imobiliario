@@ -1,0 +1,13 @@
+.l-footer {
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  max-width: var(--max-width);
+  padding-inline: 1rem;
+  padding-block: 4rem 2rem;
+  margin-inline: auto;
+
+  > * {
+    text-align: center;
+  }
+}

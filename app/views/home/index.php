@@ -15,10 +15,7 @@
   <?php require_once __DIR__ . '/partials/testimonials.php' ?>
   <?php require_once __DIR__ . '/partials/contact.php' ?>
   <?php require_once __DIR__ . '/partials/contact-form.php' ?>
-
-  <h1>Página Principal</h1>
-  <p>Nome: <?= $name ?></p>
-  <p>Idade: <?= $age ?></p>
+  <?php require_once __DIR__ . '/../shared/footer.php' ?>
 </body>
 
 </html>

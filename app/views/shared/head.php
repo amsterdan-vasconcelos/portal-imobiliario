@@ -9,6 +9,8 @@
 <!-- CSS -->
 <link rel="stylesheet" href="public/css/global.css">
 <link rel="stylesheet" href="public/css/header.css">
+<link rel="stylesheet" href="public/css/l-footer.css">
+<!-- CSS HOME -->
 <link rel="stylesheet" href="public/css/home/hero.css">
 <link rel="stylesheet" href="public/css/home/cta.css">
 <link rel="stylesheet" href="public/css/home/available.css">
