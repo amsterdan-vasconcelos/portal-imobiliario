@@ -1,0 +1,25 @@
+.c-button {
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+  border-radius: 0.3rem;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  &.c-button--full {
+    width: 100%;
+  }
+
+  &.c-button--logout {
+    border: 2px solid var(--color-border);
+
+    transition: all 400ms ease;
+
+    &:hover {
+      background-color: var(--color-accent);
+      color: var(--color-background);
+    }
+  }
+}

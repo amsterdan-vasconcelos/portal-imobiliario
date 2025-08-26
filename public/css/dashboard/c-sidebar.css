@@ -1,0 +1,32 @@
+.c-sidebar {
+  background-color: oklch(from var(--color-background) l c h / 0.97);
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: calc(100svh - 4.375rem);
+  padding: 1rem;
+
+  .c-sidebar__header {
+    text-align: center;
+    padding: 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: 0.3rem;
+  }
+
+  .c-sidebar__content {
+    padding-block: 1rem;
+  }
+
+  .c-sidebar__item {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.5rem;
+    padding-block: 0.5rem;
+
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .c-sidebar__footer {
+  }
+}
