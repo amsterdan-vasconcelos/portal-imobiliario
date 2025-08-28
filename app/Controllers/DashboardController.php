@@ -10,4 +10,9 @@ class DashboardController extends Controller
   {
     $this->view('dashboard/index');
   }
+
+  public function owner()
+  {
+    $this->view('dashboard/owner');
+  }
 }
