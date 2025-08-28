@@ -1,10 +1,9 @@
 .c-sidebar {
   background-color: oklch(from var(--color-background) l c h / 0.97);
-
   display: grid;
   grid-template-rows: auto 1fr auto;
-  height: calc(100svh - 4.375rem);
   padding: 1rem;
+  height: 100%;
 
   .c-sidebar__header {
     text-align: center;

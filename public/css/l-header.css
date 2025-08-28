@@ -1,7 +1,7 @@
 .header {
   position: relative;
   background-color: var(--color-background);
-  height: 4.375rem;
+  height: var(--header-height);
 
   &::before {
     content: "";

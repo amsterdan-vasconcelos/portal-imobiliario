@@ -3,6 +3,7 @@
 
 <head>
   <?php require_once __DIR__ . '/../shared/head.php' ?>
+  <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/home/index.css">
   <title>Página Principal</title>
 </head>
 

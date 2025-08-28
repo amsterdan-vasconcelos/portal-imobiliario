@@ -7,20 +7,4 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <!-- CSS -->
-<link rel="stylesheet" href="public/css/global.css">
-<link rel="stylesheet" href="public/css/header.css">
-<link rel="stylesheet" href="public/css/l-footer.css">
-<link rel="stylesheet" href="public/css/c-button.css">
-<!-- CSS HOME -->
-<link rel="stylesheet" href="public/css/home/hero.css">
-<link rel="stylesheet" href="public/css/home/cta.css">
-<link rel="stylesheet" href="public/css/home/available.css">
-<link rel="stylesheet" href="public/css/home/card.css">
-<link rel="stylesheet" href="public/css/home/testimonials.css">
-<link rel="stylesheet" href="public/css/home/l-contact.css">
-<link rel="stylesheet" href="public/css/home/c-card-contact.css">
-<link rel="stylesheet" href="public/css/home/l-contact-form.css">
-<link rel="stylesheet" href="public/css/home/c-form.css">
-<!-- CSS DASHBOARD -->
-<link rel="stylesheet" href="public/css/dashboard/l-dashboard.css">
-<link rel="stylesheet" href="public/css/dashboard/c-sidebar.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/global.css">

@@ -1,0 +1,47 @@
+.c-table {
+  color: var(--color-background);
+  width: 100%;
+
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.c-table__caption {
+  padding-block: 1rem;
+}
+
+.c-table__head,
+.c-table__cell {
+  border: 1px solid black;
+  padding: 0.5rem;
+  text-align: center;
+
+  > * + * {
+    margin-left: 1rem;
+  }
+}
+
+.c-table__cell {
+  .active {
+    color: #38a169;
+  }
+  .inactive {
+    color: #a0aec0;
+  }
+
+  .trash {
+    color: #e53e3e;
+  }
+
+  .pen {
+    color: #3182ce;
+  }
+
+  .mars {
+    color: #2b6cb0;
+  }
+
+  .venus {
+    color: #d53f8c;
+  }
+}

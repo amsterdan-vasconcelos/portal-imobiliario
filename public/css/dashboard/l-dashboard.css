@@ -1,4 +1,15 @@
 .l-dashboard {
-  display: grid;
-  grid-template-columns: 15rem 1fr;
+  display: flex;
+  background-color: red;
+  height: calc(100svh - var(--header-height));
+
+  .l-dashboard__sidebar {
+    width: 15rem;
+  }
+
+  .l-dashboard__content {
+    flex: 1;
+    background-color: var(--color-surface);
+    padding: 1rem;
+  }
 }
