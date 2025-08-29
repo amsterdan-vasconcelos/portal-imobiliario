@@ -3,11 +3,11 @@
 class Owner
 {
   public function __construct(
-    private int $id,
+    private ?int $id,
     private string $name,
     private string $contact,
     private string $sex,
-    private bool $active
+    private ?bool $active
   ) {}
 
   public function getId()
