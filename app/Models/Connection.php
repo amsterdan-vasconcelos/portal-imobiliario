@@ -33,48 +33,57 @@ class Conexão
   {
     try {
       $stmt = self::getConnection()->prepare($sql);
-
-      foreach ($params as $key => $value) {
-        $stmt->bindValue($key + 1, $value);
-      }
-
-      $stmt->execute();
+      $stmt->execute($params);
       return $stmt;
     } catch (PDOException $e) {
       die('execute query error: ' . $e->getMessage());
     }
   }
 
-  protected function select(string $table, $condition = '', $params = [])
+  protected function select(string $table, $condition = '', $values = [])
   {
+    $params = array_combine(
+      array_map(fn($key) => ":$key", array_keys($values)),
+      array_values($values)
+    );
+
     $sql = "select * from $table $condition order by id desc;";
     $stmt = $this->executeQuery($sql, $params);
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
-  protected function insert(string $table, array $attributes, array $values)
+  protected function insert(string $table, array $values)
   {
-    $attributes = implode(',', $attributes);
-    $params = implode(',', array_fill(0, count($values), '?'));
+    $columns = implode(', ', array_keys($values));
+    $placeholders = ':' . implode(', :', array_keys($values));
+    $params = array_combine(
+      array_map(fn($key) => ":$key", array_keys($values)),
+      array_values($values)
+    );
 
-    $sql = "insert into $table ($attributes) values ($params);";
-    $this->executeQuery($sql, $values);
+    $sql = "insert into $table ($columns) values ($placeholders);";
+    $this->executeQuery($sql, $params);
     return self::getConnection()->lastInsertId();
   }
 
-  protected function update(string $table, array $fields, array $values, int $id)
+  protected function update(string $table, array $values, int $id)
   {
-    $fields = implode(',', array_map(fn($field) => "$field = ?", $fields));
+    $columns = implode(', ', array_map(fn($key) => "$key = :$key", array_keys($values)));
 
-    $sql = "update $table set $fields where id = ?";
-    $stmt = $this->executeQuery($sql, [...$values, $id]);
+    $params = array_combine(
+      array_map(fn($key) => ":$key", array_keys($values)),
+      array_values($values)
+    );
+
+    $sql = "update $table set $columns where id = :id";
+    $stmt = $this->executeQuery($sql, [...$params, ':id' => $id]);
     return $stmt->rowCount();
   }
 
   protected function delete(string $table, int $id)
   {
-    $sql = "delete $table where id = ?";
-    $stmt = $this->executeQuery($sql, [$id]);
+    $sql = "delete $table where id = :id";
+    $stmt = $this->executeQuery($sql, [':id' => $id]);
     return $stmt->rowCount();
   }
 }
