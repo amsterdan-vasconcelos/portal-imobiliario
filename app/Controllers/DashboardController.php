@@ -11,8 +11,8 @@ class DashboardController extends Controller
     $this->view('dashboard/index');
   }
 
-  public function owner()
+  public function owner($param = 'index')
   {
-    $this->view('dashboard/owner');
+    $this->view("dashboard/owner/$param");
   }
 }

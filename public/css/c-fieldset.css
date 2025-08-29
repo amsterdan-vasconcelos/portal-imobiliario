@@ -1,0 +1,23 @@
+.c-fieldset {
+  padding: var(--padding-small);
+  padding-top: 0.3rem;
+  border: 1px solid oklch(from var(--color-border) l c h / 0.3);
+  border-radius: var(--border-radious);
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+
+  .c-fieldset__legend {
+    color: var(--color-background);
+    font-size: 0.8em;
+  }
+
+  .c-fieldset__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}

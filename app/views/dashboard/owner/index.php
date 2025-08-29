@@ -2,23 +2,23 @@
 <html lang="pt-br">
 
 <head>
-  <?php require_once __DIR__ . '/../shared/head.php' ?>
+  <?php require_once __DIR__ . '/../../shared/head.php' ?>
   <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/dashboard/index.css">
   <title>Dashboard - Proprietários</title>
 </head>
 
 <body>
-  <?php require_once __DIR__ . '/../shared/header.php' ?>
+  <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
     <div class="l-dashboard__sidebar">
-      <?php require_once __DIR__ . '/partials/sidebar.php' ?>
+      <?php require_once __DIR__ . '/../partials/sidebar.php' ?>
     </div>
     <div class="l-dashboard__content">
 
       <div class="c-dashboard-header">
         <h1 class="c-dashboard-header__title">Proprietários</h1>
-        <a href="" class="c-dashboard-header__button">
+        <a href="<?= BASE_URL ?>/dashboard/owner/register" class="c-dashboard-header__button">
           <i class="fa-solid fa-plus"></i>
           Add Proprietário
         </a>

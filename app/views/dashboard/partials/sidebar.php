@@ -1,7 +1,7 @@
 <nav class="c-sidebar">
   <div class="c-sidebar__header">Seja bem vindo Usuário!</div>
   <ul class="c-sidebar__content">
-    <a href="/ronaldo-rodrigues/portal-imobiliario/dashboard/owner">
+    <a href="<?= BASE_URL ?>/dashboard/owner">
       <li class="c-sidebar__item">
         <i class="fa-solid fa-user-tie"></i>
         Proprietário

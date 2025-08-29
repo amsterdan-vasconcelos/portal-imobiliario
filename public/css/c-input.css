@@ -1,0 +1,13 @@
+.c-input {
+  padding: 0.3rem;
+  color: var(--color-background);
+  outline: none;
+  border-radius: 0.3rem;
+}
+
+.c-input--dashboard {
+  background-color: oklch(100% 0 0 / 0.8);
+  &:focus {
+    box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-border);
+  }
+}

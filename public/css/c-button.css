@@ -3,10 +3,20 @@
   padding-inline: 1rem;
   border-radius: 0.3rem;
 
+  outline: none;
+
   display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
+  &:focus {
+    box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-border);
+  }
+
+  &.c-button--1\/2 {
+    width: 50%;
+  }
 
   &.c-button--full {
     width: 100%;
@@ -21,5 +31,10 @@
       background-color: var(--color-accent);
       color: var(--color-background);
     }
+  }
+
+  &.c-button--dashboard {
+    background-color: var(--color-border);
+    color: var(--color-text);
   }
 }

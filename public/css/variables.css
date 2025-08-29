@@ -2,6 +2,9 @@
   --max-width: 70rem;
   --font-family: "Roboto", sans-serif;
   --header-height: 4.375rem;
+  --border-radious: 0.3rem;
+  --padding-small: 0.5rem;
+  --padding-medium: 1rem;
 
   --color-background: oklch(22% 0.02 270);
   --color-text: oklch(98% 0.01 270);

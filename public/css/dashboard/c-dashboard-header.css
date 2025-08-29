@@ -1,11 +1,15 @@
 .c-dashboard-header {
   color: var(--color-background);
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid var(--color-border);
   padding-bottom: 1rem;
+
+  .c-dashboard-header__title {
+    flex: 1;
+  }
 
   .c-dashboard-header__button {
     background-color: var(--color-border);

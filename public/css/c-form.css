@@ -1,0 +1,14 @@
+.c-form {
+  > * + * {
+    margin-top: 1rem;
+  }
+
+  &.c-form--dashboard {
+    margin-top: 1rem;
+  }
+
+  .c-form__item {
+    display: grid;
+    gap: 0.25rem;
+  }
+}
