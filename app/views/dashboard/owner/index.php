@@ -1,3 +1,8 @@
+<?php
+$owners = array_reverse($owners);
+$ownerExist = isset($owners) && count($owners) > 0
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -36,28 +41,34 @@
           </tr>
         </thead>
         <tbody class="c-table__body">
-          <tr class="c-table__row">
-            <th class="c-table__head" scope="row">Amsterdan Vasconcelos</td>
-            <td class="c-table__cell">31 99796-9895</td>
-            <td class="c-table__cell">
-              <i
-                class="<?= $gender === 'M'
-                          ? 'fa-solid fa-mars mars'
-                          : 'fa-solid fa-venus venus' ?>">
-              </i>
-            </td>
-            <td class="c-table__cell">
-              <i
-                class="<?= $active
-                          ? 'fa-solid fa-circle active'
-                          : 'fa-solid fa-square inactive' ?>">
-              </i>
-            </td>
-            <td class="c-table__cell">
-              <a href=""><i class="fa-solid fa-pen pen"></i></a>
-              <a href=""><i class="fa-solid fa-trash trash"></i></a>
-            </td>
-          </tr>
+          <?php
+          if ($ownerExist):
+            foreach ($owners as $owner):
+              $classGenderIcon = $owner->gender === 'M'
+                ? 'fa-solid fa-mars mars'
+                : 'fa-solid fa-venus venus';
+              $classActiveIcon = $owner->active
+                ? 'fa-solid fa-circle active'
+                : 'fa-solid fa-square inactive';
+          ?>
+              <tr class="c-table__row">
+                <th class="c-table__head" scope="row"><?= $owner->name ?></td>
+                <td class="c-table__cell"><?= $owner->phone ?></td>
+                <td class="c-table__cell">
+                  <i class="<?= $classGenderIcon ?>"></i>
+                </td>
+                <td class="c-table__cell">
+                  <i class="<?= $classActiveIcon ?>"></i>
+                </td>
+                <td class="c-table__cell">
+                  <a href=""><i class="fa-solid fa-pen pen"></i></a>
+                  <a href=""><i class="fa-solid fa-trash trash"></i></a>
+                </td>
+              </tr>
+          <?php
+            endforeach;
+          endif
+          ?>
         </tbody>
         <tfoot></tfoot>
       </table>

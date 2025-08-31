@@ -12,6 +12,11 @@ class OwnerService
     private $ownerDAO = new OwnerDAO()
   ) {}
 
+  public function getAll()
+  {
+    return $this->ownerDAO->getAll();
+  }
+
   public function register(array $data)
   {
     $name = $data['name'] ?? null;

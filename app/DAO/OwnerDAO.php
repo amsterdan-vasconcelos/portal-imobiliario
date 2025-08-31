@@ -7,6 +7,11 @@ use App\Models\Owner;
 
 class OwnerDAO extends Connection
 {
+  public function getAll()
+  {
+    return $this->select('owner');
+  }
+
   public function register(Owner $owner)
   {
     return $this->insert('owner', $owner->areAttributesFilled());
