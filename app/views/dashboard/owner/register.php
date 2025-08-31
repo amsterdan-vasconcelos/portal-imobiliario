@@ -1,3 +1,14 @@
+<?php
+$existMessage = !empty($success) || !empty($error);
+if ($existMessage) {
+  $class = !empty($success) ? 'success' : 'error';
+  $title = !empty($success)
+    ? '<i class="fa-solid fa-check"></i> Sucesso:'
+    : '<i class="fa-solid fa-circle-exclamation"></i> Erro:';
+  $description = $success ?? $error;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,12 +31,15 @@
         <h1 class="c-dashboard-header__title">Adicionar Proprietário</h1>
       </div>
 
-      <form class="c-form c-form--dashboard">
+      <form
+        class="c-form c-form--dashboard"
+        action="<?= BASE_URL ?>/dashboard/owner/register" method="post">
         <div class="c-form__item">
           <label class="c-label" for="name">Nome</label>
           <input
             class="c-input c-input--dashboard"
-            type="text" id="name" name="name">
+            type="text" id="name" name="name"
+            autofocus>
         </div>
         <div class="c-form__item">
           <label class="c-label" for="phone">Telefone</label>
@@ -38,11 +52,11 @@
           <legend class="c-fieldset__legend">Gênero</legend>
           <div class="c-fieldset__item">
             <label class="c-label" for="F">Femino</label>
-            <input type="radio" name="gender" id="F">
+            <input type="radio" name="gender" id="F" value="F">
           </div>
           <div class="c-fieldset__item">
             <label class="c-label" for="M">Masculino</label>
-            <input type="radio" name="gender" id="M">
+            <input type="radio" name="gender" id="M" value="M">
           </div>
         </fieldset>
 
@@ -55,6 +69,16 @@
 
     </div>
   </div>
+  <?php if ($existMessage): ?>
+    <div class="c-modal__overlay">
+      <div class="c-modal <?= $class ?>">
+        <h2
+          class="c-modal__title"><?= $title ?></h2>
+        <p class="c-modal__description"><?= $description ?></p>
+        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/owner/register">Fechar</a>
+      </div>
+    </div>
+  <?php endif; ?>
 </body>
 
 </html>

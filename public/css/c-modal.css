@@ -1,0 +1,59 @@
+.c-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-modal {
+  --color: white;
+
+  background: var(--color-background);
+  padding: calc(var(--padding-medium) * 1.5);
+  border-radius: var(--border-radious);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 25rem;
+
+  animation: slideInFromRight 400ms ease-out;
+
+  > * + * {
+    margin-top: 1.5rem;
+  }
+
+  &.error {
+    --color: red;
+  }
+
+  &.success {
+    --color: green;
+  }
+
+  .c-modal__title {
+    color: var(--color);
+  }
+
+  .c-modal__button {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    background-color: var(--color);
+    border-radius: var(--border-radious);
+    padding: var(--padding-small) var(--padding-medium);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

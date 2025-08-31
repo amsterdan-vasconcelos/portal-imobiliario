@@ -1,6 +1,8 @@
 <?php
 
-class Conexão
+namespace App\DAO;
+
+class Connection
 {
   private static $connection;
 
@@ -10,13 +12,13 @@ class Conexão
       $dns = "mysql:host=localhost;dbname=casaweb";
 
       try {
-        self::$connection = new PDO($dns, 'root', '');
+        self::$connection = new \PDO($dns, 'root', '');
         // [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
         self::$connection->setAttribute(
-          PDO::ATTR_ERRMODE,
-          PDO::ERRMODE_EXCEPTION
+          \PDO::ATTR_ERRMODE,
+          \PDO::ERRMODE_EXCEPTION
         );
-      } catch (PDOException $e) {
+      } catch (\PDOException $e) {
         die('connection error:' . $e->getMessage());
       }
     }
@@ -35,7 +37,7 @@ class Conexão
       $stmt = self::getConnection()->prepare($sql);
       $stmt->execute($params);
       return $stmt;
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       die('execute query error: ' . $e->getMessage());
     }
   }
@@ -49,7 +51,7 @@ class Conexão
 
     $sql = "select * from $table $condition order by id desc;";
     $stmt = $this->executeQuery($sql, $params);
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   protected function insert(string $table, array $values)
@@ -62,6 +64,7 @@ class Conexão
     );
 
     $sql = "insert into $table ($columns) values ($placeholders);";
+
     $this->executeQuery($sql, $params);
     return self::getConnection()->lastInsertId();
   }

@@ -1,13 +1,15 @@
 <?php
 
+namespace App\Models;
+
 class Owner
 {
   public function __construct(
-    private ?int $id,
     private string $name,
-    private string $contact,
-    private string $sex,
-    private ?bool $active
+    private string $phone,
+    private string $gender,
+    private ?int $id = null,
+    private ?bool $active = null
   ) {}
 
   public function getId()
@@ -20,14 +22,14 @@ class Owner
     return $this->name;
   }
 
-  public function getContact()
+  public function getPhone()
   {
-    return $this->contact;
+    return $this->phone;
   }
 
-  public function getSex()
+  public function getGender()
   {
-    return $this->sex;
+    return $this->gender;
   }
 
   public function getActive()
@@ -40,8 +42,8 @@ class Owner
     return [
       'id' => $this->id,
       'name' => $this->name,
-      'contact' => $this->contact,
-      'sex' => $this->sex,
+      'phone' => $this->phone,
+      'gender' => $this->gender,
       'active' => $this->active,
     ];
   }
