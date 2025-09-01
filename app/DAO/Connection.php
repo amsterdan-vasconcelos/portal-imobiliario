@@ -49,7 +49,7 @@ class Connection
       array_values($values)
     );
 
-    $sql = "select * from $table $condition order by id desc;";
+    $sql = "select * from $table $condition order by id asc;";
     $stmt = $this->executeQuery($sql, $params);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }

@@ -5,9 +5,9 @@ namespace App\Models;
 class Owner
 {
   public function __construct(
-    private string $name,
-    private string $phone,
-    private string $gender,
+    private ?string $name = null,
+    private ?string $phone = null,
+    private ?string $gender = null,
     private ?int $id = null,
     private ?bool $active = null
   ) {}
@@ -52,7 +52,7 @@ class Owner
   {
     return array_filter(
       $this->toArray(),
-      fn($value) => $value !== null && $value !== ''
+      fn($value) => $value !== null
     );
   }
 }

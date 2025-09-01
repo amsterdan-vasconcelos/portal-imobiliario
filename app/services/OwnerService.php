@@ -17,6 +17,11 @@ class OwnerService
     return $this->ownerDAO->getAll();
   }
 
+  public function getById(int $id)
+  {
+    return $this->ownerDAO->getById($id);
+  }
+
   public function register(array $data)
   {
     $name = $data['name'] ?? null;
@@ -30,6 +35,20 @@ class OwnerService
     $owner = new Owner($name, $phone, $gender);
 
     return $this->ownerDAO->register($owner);
+  }
+  public function updateById(array $data, int $id)
+  {
+    $name = $data['name'] ?? null;
+    $phone = $data['phone'] ?? null;
+    $gender = $data['gender'] ?? null;
+
+    if ($name) $this->validateName($name);
+    if ($phone) $this->validatePhone($phone);
+    if ($gender) $this->validateGender($gender);
+
+    $owner = new Owner($name, $phone, $gender);
+
+    return $this->ownerDAO->updateById($owner, $id);
   }
 
   private function validateName(?string $name)

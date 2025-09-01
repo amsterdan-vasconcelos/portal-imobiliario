@@ -1,5 +1,4 @@
 <?php
-$owners = array_reverse($owners);
 $ownerExist = isset($owners) && count($owners) > 0
 ?>
 
@@ -61,7 +60,7 @@ $ownerExist = isset($owners) && count($owners) > 0
                   <i class="<?= $classActiveIcon ?>"></i>
                 </td>
                 <td class="c-table__cell">
-                  <a href=""><i class="fa-solid fa-pen pen"></i></a>
+                  <a href="<?= BASE_URL . "/dashboard/owner/update/$owner->id" ?>"><i class="fa-solid fa-pen pen"></i></a>
                   <a href=""><i class="fa-solid fa-trash trash"></i></a>
                 </td>
               </tr>
