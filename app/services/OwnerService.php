@@ -41,14 +41,26 @@ class OwnerService
     $name = $data['name'] ?? null;
     $phone = $data['phone'] ?? null;
     $gender = $data['gender'] ?? null;
+    $active = $data['active'] ?? null;
 
     if ($name) $this->validateName($name);
     if ($phone) $this->validatePhone($phone);
     if ($gender) $this->validateGender($gender);
+    if ($active) $this->validateActive($active);
 
-    $owner = new Owner($name, $phone, $gender);
+    $owner = new Owner(
+      name: $name,
+      phone: $phone,
+      gender: $gender,
+      active: $active
+    );
 
     return $this->ownerDAO->updateById($owner, $id);
+  }
+
+  public function deleteById($id)
+  {
+    return $this->ownerDAO->deleteById($id);
   }
 
   private function validateName(?string $name)
@@ -72,6 +84,15 @@ class OwnerService
     $gender = strtoupper($gender ?? '');
     match ($gender) {
       'M', 'F' => null,
+      default => throw new InvalidArgumentException('O gênero deve ser M ou F.')
+    };
+  }
+
+  private function validateActive(?string $active)
+  {
+    $active = mb_strtolower($active ?? '');
+    match ($active) {
+      '1', '0' => null,
       default => throw new InvalidArgumentException('O gênero deve ser M ou F.')
     };
   }

@@ -57,11 +57,19 @@ $ownerExist = isset($owners) && count($owners) > 0
                   <i class="<?= $classGenderIcon ?>"></i>
                 </td>
                 <td class="c-table__cell">
-                  <i class="<?= $classActiveIcon ?>"></i>
+                  <form action="<?= BASE_URL ?>/dashboard/owner" method="post">
+                    <input type="hidden" name="id" value="<?= $owner->id ?>">
+                    <input
+                      type="hidden" name="active"
+                      value="<?= !$owner->active ? '1' : '0' ?>">
+                    <button>
+                      <i class="<?= $classActiveIcon ?>"></i>
+                    </button>
+                  </form>
                 </td>
                 <td class="c-table__cell">
                   <a href="<?= BASE_URL . "/dashboard/owner/update/$owner->id" ?>"><i class="fa-solid fa-pen pen"></i></a>
-                  <a href=""><i class="fa-solid fa-trash trash"></i></a>
+                  <a href="<?= BASE_URL . "/dashboard/owner/delete/$owner->id" ?>"><i class="fa-solid fa-trash trash"></i></a>
                 </td>
               </tr>
           <?php

@@ -30,8 +30,22 @@ class DashboardController extends Controller
         $result = [...$result, ...$this->update('owner', $_POST, $id)];
       }
     }
-    if ($param === 'delete') $result = $this->getAll('owner');
-    if ($param === 'index') $result = ['owners' => $this->getAll('owner')];
+    if ($param === 'delete') {
+      $result = ['owner' => $this->getById('owner', $id)];
+
+      if ($_POST) {
+        $result = [...$result, ...$this->delete('owner', $id)];
+      }
+    }
+
+    if ($param === 'index') {
+
+      if ($_POST) {
+        $result = $this->update('owner', $_POST, $_POST['id']);
+      }
+
+      $result = [...$result, 'owners' => $this->getAll('owner')];
+    }
 
     $this->view("dashboard/owner/$param", $result);
   }
@@ -65,11 +79,10 @@ class DashboardController extends Controller
     try {
       $this->$service->register($data);
 
-      sleep(2);
+      sleep(1);
       return ['success' => 'Proprietário cadastrado com sucesso!'];
     } catch (InvalidArgumentException $e) {
-
-      sleep(2);
+      sleep(1);
       return ['error' => $e->getMessage()];
     }
   }
@@ -84,11 +97,25 @@ class DashboardController extends Controller
       sleep(1);
       return ['success' => 'Proprietário atualizado com sucesso!'];
     } catch (InvalidArgumentException $e) {
-
       sleep(1);
       return ['error' => $e->getMessage()];
     }
   }
 
-  public function delete() {}
+  public function delete(string $service, int $id)
+  {
+    $service = $service . 'Service';
+
+    try {
+      $this->$service->deleteById($id);
+
+      sleep(1);
+      return ['success' => 'Proprietário deletado com sucesso!'];
+    } catch (InvalidArgumentException $e) {
+      sleep(1);
+      return ['error' => $e->getMessage()];
+    }
+  }
+
+  public function activeToggle() {}
 }

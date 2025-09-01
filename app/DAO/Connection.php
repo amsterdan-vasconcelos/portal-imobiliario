@@ -85,7 +85,7 @@ class Connection
 
   protected function delete(string $table, int $id)
   {
-    $sql = "delete $table where id = :id";
+    $sql = "delete from $table where id = :id";
     $stmt = $this->executeQuery($sql, [':id' => $id]);
     return $stmt->rowCount();
   }

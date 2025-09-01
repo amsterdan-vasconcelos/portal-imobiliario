@@ -26,4 +26,9 @@ class OwnerDAO extends Connection
   {
     return $this->update('owner', $owner->areAttributesFilled(), $id);
   }
+
+  public function deleteById(int $id)
+  {
+    return $this->delete('owner', $id);
+  }
 }
