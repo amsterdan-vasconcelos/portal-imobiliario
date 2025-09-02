@@ -116,6 +116,4 @@ class DashboardController extends Controller
       return ['error' => $e->getMessage()];
     }
   }
-
-  public function activeToggle() {}
 }

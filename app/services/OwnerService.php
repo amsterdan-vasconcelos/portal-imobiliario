@@ -4,7 +4,6 @@ namespace App\services;
 
 use App\DAO\OwnerDAO;
 use App\Models\Owner;
-use InvalidArgumentException;
 
 class OwnerService
 {
@@ -66,7 +65,7 @@ class OwnerService
   private function validateName(?string $name)
   {
     if (!$name || mb_strlen(trim($name) < 3)) {
-      throw new InvalidArgumentException(
+      throw new \InvalidArgumentException(
         'O nome é obrigatório e deve conter pelo menos 3 caracteres.'
       );
     }
@@ -75,7 +74,7 @@ class OwnerService
   private function validatePhone(?string $phone)
   {
     if (!$phone || !preg_match('/^\d{4,5}-\d{4}$/', $phone)) {
-      throw new InvalidArgumentException('O telefone é inválido. Ex: 99999-9999');
+      throw new \InvalidArgumentException('O telefone é inválido. Ex: 99999-9999');
     }
   }
 
@@ -84,7 +83,7 @@ class OwnerService
     $gender = strtoupper($gender ?? '');
     match ($gender) {
       'M', 'F' => null,
-      default => throw new InvalidArgumentException('O gênero deve ser M ou F.')
+      default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
     };
   }
 
@@ -93,7 +92,7 @@ class OwnerService
     $active = mb_strtolower($active ?? '');
     match ($active) {
       '1', '0' => null,
-      default => throw new InvalidArgumentException('O gênero deve ser M ou F.')
+      default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
     };
   }
 }

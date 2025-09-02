@@ -16,11 +16,11 @@ CREATE TABLE user (
   id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) DEFAULT NULL,
   username VARCHAR(60) DEFAULT NULL,
-  password VARCHAR(100) DEFAULT NULL,
-  profile_id INT(11) DEFAULT NULL,
   email VARCHAR(100) DEFAULT NULL,
-  created_at TIMESTAMP NOT NULL,
+  password VARCHAR(100) DEFAULT NULL,
   active TINYINT(1) DEFAULT 0,
+  profile_id INT(11) DEFAULT NULL,
+  created_at TIMESTAMP NOT NULL,
   FOREIGN KEY (profile_id) REFERENCES access_profile(id)
 );
 
@@ -43,9 +43,9 @@ DROP TABLE IF EXISTS owner;
 CREATE TABLE owner (
   id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) DEFAULT NULL,
-  contact VARCHAR(14) DEFAULT NULL,
+  phone VARCHAR(14) DEFAULT NULL,
   gender ENUM('M', 'F') DEFAULT NULL,
-  active ENUM('0', '1') DEFAULT NULL
+  active boolean DEFAULT true
 );
 
 -- TABLE: property
