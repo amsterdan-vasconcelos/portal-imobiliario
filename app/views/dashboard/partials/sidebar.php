@@ -13,7 +13,7 @@
         Imóvel
       </li>
     </a>
-    <a href="">
+    <a href="<?= BASE_URL ?>/dashboard/user">
       <li class="c-sidebar__item">
         <i class="fa-solid fa-user"></i>
         Usuário

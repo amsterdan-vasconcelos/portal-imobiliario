@@ -3,14 +3,19 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\services\AccessProfileService;
 use App\services\OwnerService;
+use App\services\UserService;
+use DateTime;
 use Exception;
 use InvalidArgumentException;
 
 class DashboardController extends Controller
 {
   public function __construct(
-    private $ownerService = new OwnerService()
+    private $ownerService = new OwnerService(),
+    private $userService = new UserService(),
+    private $accessProfileService = new AccessProfileService(),
   ) {}
 
   public function index()
@@ -48,6 +53,46 @@ class DashboardController extends Controller
     }
 
     $this->view("dashboard/owner/$param", $result);
+  }
+
+  public function user($param = 'index', $id = null)
+  {
+    $result = [];
+
+    if ($_POST && $param === 'register') $result = $this->register('owner', $_POST);
+    if ($param === 'update') {
+      $result = ['owner' => $this->getById('owner', $id)];
+
+      if ($_POST) {
+        $result = [...$result, ...$this->update('owner', $_POST, $id)];
+      }
+    }
+    if ($param === 'delete') {
+      $result = ['owner' => $this->getById('owner', $id)];
+
+      if ($_POST) {
+        $result = [...$result, ...$this->delete('owner', $id)];
+      }
+    }
+
+    if ($param === 'index') {
+
+      if ($_POST) {
+        $result = $this->update('owner', $_POST, $_POST['id']);
+      }
+
+      $users = $this->getAll('user');
+
+      foreach ($users as $user) {
+        $access_profile = $this->getById('accessProfile', $user->profile_id);
+        $user->access_profile = $access_profile[0]->description;
+        $user->created_at = (new DateTime($user->created_at))->format('d/m/y');
+      }
+
+      $result = [...$result, 'users' => $users];
+    }
+
+    $this->view("dashboard/user/$param", $result);
   }
 
   public function getAll(string $service)

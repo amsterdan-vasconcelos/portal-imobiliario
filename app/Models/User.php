@@ -5,12 +5,12 @@ namespace App\Models;
 class User
 {
   public function __construct(
-    private ?string $id = null,
+    private ?int $id = null,
     private ?string $name = null,
     private ?string $username = null,
     private ?string $email = null,
     private ?string $password = null,
-    private ?string $active = null,
+    private ?bool $active = null,
     private ?string $profile_id = null,
     private ?string $created_at = null,
   ) {}
