@@ -52,6 +52,7 @@ class UserService
     $name = $data['name'] ?? null;
     $username = $data['username'] ?? null;
     $email = $data['email'] ?? null;
+    $profile_id = $data['profile_id'] ?? null;
     $password = $data['password'] ?? null;
     $confirm_password = $data['confirm_password'] ?? null;
     $active = $data['active'] ?? null;
@@ -59,6 +60,7 @@ class UserService
     if ($name) $this->validateName($name);
     if ($username) $this->validateUsername($username);
     if ($email) $this->validateEmail($email);
+    if ($profile_id) $this->validateProfileId($profile_id);
     if ($password) $this->validatePassword($password, $confirm_password);
     if ($active) $this->validateActive($active);
 
@@ -66,8 +68,9 @@ class UserService
       name: $name,
       username: $username,
       email: $email,
+      profile_id: $profile_id,
       password: $password,
-      active: $active
+      active: $active === 'true' ? true : false
     );
 
     return $this->userDAO->updateById($user, $id);
@@ -140,7 +143,7 @@ class UserService
   {
     $active = mb_strtolower($active ?? '');
     match ($active) {
-      '1', '0' => null,
+      'true', 'false' => null,
       default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
     };
   }

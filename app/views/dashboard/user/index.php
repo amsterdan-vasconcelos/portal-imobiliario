@@ -1,7 +1,5 @@
 <?php
 $userExist = isset($users) && count($users) > 0;
-
-
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +59,7 @@ $userExist = isset($users) && count($users) > 0;
                     <input type="hidden" name="id" value="<?= $user->id ?>">
                     <input
                       type="hidden" name="active"
-                      value="<?= !$user->active ? '1' : '0' ?>">
+                      value="<?= $user->active ? 'false' : 'true' ?>">
                     <button>
                       <i class="<?= $classActiveIcon ?>"></i>
                     </button>

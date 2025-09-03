@@ -86,7 +86,8 @@ class DashboardController extends Controller
     if ($param === 'index') {
 
       if ($_POST) {
-        $result = $this->update('owner', $_POST, $_POST['id']);
+
+        $result = $this->update('user', $_POST, $_POST['id']);
       }
 
       $users = $this->getAll('user');

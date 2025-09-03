@@ -10,7 +10,7 @@ class User
     private ?string $username = null,
     private ?string $email = null,
     private ?string $password = null,
-    private ?bool $active = null,
+    private ?bool $active = true,
     private ?string $profile_id = null,
     private ?string $created_at = null,
   ) {}
@@ -63,7 +63,7 @@ class User
       'username' => $this->username,
       'email' => $this->email,
       'password' => $this->password,
-      'active' => $this->active,
+      'active' => $this->active === true ? 1 : 0,
       'profile_id' => $this->profile_id,
       'created_at' => $this->created_at,
     ];
