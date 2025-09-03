@@ -63,7 +63,9 @@ class User
       'username' => $this->username,
       'email' => $this->email,
       'password' => $this->password,
-      'active' => $this->active === true ? 1 : 0,
+      'active' => $this->active === true ? 1 : (
+        $this->active === false ? 0 : null
+      ),
       'profile_id' => $this->profile_id,
       'created_at' => $this->created_at,
     ];

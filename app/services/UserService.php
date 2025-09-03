@@ -70,7 +70,7 @@ class UserService
       email: $email,
       profile_id: $profile_id,
       password: $password,
-      active: $active === 'true' ? true : false
+      active: $active === 'true' ? true : ($active === 'false' ? false : null)
     );
 
     return $this->userDAO->updateById($user, $id);

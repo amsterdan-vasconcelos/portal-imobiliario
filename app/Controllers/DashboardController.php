@@ -65,16 +65,27 @@ class DashboardController extends Controller
         $result = $this->register('user', $_POST);
       }
 
-      $result = [...$result, 'access_profiles' => $this->getAll('accessProfile')];
+      $result = [
+        ...$result,
+        'access_profiles' => $this->getAll('accessProfile')
+      ];
     }
 
     if ($param === 'update') {
-      $result = ['owner' => $this->getById('owner', $id)];
-
       if ($_POST) {
-        $result = [...$result, ...$this->update('owner', $_POST, $id)];
+        $result = $this->update('user', $_POST, $id);
       }
+
+      $user = $this->getById('user', $id);
+      $access_profiles = $this->getAll('accessProfile');
+
+      $result = [
+        ...$result,
+        'user' => $user,
+        'access_profiles' => $access_profiles
+      ];
     }
+
     if ($param === 'delete') {
       $result = ['owner' => $this->getById('owner', $id)];
 

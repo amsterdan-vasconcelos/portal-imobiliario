@@ -1,5 +1,5 @@
 <?php
-$owner = !empty($owner) ? $owner[0] : null;
+$user = !empty($user) ? $user[0] : null;
 
 $existMessage = !empty($success) || !empty($error);
 if ($existMessage) {
@@ -17,7 +17,7 @@ if ($existMessage) {
 <head>
   <?php require_once __DIR__ . '/../../shared/head.php' ?>
   <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/dashboard/index.css">
-  <title>Dashboard - Atualizar Proprietário</title>
+  <title>Dashboard - Atualizar Usuário</title>
 </head>
 
 <body>
@@ -30,39 +30,52 @@ if ($existMessage) {
     <div class="l-dashboard__content">
 
       <div class="c-dashboard-header">
-        <h1 class="c-dashboard-header__title">Atualizar Proprietário</h1>
+        <h1 class="c-dashboard-header__title">Atualizar Usuário</h1>
       </div>
 
       <form
         class="c-form c-form--dashboard"
-        action="<?= BASE_URL ?>/dashboard/owner/update/<?= $owner->id ?>" method="post">
+        action="<?= BASE_URL ?>/dashboard/user/update/<?= $user->id ?>" method="post">
         <div class="c-form__item">
           <label class="c-label" for="name">Nome</label>
           <input
             class="c-input c-input--dashboard"
             type="text" id="name" name="name"
-            value="<?= $owner->name ?>"
+            value="<?= $user->name ?>"
             autofocus>
         </div>
         <div class="c-form__item">
-          <label class="c-label" for="phone">Telefone</label>
+          <label class="c-label" for="username">Username</label>
           <input
             class="c-input c-input--dashboard"
-            type="tel" id="phone" name="phone"
-            value="<?= $owner->phone ?>">
+            type="text" id="username" name="username"
+            value="<?= $user->username ?>">
         </div>
-
-        <fieldset class="c-fieldset">
-          <legend class="c-fieldset__legend">Gênero</legend>
-          <div class="c-fieldset__item">
-            <label class="c-label" for="F">Femino</label>
-            <input type="radio" name="gender" id="F" <?= $owner->gender === 'F' ? 'checked' : '' ?> value="F">
-          </div>
-          <div class="c-fieldset__item">
-            <label class="c-label" for="M">Masculino</label>
-            <input type="radio" name="gender" id="M" <?= $owner->gender === 'M' ? 'checked' : '' ?> value="M">
-          </div>
-        </fieldset>
+        <div class="c-form__item">
+          <label class="c-label" for="email">Email</label>
+          <input
+            class="c-input c-input--dashboard"
+            type="email" id="email" name="email"
+            value="<?= $user->email ?>">
+        </div>
+        <div class="c-form__item">
+          <label class="c-label" for="access_profile">Perfil de acesso</label>
+          <select class="c-select c-select--dashboard" name="profile_id" id="access_profile">
+            <option
+              class="c-select__option c-select__option--placeholder"
+              disabled value="">
+              -- selecione --
+            </option>
+            <?php foreach ($access_profiles as $access_profile): ?>
+              <option
+                class="c-select__option"
+                <?= $user->profile_id === $access_profile->id ? 'selected' : '' ?>
+                value="<?= $access_profile->id ?>">
+                <?= ucfirst($access_profile->description) ?>
+              </option>
+            <?php endforeach ?>
+          </select>
+        </div>
 
         <button
           class="c-button c-button--dashboard c-button--1/2"
@@ -79,7 +92,7 @@ if ($existMessage) {
         <h2
           class="c-modal__title"><?= $title ?></h2>
         <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL . '/dashboard/owner/update/' . $owner->id ?>">Fechar</a>
+        <a class="c-modal__button" href="<?= BASE_URL . '/dashboard/user/update/' . $user->id ?>">Fechar</a>
       </div>
     </div>
   <?php endif; ?>
