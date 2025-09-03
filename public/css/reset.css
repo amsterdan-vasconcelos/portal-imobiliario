@@ -26,6 +26,11 @@ button {
   background: none;
 }
 
+select,
+input {
+  font-size: inherit;
+}
+
 ul {
   list-style: none;
 }

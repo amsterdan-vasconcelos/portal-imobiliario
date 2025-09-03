@@ -24,7 +24,7 @@ $userExist = isset($users) && count($users) > 0;
 
       <div class="c-dashboard-header">
         <h1 class="c-dashboard-header__title">Usuários</h1>
-        <a href="<?= BASE_URL ?>/dashboard/owner/register" class="c-dashboard-header__button">
+        <a href="<?= BASE_URL ?>/dashboard/user/register" class="c-dashboard-header__button">
           <i class="fa-solid fa-plus"></i>
           Add Usuário
         </a>

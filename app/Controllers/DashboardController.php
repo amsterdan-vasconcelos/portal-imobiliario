@@ -59,7 +59,15 @@ class DashboardController extends Controller
   {
     $result = [];
 
-    if ($_POST && $param === 'register') $result = $this->register('owner', $_POST);
+    if ($param === 'register') {
+
+      if ($_POST) {
+        $result = $this->register('user', $_POST);
+      }
+
+      $result = [...$result, 'access_profiles' => $this->getAll('accessProfile')];
+    }
+
     if ($param === 'update') {
       $result = ['owner' => $this->getById('owner', $id)];
 

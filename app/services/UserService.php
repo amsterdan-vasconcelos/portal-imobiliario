@@ -34,12 +34,14 @@ class UserService
     $this->validateUsername($username);
     $this->validateEmail($email);
     $this->validatePassword($password, $confirm_password);
+    $this->validateProfileId($profile_id);
 
     $user = new User(
       name: $name,
       username: $username,
       email: $email,
       password: $password,
+      profile_id: $profile_id
     );
 
     return $this->userDAO->register($user);
@@ -141,5 +143,12 @@ class UserService
       '1', '0' => null,
       default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
     };
+  }
+
+  private function validateProfileId(?int $profile_id)
+  {
+    if (!filter_var($profile_id, FILTER_VALIDATE_INT)) {
+      throw new \InvalidArgumentException("Perfil de acesso inválido.");
+    }
   }
 }

@@ -1,10 +1,17 @@
 .c-form {
-  > * + * {
+  /* > * + * {
     margin-top: 1rem;
-  }
+  } */
+
+  display: grid;
+  gap: 1rem;
 
   &.c-form--dashboard {
     margin-top: 1rem;
+  }
+
+  &.c-form--grid-col-2 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .c-form__item {
