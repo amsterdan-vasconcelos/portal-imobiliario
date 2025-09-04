@@ -1,6 +1,4 @@
 <?php
-$owner = !empty($owner) ? $owner[0] : null;
-
 $classGenderIcon = $owner->gender === 'M'
   ? 'fa-solid fa-mars mars'
   : 'fa-solid fa-venus venus';

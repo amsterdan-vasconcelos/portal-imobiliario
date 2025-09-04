@@ -1,6 +1,4 @@
 <?php
-$owner = !empty($owner) ? $owner[0] : null;
-
 $existMessage = !empty($success) || !empty($error);
 if ($existMessage) {
   $class = !empty($success) ? 'success' : 'error';
