@@ -59,7 +59,7 @@ $userExist = isset($users) && count($users) > 0;
                     <input type="hidden" name="id" value="<?= $user->id ?>">
                     <input
                       type="hidden" name="active"
-                      value="<?= $user->active ? 'false' : 'true' ?>">
+                      value="<?= !$user->active ? 'true' : 'false' ?>">
                     <button>
                       <i class="<?= $classActiveIcon ?>"></i>
                     </button>

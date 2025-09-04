@@ -23,14 +23,10 @@ class OwnerService extends Services
 
   public function register(array $data)
   {
-    $name = $data['name'] ?? null;
-    $phone = $data['phone'] ?? null;
-    $gender = $data['gender'] ?? null;
-
     try {
-      $this->validateName($name);
-      $this->validatePhone($phone);
-      $this->validateGender($gender);
+      $name = $this->validateName($data['name'] ?? null);
+      $phone = $this->validatePhone($data['phone'] ?? null);
+      $gender = $this->validateGender($data['gender'] ?? null);
 
       $owner = new Owner($name, $phone, $gender);
 
@@ -44,16 +40,19 @@ class OwnerService extends Services
 
   public function updateById(array $data, int $id)
   {
-    $name = $data['name'] ?? null;
-    $phone = $data['phone'] ?? null;
-    $gender = $data['gender'] ?? null;
-    $active = $data['active'] ?? null;
-
     try {
-      if ($name) $this->validateName($name);
-      if ($phone) $this->validatePhone($phone);
-      if ($gender) $this->validateGender($gender);
-      if ($active) $this->validateActive($active);
+      $name = $data['name'] ?? null;
+      $name = $name ? $this->validateName($name) : $name;
+
+      $phone = $data['phone'] ?? null;
+      $phone = $phone ? $this->validatePhone($phone) : $name;
+
+      $gender = $data['gender'] ?? null;
+      $gender = $gender ? $this->validateGender($gender) : $name;
+
+      $active = $data['active'] ?? null;
+      $active = $active ? $this->validateActive($active) : $name;
+
 
       $owner = new Owner(
         name: $name,

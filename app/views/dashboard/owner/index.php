@@ -61,7 +61,7 @@ $ownerExist = isset($owners) && count($owners) > 0
                     <input type="hidden" name="id" value="<?= $owner->id ?>">
                     <input
                       type="hidden" name="active"
-                      value="<?= !$owner->active ? '1' : '0' ?>">
+                      value="<?= !$owner->active ? 'true' : 'false' ?>">
                     <button>
                       <i class="<?= $classActiveIcon ?>"></i>
                     </button>

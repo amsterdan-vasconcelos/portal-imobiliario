@@ -23,19 +23,15 @@ class UserService extends Services
 
   public function register(array $data)
   {
-    $name = $data['name'] ?? null;
-    $username = $data['username'] ?? null;
-    $email = $data['email'] ?? null;
-    $password = $data['password'] ?? null;
-    $confirm_password = $data['confirm_password'] ?? null;
-    $profile_id = $data['profile_id'] ?? null;
-
     try {
-      $this->validateName($name);
-      $this->validateUsername($username);
-      $this->validateEmail($email);
-      $this->validatePassword($password, $confirm_password);
-      $this->validateProfileId($profile_id);
+      $name = $this->validateName($data['name'] ?? null);
+      $username = $this->validateUsername($data['username'] ?? null);
+      $email = $this->validateEmail($data['email'] ?? null);
+      $password = $this->validatePassword(
+        $data['password'] ?? null,
+        $data['confirm_password'] ?? null
+      );
+      $profile_id = $this->validateProfileId($data['profile_id'] ?? null);
 
       $user = new User(
         name: $name,
@@ -54,21 +50,25 @@ class UserService extends Services
 
   public function updateById(array $data, int $id)
   {
-    $name = $data['name'] ?? null;
-    $username = $data['username'] ?? null;
-    $email = $data['email'] ?? null;
-    $profile_id = $data['profile_id'] ?? null;
-    $password = $data['password'] ?? null;
-    $confirm_password = $data['confirm_password'] ?? null;
-    $active = $data['active'] ?? null;
-
     try {
-      if ($name) $this->validateName($name);
-      if ($username) $this->validateUsername($username);
-      if ($email) $this->validateEmail($email);
-      if ($profile_id) $this->validateProfileId($profile_id);
-      if ($password) $this->validatePassword($password, $confirm_password);
-      if ($active) $this->validateActive($active);
+      $name = $data['name'] ?? null;
+      $name = $name ? $this->validateName($name) : $name;
+
+      $username = $data['username'] ?? null;
+      $username = $username ? $this->validateUsername($username) : $username;
+
+      $email = $data['email'] ?? null;
+      $email = $email ? $this->validateEmail($email) : $email;
+
+      $profile_id = $data['profile_id'] ?? null;
+      $profile_id = $profile_id ? $this->validateProfileId($profile_id) : $profile_id;
+
+      $password = $data['password'] ?? null;
+      $confirm_password = $data['confirm_password'] ?? null;
+      $password = $password ? $this->validatePassword($password, $confirm_password) : $password;
+
+      $active = $data['active'] ?? null;
+      $active = $active ? $this->validateActive($active) : $active;
 
       $user = new User(
         name: $name,
@@ -76,7 +76,7 @@ class UserService extends Services
         email: $email,
         profile_id: $profile_id,
         password: $password,
-        active: $active === 'true' ? true : ($active === 'false' ? false : null)
+        active: $active
       );
 
       $this->userDAO->updateById($user, $id);

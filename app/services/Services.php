@@ -24,6 +24,8 @@ class Services
         'O nome é obrigatório e deve conter pelo menos 3 caracteres.'
       );
     }
+
+    return trim($name);
   }
 
   protected function validatePhone(?string $phone)
@@ -31,22 +33,27 @@ class Services
     if (!$phone || !preg_match('/^\d{4,5}-\d{4}$/', $phone)) {
       throw new \InvalidArgumentException('O telefone é inválido. Ex: 99999-9999');
     }
+
+    return trim($phone);
   }
 
   protected function validateGender(?string $gender)
   {
-    $gender = strtoupper($gender ?? '');
+    $gender = mb_strtoupper(trim($gender) ?? '');
     match ($gender) {
       'M', 'F' => null,
       default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
     };
+
+    return $gender;
   }
 
   protected function validateActive(?string $active)
   {
     $active = mb_strtolower($active ?? '');
-    match ($active) {
-      'true', 'false' => null,
+    return match ($active) {
+      'true' => true,
+      'false' => false,
       default => throw new \InvalidArgumentException(
         'O valor de ativo deve ser uma string "true" ou "false"'
       )
@@ -69,6 +76,8 @@ class Services
         "O username deve conter apenas letras minúsculas e underscores (_)."
       );
     }
+
+    return $username;
   }
 
   protected function validateEmail(?string $email)
@@ -82,6 +91,8 @@ class Services
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       throw new \InvalidArgumentException("O e-mail fornecido é inválido.");
     }
+
+    return $email;
   }
 
   protected function validatePassword(?string $password, ?string $confirm_password)
@@ -100,6 +111,8 @@ class Services
         'As senhas devem coincidir.'
       );
     }
+
+    return $password;
   }
 
   protected function validateProfileId(?int $profile_id)
@@ -107,5 +120,7 @@ class Services
     if (!filter_var($profile_id, FILTER_VALIDATE_INT)) {
       throw new \InvalidArgumentException("Perfil de acesso inválido.");
     }
+
+    return (int) $profile_id;
   }
 }

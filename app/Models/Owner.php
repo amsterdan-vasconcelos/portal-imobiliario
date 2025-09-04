@@ -44,7 +44,9 @@ class Owner
       'name' => $this->name,
       'phone' => $this->phone,
       'gender' => $this->gender,
-      'active' => $this->active === true ? 1 : 0,
+      'active' => $this->active === true ? 1 : (
+        $this->active === false ? 0 : null
+      )
     ];
   }
 

@@ -10,7 +10,7 @@ class User
     private ?string $username = null,
     private ?string $email = null,
     private ?string $password = null,
-    private ?bool $active = true,
+    private ?bool $active = null,
     private ?string $profile_id = null,
     private ?string $created_at = null,
   ) {}
