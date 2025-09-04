@@ -5,7 +5,7 @@ namespace App\services;
 use App\DAO\OwnerDAO;
 use App\Models\Owner;
 
-class OwnerService
+class OwnerService extends Services
 {
   public function __construct(
     private $ownerDAO = new OwnerDAO()
@@ -36,7 +36,7 @@ class OwnerService
 
       $this->ownerDAO->register($owner);
 
-      return ['success' => 'Proprietário adicionado com sucesso!'];
+      return ['success' => $this->successMessages['owner']['register']];
     } catch (\InvalidArgumentException $e) {
       return ['error' => $e->getMessage()];
     }
@@ -64,7 +64,7 @@ class OwnerService
 
       $this->ownerDAO->updateById($owner, $id);
 
-      return ['success' => 'Proprietário atualizado com sucesso!'];
+      return ['success' => $this->successMessages['owner']['update']];
     } catch (\InvalidArgumentException $e) {
       return ['error' => $e->getMessage()];
     }
@@ -74,43 +74,9 @@ class OwnerService
   {
     try {
       $this->ownerDAO->deleteById($id);
-      return ['success' => 'Proprietário deletado com sucesso!'];
+      return ['success' => $this->successMessages['owner']['delete']];
     } catch (\InvalidArgumentException $e) {
       return ['error' => $e->getMessage()];
     }
-  }
-
-  private function validateName(?string $name)
-  {
-    if (!$name || mb_strlen(trim($name) < 3)) {
-      throw new \InvalidArgumentException(
-        'O nome é obrigatório e deve conter pelo menos 3 caracteres.'
-      );
-    }
-  }
-
-  private function validatePhone(?string $phone)
-  {
-    if (!$phone || !preg_match('/^\d{4,5}-\d{4}$/', $phone)) {
-      throw new \InvalidArgumentException('O telefone é inválido. Ex: 99999-9999');
-    }
-  }
-
-  private function validateGender(?string $gender)
-  {
-    $gender = strtoupper($gender ?? '');
-    match ($gender) {
-      'M', 'F' => null,
-      default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
-    };
-  }
-
-  private function validateActive(?string $active)
-  {
-    $active = mb_strtolower($active ?? '');
-    match ($active) {
-      '1', '0' => null,
-      default => throw new \InvalidArgumentException('O gênero deve ser M ou F.')
-    };
   }
 }
