@@ -30,21 +30,26 @@ class UserService
     $confirm_password = $data['confirm_password'] ?? null;
     $profile_id = $data['profile_id'] ?? null;
 
-    $this->validateName($name);
-    $this->validateUsername($username);
-    $this->validateEmail($email);
-    $this->validatePassword($password, $confirm_password);
-    $this->validateProfileId($profile_id);
+    try {
+      $this->validateName($name);
+      $this->validateUsername($username);
+      $this->validateEmail($email);
+      $this->validatePassword($password, $confirm_password);
+      $this->validateProfileId($profile_id);
 
-    $user = new User(
-      name: $name,
-      username: $username,
-      email: $email,
-      password: $password,
-      profile_id: $profile_id
-    );
+      $user = new User(
+        name: $name,
+        username: $username,
+        email: $email,
+        password: $password,
+        profile_id: $profile_id
+      );
 
-    return $this->userDAO->register($user);
+      $this->userDAO->register($user);
+      return ['success' => 'Usuário cadastrado com sucesso!'];
+    } catch (\InvalidArgumentException $e) {
+      return ['error' => $e->getMessage()];
+    }
   }
 
   public function updateById(array $data, int $id)
@@ -57,28 +62,39 @@ class UserService
     $confirm_password = $data['confirm_password'] ?? null;
     $active = $data['active'] ?? null;
 
-    if ($name) $this->validateName($name);
-    if ($username) $this->validateUsername($username);
-    if ($email) $this->validateEmail($email);
-    if ($profile_id) $this->validateProfileId($profile_id);
-    if ($password) $this->validatePassword($password, $confirm_password);
-    if ($active) $this->validateActive($active);
+    try {
+      if ($name) $this->validateName($name);
+      if ($username) $this->validateUsername($username);
+      if ($email) $this->validateEmail($email);
+      if ($profile_id) $this->validateProfileId($profile_id);
+      if ($password) $this->validatePassword($password, $confirm_password);
+      if ($active) $this->validateActive($active);
 
-    $user = new User(
-      name: $name,
-      username: $username,
-      email: $email,
-      profile_id: $profile_id,
-      password: $password,
-      active: $active === 'true' ? true : ($active === 'false' ? false : null)
-    );
+      $user = new User(
+        name: $name,
+        username: $username,
+        email: $email,
+        profile_id: $profile_id,
+        password: $password,
+        active: $active === 'true' ? true : ($active === 'false' ? false : null)
+      );
 
-    return $this->userDAO->updateById($user, $id);
+      $this->userDAO->updateById($user, $id);
+
+      return ['success' => 'Usuário atualizado com sucesso!'];
+    } catch (\InvalidArgumentException $e) {
+      return ['error' => $e->getMessage()];
+    }
   }
 
   public function deleteById($id)
   {
-    return $this->userDAO->deleteById($id);
+    try {
+      $this->userDAO->deleteById($id);
+      return ['success' => 'Usuário deletado com sucesso!'];
+    } catch (\InvalidArgumentException $e) {
+      return ['error' => $e->getMessage()];
+    }
   }
 
   private function validateName(?string $name)

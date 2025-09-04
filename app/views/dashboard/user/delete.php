@@ -1,10 +1,5 @@
 <?php
-$owner = !empty($owner) ? $owner[0] : null;
-
-$classGenderIcon = $owner->gender === 'M'
-  ? 'fa-solid fa-mars mars'
-  : 'fa-solid fa-venus venus';
-$classActiveIcon = $owner->active
+$classActiveIcon = $user->active
   ? 'fa-solid fa-circle active'
   : 'fa-solid fa-square inactive';
 
@@ -24,7 +19,7 @@ if ($existMessage) {
 <head>
   <?php require_once __DIR__ . '/../../shared/head.php' ?>
   <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/dashboard/index.css">
-  <title>Dashboard - Deletar Proprietário</title>
+  <title>Dashboard - Deletar Usuário</title>
 </head>
 
 <body>
@@ -37,35 +32,37 @@ if ($existMessage) {
     <div class="l-dashboard__content">
 
       <div class="c-dashboard-header">
-        <h1 class="c-dashboard-header__title">Proprietário</h1>
+        <h1 class="c-dashboard-header__title">Usuário</h1>
       </div>
 
       <table class="c-table">
-        <caption class="c-table__caption">Tem certeza que deseja deletar este proprietário?</caption>
+        <caption class="c-table__caption">Tem certeza que deseja deletar este usuário?</caption>
         <thead class="c-table__header">
           <tr class="c-table__row">
             <th class="c-table__head" scope="col">Nome</th>
-            <th class="c-table__head" scope="col">Contato</th>
-            <th class="c-table__head" scope="col">Sexo</th>
+            <th class="c-table__head" scope="col">Username</th>
+            <th class="c-table__head" scope="col">Email</th>
+            <th class="c-table__head" scope="col">Perfil de acesso</th>
             <th class="c-table__head" scope="col">Ativo</th>
+            <th class="c-table__head" scope="col">Criado em</th>
           </tr>
         </thead>
         <tbody class="c-table__body">
           <tr class="c-table__row">
-            <th class="c-table__head" scope="row"><?= $owner->name ?></td>
-            <td class="c-table__cell"><?= $owner->phone ?></td>
-            <td class="c-table__cell">
-              <i class="<?= $classGenderIcon ?>"></i>
-            </td>
+            <th class="c-table__head" scope="row"><?= $user->name ?></td>
+            <td class="c-table__cell"><?= $user->username ?></td>
+            <td class="c-table__cell"><?= $user->email ?></td>
+            <td class="c-table__cell"><?= $user->access_profile ?></td>
             <td class="c-table__cell">
               <i class="<?= $classActiveIcon ?>"></i>
             </td>
+            <td class="c-table__cell"><?= $user->created_at ?></td>
           </tr>
         </tbody>
       </table>
       <div>
-        <form style="display: flex; gap: .5rem; padding-top: 1rem;" action="<?= BASE_URL . '/dashboard/owner/delete/' . $owner->id ?>" method="post">
-          <a class="c-button c-button--dashboard c-button--full" href="<?= BASE_URL ?>/dashboard/owner">Não</a>
+        <form style="display: flex; gap: .5rem; padding-top: 1rem;" action="<?= BASE_URL . '/dashboard/user/delete/' . $user->id ?>" method="post">
+          <a class="c-button c-button--dashboard c-button--full" href="<?= BASE_URL ?>/dashboard/user">Não</a>
           <input type="hidden" name="delete">
           <button class="c-button c-button--dashboard c-button--full">Sim</button>
         </form>
@@ -78,7 +75,7 @@ if ($existMessage) {
         <h2
           class="c-modal__title"><?= $title ?></h2>
         <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/owner">Fechar</a>
+        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/user">Fechar</a>
       </div>
     </div>
   <?php endif; ?>

@@ -2,13 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Controllers\DashboardModules\DashboardUserController;
 use App\Core\Controller;
 use App\services\AccessProfileService;
 use App\services\OwnerService;
 use App\services\UserService;
-use DateTime;
-use Exception;
-use InvalidArgumentException;
 
 class DashboardController extends Controller
 {
@@ -23,11 +21,12 @@ class DashboardController extends Controller
     $this->view('dashboard/index');
   }
 
-  public function owner($param = 'index', $id = null)
+  public function owner($param = 'index', ?int $id = null)
   {
     $result = [];
 
     if ($_POST && $param === 'register') $result = $this->register('owner', $_POST);
+
     if ($param === 'update') {
       $result = ['owner' => $this->getById('owner', $id)];
 
@@ -35,6 +34,7 @@ class DashboardController extends Controller
         $result = [...$result, ...$this->update('owner', $_POST, $id)];
       }
     }
+
     if ($param === 'delete') {
       $result = ['owner' => $this->getById('owner', $id)];
 
@@ -57,60 +57,12 @@ class DashboardController extends Controller
 
   public function user($param = 'index', $id = null)
   {
-    $result = [];
+    $controller = new DashboardUserController(
+      $this->userService,
+      $this->accessProfileService
+    );
 
-    if ($param === 'register') {
-
-      if ($_POST) {
-        $result = $this->register('user', $_POST);
-      }
-
-      $result = [
-        ...$result,
-        'access_profiles' => $this->getAll('accessProfile')
-      ];
-    }
-
-    if ($param === 'update') {
-      if ($_POST) {
-        $result = $this->update('user', $_POST, $id);
-      }
-
-      $user = $this->getById('user', $id);
-      $access_profiles = $this->getAll('accessProfile');
-
-      $result = [
-        ...$result,
-        'user' => $user,
-        'access_profiles' => $access_profiles
-      ];
-    }
-
-    if ($param === 'delete') {
-      $result = ['owner' => $this->getById('owner', $id)];
-
-      if ($_POST) {
-        $result = [...$result, ...$this->delete('owner', $id)];
-      }
-    }
-
-    if ($param === 'index') {
-
-      if ($_POST) {
-
-        $result = $this->update('user', $_POST, $_POST['id']);
-      }
-
-      $users = $this->getAll('user');
-
-      foreach ($users as $user) {
-        $access_profile = $this->getById('accessProfile', $user->profile_id);
-        $user->access_profile = $access_profile[0]->description;
-        $user->created_at = (new DateTime($user->created_at))->format('d/m/y');
-      }
-
-      $result = [...$result, 'users' => $users];
-    }
+    $result = $controller->handle($param, $id);
 
     $this->view("dashboard/user/$param", $result);
   }
@@ -121,7 +73,7 @@ class DashboardController extends Controller
 
     try {
       return $this->$service->getAll();
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       echo 'Error' . $e->getMessage();
     }
   }
@@ -132,7 +84,7 @@ class DashboardController extends Controller
 
     try {
       return $this->$service->getById($id);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       echo 'Error' . $e->getMessage();
     }
   }
@@ -144,10 +96,10 @@ class DashboardController extends Controller
     try {
       $this->$service->register($data);
 
-      sleep(1);
+
       return ['success' => 'Proprietário cadastrado com sucesso!'];
-    } catch (InvalidArgumentException $e) {
-      sleep(1);
+    } catch (\InvalidArgumentException $e) {
+
       return ['error' => $e->getMessage()];
     }
   }
@@ -161,7 +113,7 @@ class DashboardController extends Controller
 
       sleep(1);
       return ['success' => 'Proprietário atualizado com sucesso!'];
-    } catch (InvalidArgumentException $e) {
+    } catch (\InvalidArgumentException $e) {
       sleep(1);
       return ['error' => $e->getMessage()];
     }
@@ -176,7 +128,7 @@ class DashboardController extends Controller
 
       sleep(1);
       return ['success' => 'Proprietário deletado com sucesso!'];
-    } catch (InvalidArgumentException $e) {
+    } catch (\InvalidArgumentException $e) {
       sleep(1);
       return ['error' => $e->getMessage()];
     }

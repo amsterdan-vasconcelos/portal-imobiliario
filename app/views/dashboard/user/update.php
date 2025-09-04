@@ -1,6 +1,4 @@
 <?php
-$user = !empty($user) ? $user[0] : null;
-
 $existMessage = !empty($success) || !empty($error);
 if ($existMessage) {
   $class = !empty($success) ? 'success' : 'error';
