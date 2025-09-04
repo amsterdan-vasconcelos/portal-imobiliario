@@ -27,14 +27,21 @@ class OwnerService
     $phone = $data['phone'] ?? null;
     $gender = $data['gender'] ?? null;
 
-    $this->validateName($name);
-    $this->validatePhone($phone);
-    $this->validateGender($gender);
+    try {
+      $this->validateName($name);
+      $this->validatePhone($phone);
+      $this->validateGender($gender);
 
-    $owner = new Owner($name, $phone, $gender);
+      $owner = new Owner($name, $phone, $gender);
 
-    return $this->ownerDAO->register($owner);
+      $this->ownerDAO->register($owner);
+
+      return ['success' => 'Proprietário adicionado com sucesso!'];
+    } catch (\InvalidArgumentException $e) {
+      return ['error' => $e->getMessage()];
+    }
   }
+
   public function updateById(array $data, int $id)
   {
     $name = $data['name'] ?? null;
@@ -42,24 +49,35 @@ class OwnerService
     $gender = $data['gender'] ?? null;
     $active = $data['active'] ?? null;
 
-    if ($name) $this->validateName($name);
-    if ($phone) $this->validatePhone($phone);
-    if ($gender) $this->validateGender($gender);
-    if ($active) $this->validateActive($active);
+    try {
+      if ($name) $this->validateName($name);
+      if ($phone) $this->validatePhone($phone);
+      if ($gender) $this->validateGender($gender);
+      if ($active) $this->validateActive($active);
 
-    $owner = new Owner(
-      name: $name,
-      phone: $phone,
-      gender: $gender,
-      active: $active
-    );
+      $owner = new Owner(
+        name: $name,
+        phone: $phone,
+        gender: $gender,
+        active: $active
+      );
 
-    return $this->ownerDAO->updateById($owner, $id);
+      $this->ownerDAO->updateById($owner, $id);
+
+      return ['success' => 'Proprietário atualizado com sucesso!'];
+    } catch (\InvalidArgumentException $e) {
+      return ['error' => $e->getMessage()];
+    }
   }
 
   public function deleteById($id)
   {
-    return $this->ownerDAO->deleteById($id);
+    try {
+      $this->ownerDAO->deleteById($id);
+      return ['success' => 'Proprietário deletado com sucesso!'];
+    } catch (\InvalidArgumentException $e) {
+      return ['error' => $e->getMessage()];
+    }
   }
 
   private function validateName(?string $name)
