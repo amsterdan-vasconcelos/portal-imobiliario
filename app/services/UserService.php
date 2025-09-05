@@ -37,7 +37,7 @@ class UserService extends Services
         name: $name,
         username: $username,
         email: $email,
-        password: $password,
+        password: password_hash($password, PASSWORD_BCRYPT),
         profile_id: $profile_id
       );
 
