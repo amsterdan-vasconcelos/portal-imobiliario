@@ -2,6 +2,9 @@
 
 namespace App\services;
 
+use Respect\Validation\Validator as v;
+use Respect\Validation\Exceptions\NestedValidationException;
+
 use App\DAO\OwnerDAO;
 use App\Models\Owner;
 
@@ -24,49 +27,99 @@ class OwnerService extends Services
   public function register(array $data)
   {
     try {
-      $name = $this->validateName($data['name'] ?? null);
-      $phone = $this->validatePhone($data['phone'] ?? null);
-      $gender = $this->validateGender($data['gender'] ?? null);
-
-      $owner = new Owner($name, $phone, $gender);
-
+      $this->registerValidate($data);
+      $owner = new Owner(...$data);
       $this->ownerDAO->register($owner);
 
       return ['success' => $this->successMessages['owner']['register']];
-    } catch (\InvalidArgumentException $e) {
-      return ['error' => $e->getMessage()];
+    } catch (NestedValidationException $e) {
+      return ['error' => $e->getMessages()];
     }
+  }
+
+  private function registerValidate($data)
+  {
+    $schema =
+      v::key(
+        'name',
+        v::stringType()
+          ->length(3, 50)
+          ->setName('Nome')
+          ->setTemplate(
+            "{{name}} deve ter entre {{minValue}} e {{maxValue}} caracteres."
+          )
+      )->setTemplate("{{name}} é obrigatório")
+      ->key(
+        'phone',
+        v::stringType()
+          ->length(10, null)
+          ->setName('Telefone')
+          ->setTemplate(
+            "{{name}} deve ter no mínimo {{minValue}} caracteres."
+          )
+      )->setTemplate("{{name}} é obrigatório")
+      ->key(
+        'gender',
+        v::stringType()
+          ->length(1, 1)
+          ->setName('Gênero')
+      )->setTemplate("{{name}} é obrigatório");
+
+    $schema->assert($data);
   }
 
   public function updateById(array $data, int $id)
   {
     try {
-      $name = $data['name'] ?? null;
-      $name = $name ? $this->validateName($name) : $name;
-
-      $phone = $data['phone'] ?? null;
-      $phone = $phone ? $this->validatePhone($phone) : $name;
-
-      $gender = $data['gender'] ?? null;
-      $gender = $gender ? $this->validateGender($gender) : $name;
-
-      $active = $data['active'] ?? null;
-      $active = $active ? $this->validateActive($active) : $name;
-
-
-      $owner = new Owner(
-        name: $name,
-        phone: $phone,
-        gender: $gender,
-        active: $active
-      );
-
+      $data = array_filter($data, fn($value) => $value !== '');
+      $this->updateValidate($data);
+      $owner = new Owner(...$data);
       $this->ownerDAO->updateById($owner, $id);
 
       return ['success' => $this->successMessages['owner']['update']];
-    } catch (\InvalidArgumentException $e) {
-      return ['error' => $e->getMessage()];
+    } catch (NestedValidationException $e) {
+      return ['error' => $e->getMessages()];
     }
+  }
+
+  private function updateValidate($data)
+  {
+    $schema =
+      v::key(
+        'name',
+        v::stringType()
+          ->length(3, 50)
+          ->setName('Nome')
+          ->setTemplate(
+            "{{name}} deve ter entre {{minValue}} e {{maxValue}} caracteres."
+          ),
+        false
+      )
+      ->key(
+        'phone',
+        v::stringType()
+          ->length(10, null)
+          ->setName('Telefone')
+          ->setTemplate(
+            "{{name}} deve ter no mínimo {{minValue}} caracteres."
+          ),
+        false
+      )
+      ->key(
+        'gender',
+        v::stringType()
+          ->length(1, 1)
+          ->setName('Gênero')
+      )
+      ->key(
+        'active',
+        v::boolType()
+          ->setName('Ativo')
+          ->setTemplate('{{name}} deve ser verdadeiro ou falso'),
+        false
+      );
+
+    $schema->assert($data);
   }
 
   public function deleteById($id)

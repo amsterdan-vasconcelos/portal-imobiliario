@@ -31,7 +31,7 @@ class UserService extends Services
         $data['password'] ?? null,
         $data['confirm_password'] ?? null
       );
-      $profile_id = $this->validateProfileId($data['profile_id'] ?? null);
+      $profile_id = $this->validateInt($data['profile_id'] ?? null, 'Perfil de acesso');
 
       $user = new User(
         name: $name,
@@ -61,7 +61,7 @@ class UserService extends Services
       $email = $email ? $this->validateEmail($email) : $email;
 
       $profile_id = $data['profile_id'] ?? null;
-      $profile_id = $profile_id ? $this->validateProfileId($profile_id) : $profile_id;
+      $profile_id = $profile_id ? $this->validateInt($profile_id, 'Perfil de acesso') : $profile_id;
 
       $password = $data['password'] ?? null;
       $confirm_password = $data['confirm_password'] ?? null;

@@ -28,14 +28,45 @@ class Services
     return trim($name);
   }
 
-  protected function validatePhone(?string $phone)
-  {
-    if (!$phone || !preg_match('/^\d{4,5}-\d{4}$/', $phone)) {
-      throw new \InvalidArgumentException('O telefone é inválido. Ex: 99999-9999');
+  protected function validatePhone(
+    ?string $value,
+    string $fieldName = 'Telefone',
+    bool $required = true
+  ): ?string {
+    $errors = [];
+
+    if ($required && $value === null) {
+      $errors[] = "$fieldName é obrigatório.";
     }
 
-    return trim($phone);
+    if (!$required && $value === null) {
+      return $value;
+    }
+
+    $value = trim((string) $value);
+
+    $numericPhone = preg_replace('/\D/', '', $value);
+
+    if (!in_array(strlen($numericPhone), [10, 11])) {
+      $errors[] = "$fieldName deve conter 10 ou 11 dígitos (com DDD).";
+    }
+
+    if (strlen($numericPhone) === 11 && $numericPhone[2] !== '9') {
+      $errors[] = "$fieldName parece ser celular, mas não começa com 9.";
+    }
+
+    $ddd = substr($numericPhone, 0, 2);
+    if (!preg_match('/^[1-9]{2}$/', $ddd)) {
+      $errors[] = "$fieldName possui DDD inválido.";
+    }
+
+    if (!empty($errors)) {
+      throw new \InvalidArgumentException(implode(' ', $errors));
+    }
+
+    return $numericPhone;
   }
+
 
   protected function validateGender(?string $gender)
   {
@@ -115,12 +146,97 @@ class Services
     return $password;
   }
 
-  protected function validateProfileId(?int $profile_id)
+  protected function validateInt(?string $intNumber, string $idType)
   {
-    if (!filter_var($profile_id, FILTER_VALIDATE_INT)) {
-      throw new \InvalidArgumentException("Perfil de acesso inválido.");
+    if (!filter_var($intNumber, FILTER_VALIDATE_INT)) {
+      throw new \InvalidArgumentException("$idType inválido.");
     }
 
-    return (int) $profile_id;
+    return (int) $intNumber;
+  }
+
+  protected function validateFloat(?string $value, string $fieldName)
+  {
+    $normalized = str_replace(',', '.', $value);
+
+    if (!filter_var($normalized, FILTER_VALIDATE_FLOAT)) {
+      throw new \InvalidArgumentException("$fieldName inválido.");
+    }
+
+    return (float) $normalized;
+  }
+
+  protected function validateString(
+    ?string $value,
+    string $fieldName,
+    bool $required = true,
+    int $minLength = 0,
+    int $maxLength = 255,
+    ?string $pattern = null
+  ): ?string {
+    $errors = [];
+
+    if ($required && $value === null) {
+      $errors[] = "$fieldName é obrigatório.";
+    }
+
+    if (!$required && $value === null) {
+      return $value;
+    }
+
+    $value = trim((string) $value);
+    $length = mb_strlen($value);
+
+    if ($length < $minLength) {
+      $errors[] = "$fieldName deve ter pelo menos $minLength caracteres.";
+    }
+
+    if ($length > $maxLength) {
+      $errors[] = "$fieldName deve ter no máximo $maxLength caracteres.";
+    }
+
+    if ($pattern && !preg_match($pattern, $value)) {
+      $errors[] = "$fieldName está em um formato inválido.";
+    }
+
+    if (!empty($errors)) {
+      throw new \InvalidArgumentException(implode(' ', $errors));
+    }
+
+    return $value;
+  }
+
+  protected function validateZipCode(
+    ?string $value,
+    string $fieldName = 'CEP',
+    bool $required = true
+  ): ?string {
+    $errors = [];
+
+    if ($required && $value === null) {
+      $errors[] = "$fieldName é obrigatório.";
+    }
+
+    if (!$required && $value === null) {
+      return $value;
+    }
+
+    $value = trim((string) $value);
+    $numericZip = preg_replace('/\D/', '', $value);
+
+    if (strlen($numericZip) !== 8) {
+      $errors[] = "$fieldName deve conter exatamente 8 dígitos numéricos.";
+    }
+
+    $pattern = '/^\d{5}-?\d{3}$/';
+    if (!preg_match($pattern, $value)) {
+      $errors[] = "$fieldName deve estar no formato 99999-999 ou 99999999.";
+    }
+
+    if (!empty($errors)) {
+      throw new \InvalidArgumentException(implode(' ', $errors));
+    }
+
+    return substr($numericZip, 0, 5) . '-' . substr($numericZip, 5, 3);
   }
 }
