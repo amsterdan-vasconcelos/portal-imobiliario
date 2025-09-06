@@ -3,10 +3,14 @@
 namespace App\Controllers;
 
 use App\Controllers\DashboardModules\DashboardOwnerController;
+use App\Controllers\DashboardModules\DashboardPropertyController;
 use App\Controllers\DashboardModules\DashboardUserController;
 use App\Core\Controller;
 use App\services\AccessProfileService;
 use App\services\OwnerService;
+use App\services\PropertyService;
+use App\services\PropertyTypeService;
+use App\services\PurposeService;
 use App\services\UserService;
 
 class DashboardController extends Controller
@@ -15,6 +19,9 @@ class DashboardController extends Controller
     private $ownerService = new OwnerService(),
     private $userService = new UserService(),
     private $accessProfileService = new AccessProfileService(),
+    private $propertyService = new PropertyService(),
+    private $propertyTypeService = new PropertyTypeService(),
+    private $purposeService = new PurposeService(),
   ) {}
 
   public function index()
@@ -43,5 +50,19 @@ class DashboardController extends Controller
     $result = $controller->handle($param, $id);
 
     $this->view("dashboard/user/$param", $result);
+  }
+
+  public function property($param = 'index', ?int $id = null)
+  {
+    $controller = new DashboardPropertyController(
+      $this->propertyService,
+      $this->propertyTypeService,
+      $this->purposeService,
+      $this->ownerService,
+    );
+
+    $result = $controller->handle($param, $id);
+
+    $this->view("dashboard/property/$param", $result);
   }
 }
