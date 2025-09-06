@@ -13,5 +13,7 @@
       "email": "amsterdan.email@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "respect/validation": "^2.4"
+  }
 }
