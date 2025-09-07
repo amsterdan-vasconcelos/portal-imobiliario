@@ -29,6 +29,7 @@ button {
 select,
 input {
   font-size: inherit;
+  width: 100%;
 }
 
 ul {

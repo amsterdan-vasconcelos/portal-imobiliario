@@ -1,8 +1,4 @@
 .c-form {
-  /* > * + * {
-    margin-top: 1rem;
-  } */
-
   display: grid;
   gap: 1rem;
 
@@ -17,5 +13,21 @@
   .c-form__item {
     display: grid;
     gap: 0.25rem;
+
+    &.c-form__item--span-2 {
+      grid-column: span 2;
+    }
+
+    &.c-form__item--gap-small {
+      gap: 1rem;
+    }
+
+    &.c-form__item--grid-col-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.c-form__item--grid-col-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 }
