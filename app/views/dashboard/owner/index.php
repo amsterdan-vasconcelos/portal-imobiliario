@@ -7,7 +7,6 @@ $ownerExist = isset($owners) && count($owners) > 0
 
 <head>
   <?php require_once __DIR__ . '/../../shared/head.php' ?>
-  <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/dashboard/index.css">
   <title>Dashboard - Proprietários</title>
 </head>
 

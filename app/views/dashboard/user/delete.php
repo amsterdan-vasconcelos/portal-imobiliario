@@ -18,7 +18,6 @@ if ($existMessage) {
 
 <head>
   <?php require_once __DIR__ . '/../../shared/head.php' ?>
-  <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/dashboard/index.css">
   <title>Dashboard - Deletar Usuário</title>
 </head>
 

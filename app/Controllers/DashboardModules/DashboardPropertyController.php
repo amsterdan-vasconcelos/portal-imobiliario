@@ -84,9 +84,16 @@ class DashboardPropertyController
     return $result;
   }
 
-  private function handleDetails(): array
+  private function handleDetails(int $id): array
   {
-    return [];
+    $property = $this->propertyService->getById($id)[0];
+
+    return [
+      'property' => $property,
+      'property_type' => $this->propertyTypeService->getById($property->property_type_id)[0],
+      'purpose' => $this->purposeService->getById($property->purpose_id)[0],
+      'owner' => $this->ownerService->getById($property->owner_id)[0],
+    ];
   }
 
   private function handleIndex(): array
