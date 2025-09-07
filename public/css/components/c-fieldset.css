@@ -4,20 +4,19 @@
   border: 1px solid oklch(from var(--color-border) l c h / 0.3);
   border-radius: var(--border-radious);
 
-  display: flex;
-  align-items: center;
-  justify-content: start;
+  display: grid;
   gap: 1rem;
+
+  &.c-fieldset--col-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.c-fieldset--col-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   .c-fieldset__legend {
     color: var(--color-background);
     font-size: 0.8em;
-  }
-
-  .c-fieldset__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
   }
 }

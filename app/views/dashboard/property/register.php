@@ -1,4 +1,55 @@
 <?php
+$adress = [
+  [
+    'labelText' => 'CEP',
+    'id' => 'zip_code',
+    'name' => 'zip_code',
+  ],
+  [
+    'labelText' => 'Rua',
+    'id' => 'street',
+    'name' => 'street',
+  ],
+  [
+    'labelText' => 'Bairro',
+    'id' => 'neighborhood',
+    'name' => 'neighborhood',
+  ],
+  [
+    'labelText' => 'Cidade',
+    'id' => 'city',
+    'name' => 'city',
+  ],
+];
+
+$details = [
+  [
+    'labelText' => 'Quartos',
+    'id' => 'bedrooms',
+    'name' => 'bedrooms',
+  ],
+  [
+    'labelText' => 'Banheiros',
+    'id' => 'bathrooms',
+    'name' => 'bathrooms',
+  ],
+  [
+    'labelText' => 'Vagas na garagem',
+    'id' => 'garage',
+    'name' => 'garage',
+  ],
+  [
+    'labelText' => 'Área total',
+    'id' => 'total_area',
+    'name' => 'total_area',
+  ],
+  [
+    'labelText' => 'Área construída',
+    'id' => 'build_area',
+    'name' => 'build_area',
+  ],
+];
+
 $existMessage = !empty($success) || !empty($error);
 if ($existMessage) {
   $class = !empty($success) ? 'success' : 'error';
@@ -32,84 +83,46 @@ if ($existMessage) {
     </div>
 
     <form
-      class="c-form c-form--dashboard c-form--grid-col-2"
+      class="l-form l-form--col-2"
       action="<?= BASE_URL ?>/dashboard/property/register" method="post">
-      <fieldset
-        class="c-form__item--gap-small c-fieldset c-form__item c-form__item--span-2 c-form__item--grid-col-2">
+      <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
         <legend class="c-fieldset__legend">Endereço</legend>
-
-        <div class="c-form__item">
-          <label class="c-label" for="zip_code">CEP</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="text" id="zip_code" name="zip_code">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="street">Rua</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="text" id="street" name="street">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="neighborhood">Bairro</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="text" id="neighborhood" name="neighborhood">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="city">Cidade</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="text" id="city" name="city">
-        </div>
+        <?php foreach ($adress as $item): ?>
+          <div class="c-form-item">
+            <label class="c-label" for="<?= $item['id'] ?>"><?= $item['labelText'] ?></label>
+            <input
+              class="c-input c-input--dashboard"
+              type="text" autocomplete="" id="<?= $item['id'] ?>" name="<?= $item['name'] ?>"
+              autofocus>
+          </div>
+        <?php endforeach ?>
       </fieldset>
 
-      <fieldset class="c-form__item--gap-small c-fieldset c-form__item c-form__item--grid-col-3">
-        <legend class=" c-fieldset__legend">Detalhes do imóvel</legend>
-
-        <div class="c-form__item">
-          <label class="c-label" for="bedrooms">Quartos</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="number" id="bedrooms" name="bedrooms">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="bathrooms">Banheiros</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="number" id="bathrooms" name="bathrooms">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="garage">Vagas na garagem</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="number" id="garage" name="garage">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="total_area">Área total</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="number" id="total_area" name="total_area">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="build_area">Área construída</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="number" id="build_area" name="build_area">
-        </div>
+      <fieldset class="c-fieldset c-fieldset--col-3">
+        <legend class="c-fieldset__legend">Detalhes do imóvel</legend>
+        <?php foreach ($details as $item): ?>
+          <div class="c-form-item">
+            <label class="c-label" for="<?= $item['id'] ?>"><?= $item['labelText'] ?></label>
+            <input
+              class="c-input c-input--dashboard"
+              type="number" id="<?= $item['id'] ?>" name="<?= $item['name'] ?>"
+              autofocus>
+          </div>
+        <?php endforeach ?>
       </fieldset>
 
-      <fieldset class="c-form__item--gap-small c-fieldset c-form__item c-form__item--grid-col-2">
+      <fieldset class="c-fieldset c-fieldset--col-2">
         <legend class="c-fieldset__legend">Informações comerciais</legend>
 
-        <div class="c-form__item">
+        <div class="c-form-item">
           <label class="c-label" for="price">Preço</label>
           <input
             class="c-input c-input--dashboard"
             type="number" id="price" name="price"
             autofocus>
         </div>
-        <div class="c-form__item">
+
+        <div class="c-form-item">
           <label class="c-label" for="property_type">Tipo de imóvel</label>
           <select class="c-select c-select--dashboard" name="property_type_id" id="property_type">
             <option
@@ -122,7 +135,8 @@ if ($existMessage) {
             <?php endforeach ?>
           </select>
         </div>
-        <div class="c-form__item">
+
+        <div class="c-form-item">
           <label class="c-label" for="purpose">Finalidade</label>
           <select class="c-select c-select--dashboard" name="purpose_id" id="purpose">
             <option
@@ -135,7 +149,8 @@ if ($existMessage) {
             <?php endforeach ?>
           </select>
         </div>
-        <div class="c-form__item">
+
+        <div class="c-form-item">
           <label class="c-label" for="owner">Proprietário</label>
           <select class="c-select c-select--dashboard" name="owner_id" id="owner">
             <option
@@ -148,11 +163,10 @@ if ($existMessage) {
             <?php endforeach ?>
           </select>
         </div>
+
       </fieldset>
 
-      <button
-        class="c-button c-button--dashboard"
-        type="submit">
+      <button class="c-button c-button--dashboard" type="submit">
         Adicionar
       </button>
     </form>

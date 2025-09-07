@@ -1,0 +1,13 @@
+.l-form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1.5rem;
+
+  &.l-form--col-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .l-form__item-span-2 {
+    grid-column: span 2;
+  }
+}
