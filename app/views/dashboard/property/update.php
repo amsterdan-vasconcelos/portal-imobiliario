@@ -1,11 +1,72 @@
 <?php
+$adress = [
+  [
+    'labelText' => 'CEP',
+    'id' => 'zip_code',
+    'name' => 'zip_code',
+    'value' => $property->zip_code,
+  ],
+  [
+    'labelText' => 'Rua',
+    'id' => 'street',
+    'name' => 'street',
+    'value' => $property->street,
+  ],
+  [
+    'labelText' => 'Bairro',
+    'id' => 'neighborhood',
+    'name' => 'neighborhood',
+    'value' => $property->neighborhood,
+  ],
+  [
+    'labelText' => 'Cidade',
+    'id' => 'city',
+    'name' => 'city',
+    'value' => $property->city,
+  ],
+];
+
+$details = [
+  [
+    'labelText' => 'Quartos',
+    'id' => 'bedrooms',
+    'name' => 'bedrooms',
+    'value' => $property->bedrooms,
+  ],
+  [
+    'labelText' => 'Banheiros',
+    'id' => 'bathrooms',
+    'name' => 'bathrooms',
+    'value' => $property->bathrooms,
+  ],
+  [
+    'labelText' => 'Vagas na garagem',
+    'id' => 'garage',
+    'name' => 'garage',
+    'value' => $property->garage,
+  ],
+  [
+    'labelText' => 'Área total',
+    'id' => 'total_area',
+    'name' => 'total_area',
+    'value' => $property->total_area,
+  ],
+  [
+    'labelText' => 'Área construída',
+    'id' => 'build_area',
+    'name' => 'build_area',
+    'value' => $property->build_area,
+  ],
+];
+
 $existMessage = !empty($success) || !empty($error);
 if ($existMessage) {
   $class = !empty($success) ? 'success' : 'error';
   $title = !empty($success)
     ? '<i class="fa-solid fa-check"></i> Sucesso:'
     : '<i class="fa-solid fa-circle-exclamation"></i> Erro:';
-  $description = $success ?? $error;
+
+  $messages = $error ?? [$success];
 }
 ?>
 
@@ -32,129 +93,102 @@ if ($existMessage) {
       </div>
 
       <form
-        class="c-form c-form--dashboard c-form--grid-col-2"
-        action="<?= BASE_URL ?>/dashboard/property/register" method="post">
-        <div class="c-form__item">
-          <label class="c-label" for="price">Preço</label>
-          <input
-            value="<?= $property->price ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="price" name="price"
-            autofocus>
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="street">Rua</label>
-          <input
-            value="<?= $property->street ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="street" name="street">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="neighborhood">Bairro</label>
-          <input
-            value="<?= $property->neighborhood ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="neighborhood" name="neighborhood">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="city">Cidade</label>
-          <input
-            value="<?= $property->city ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="city" name="city">
-        </div>
+        class="l-form l-form--col-2"
+        action="<?= BASE_URL ?>/dashboard/property/update/<?= $property->id ?>" method="post">
 
-        <div class="c-form__item">
-          <label class="c-label" for="zip_code">CEP</label>
-          <input
-            value="<?= $property->zip_code ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="zip_code" name="zip_code">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="bedrooms">Quartos</label>
-          <input
-            value="<?= $property->bedrooms ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="bedrooms" name="bedrooms">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="bathrooms">Banheiros</label>
-          <input
-            value="<?= $property->bathrooms ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="bathrooms" name="bathrooms">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="garage">Quantos carros cabem na garagem</label>
-          <input
-            value="<?= $property->garage ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="garage" name="garage">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="total_area">Área total</label>
-          <input
-            value="<?= $property->total_area ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="total_area" name="total_area">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="build_area">Área construída</label>
-          <input
-            value="<?= $property->build_area ?>"
-            class="c-input c-input--dashboard"
-            type="text" id="build_area" name="build_area">
-        </div>
+        <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
+          <legend class="c-fieldset__legend">Endereço</legend>
+          <?php foreach ($adress as $item): ?>
+            <div class="c-form-item">
+              <label class="c-label" for="<?= $item['id'] ?>"><?= $item['labelText'] ?></label>
+              <input
+                value="<?= $item['value'] ?>"
+                class="c-input c-input--dashboard"
+                type="text" autocomplete="" id="<?= $item['id'] ?>" name="<?= $item['name'] ?>"
+                autofocus>
+            </div>
+          <?php endforeach ?>
+        </fieldset>
 
-        <div class="c-form__item">
-          <label class="c-label" for="property_type">Tipo de imóvel</label>
-          <select class="c-select c-select--dashboard" name="property_type_id" id="property_type">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              selected disabled value="">-- selecione --</option>
-            <?php foreach ($property_types as $property_type): ?>
+        <fieldset class="c-fieldset c-fieldset--col-3">
+          <legend class="c-fieldset__legend">Detalhes do imóvel</legend>
+          <?php foreach ($details as $item): ?>
+            <div class="c-form-item">
+              <label class="c-label" for="<?= $item['id'] ?>"><?= $item['labelText'] ?></label>
+              <input
+                value="<?= $item['value'] ?>"
+                class="c-input c-input--dashboard"
+                type="number"
+                autocomplete="" id="<?= $item['id'] ?>" name="<?= $item['name'] ?>"
+                autofocus>
+            </div>
+          <?php endforeach ?>
+        </fieldset>
+
+        <fieldset class="c-fieldset c-fieldset--col-2">
+          <legend class="c-fieldset__legend">Informações comerciais</legend>
+
+          <div class="c-form-item">
+            <label class="c-label" for="price">Preço</label>
+            <input
+              class="c-input c-input--dashboard"
+              value="<?= $property->price ?>"
+              type="number" id="price" name="price"
+              autofocus step="0.01">
+          </div>
+
+          <div class="c-form-item">
+            <label class="c-label" for="property_type">Tipo de imóvel</label>
+            <select class="c-select c-select--dashboard" name="property_type_id" id="property_type">
               <option
-                class="c-select__option"
-                <?= $property_type->id === $property->property_type_id ? 'selected' : '' ?>
-                value="<?= $property_type->id ?>">
-                <?= ucfirst($property_type->description) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="purpose">Finalidade</label>
-          <select class="c-select c-select--dashboard" name="purpose_id" id="purpose">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              selected disabled value="">-- selecione --</option>
-            <?php foreach ($purposes as $purpose): ?>
+                class="c-select__option c-select__option--placeholder"
+                selected disabled value="">-- selecione --</option>
+              <?php foreach ($property_types as $property_type): ?>
+                <option
+                  class="c-select__option"
+                  <?= $property_type->id === $property->property_type_id ? 'selected' : '' ?>
+                  value="<?= $property_type->id ?>">
+                  <?= ucfirst($property_type->description) ?>
+                </option>
+              <?php endforeach ?>
+            </select>
+          </div>
+
+          <div class="c-form-item">
+            <label class="c-label" for="purpose">Finalidade</label>
+            <select class="c-select c-select--dashboard" name="purpose_id" id="purpose">
               <option
-                class="c-select__option"
-                <?= $purpose->id === $property->purpose_id ? 'selected' : '' ?>
-                value="<?= $purpose->id ?>">
-                <?= ucfirst($purpose->description) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="owner">Proprietário</label>
-          <select class="c-select c-select--dashboard" name="owner_id" id="owner">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              selected disabled value="">-- selecione --</option>
-            <?php foreach ($owners as $owner): ?>
+                class="c-select__option c-select__option--placeholder"
+                selected disabled value="">-- selecione --</option>
+              <?php foreach ($purposes as $purpose): ?>
+                <option
+                  class="c-select__option"
+                  <?= $purpose->id === $property->purpose_id ? 'selected' : '' ?>
+                  value="<?= $purpose->id ?>">
+                  <?= ucfirst($purpose->description) ?>
+                </option>
+              <?php endforeach ?>
+            </select>
+          </div>
+
+          <div class="c-form-item">
+            <label class="c-label" for="owner">Proprietário</label>
+            <select class="c-select c-select--dashboard" name="owner_id" id="owner">
               <option
-                class="c-select__option"
-                <?= $owner->id === $property->owner_id ? 'selected' : '' ?>
-                value="<?= $owner->id ?>">
-                <?= ucfirst($owner->description) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
+                class="c-select__option c-select__option--placeholder"
+                selected disabled value="">-- selecione --</option>
+              <?php foreach ($owners as $owner): ?>
+                <option
+                  class="c-select__option"
+                  <?= $owner->id === $property->owner_id ? 'selected' : '' ?>
+                  value="<?= $owner->id ?>">
+                  <?= ucfirst($owner->name) ?>
+                </option>
+              <?php endforeach ?>
+            </select>
+          </div>
+
+        </fieldset>
 
         <button
           class="c-button c-button--dashboard"
@@ -170,8 +204,12 @@ if ($existMessage) {
       <div class="c-modal <?= $class ?>">
         <h2
           class="c-modal__title"><?= $title ?></h2>
-        <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/property/register">Fechar</a>
+
+        <?php foreach ($messages as $message): ?>
+          <p class="c-modal__description"><?= $message ?></p>
+        <?php endforeach ?>
+
+        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/property/update/<?= $property->id ?>">Fechar</a>
       </div>
     </div>
   <?php endif; ?>

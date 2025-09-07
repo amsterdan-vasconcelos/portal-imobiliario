@@ -70,7 +70,7 @@ class DashboardPropertyController
 
     $property->property_type = $property_type->description;
     $property->purpose = $purpose->description;
-    $property->owner = $owner->description;
+    $property->owner = $owner->name;
 
     $result = ['property' => $property];
 
@@ -107,7 +107,7 @@ class DashboardPropertyController
 
       $property->property_type = $property_type->description;
       $property->purpose = $purpose->description;
-      $property->owner = $owner->description;
+      $property->owner = $owner->name;
     }
 
     return [...$result, 'properties' => $properties];

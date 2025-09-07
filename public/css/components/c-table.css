@@ -1,3 +1,8 @@
+.c-table__container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .c-table {
   color: var(--color-background);
   width: 100%;
@@ -19,6 +24,11 @@
   > * + * {
     margin-left: 1rem;
   }
+
+  max-width: 8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .c-table__cell {

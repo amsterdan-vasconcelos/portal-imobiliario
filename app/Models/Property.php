@@ -17,7 +17,7 @@ class Property
     private ?int $garage = null,
     private ?float $total_area = null,
     private ?float $build_area = null,
-    private ?bool $status = null,
+    private ?int $active = null,
     private ?int $owner_id = null,
     private ?int $purpose_id = null,
     private ?int $property_type_id = null,
@@ -86,7 +86,7 @@ class Property
 
   public function getStatus()
   {
-    return $this->status;
+    return $this->active;
   }
 
   public function getOwnerId()
@@ -124,7 +124,7 @@ class Property
       'garage' => $this->garage,
       'total_area' => $this->total_area,
       'build_area' => $this->build_area,
-      'status' => $this->status,
+      'active' => $this->active,
       'owner_id' => $this->owner_id,
       'purpose_id' => $this->purpose_id,
       'property_type_id' => $this->property_type_id,

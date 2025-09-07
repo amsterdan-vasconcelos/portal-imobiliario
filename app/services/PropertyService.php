@@ -34,7 +34,7 @@ class PropertyService extends Services
 
       return ['success' => $this->successMessages['user']['register']];
     } catch (NestedValidationException $e) {
-      return ['error' => $e->getMessage()];
+      return ['error' => $e->getMessages()];
     }
   }
 
@@ -42,17 +42,17 @@ class PropertyService extends Services
   {
     $schema =
       v::key('street', v::stringType()
-        ->length(10)
+        ->length(5)->setTemplate("{{name}} deve ter pelo menos 5 caracteres.")
         ->setName('Rua'))
       ->setTemplate("{{name}} é obrigatório")
 
       ->key('neighborhood', v::stringType()
-        ->length(5)
+        ->length(5)->setTemplate("{{name}} deve ter pelo menos 5 caracteres.")
         ->setName('Bairro'))
       ->setTemplate("{{name}} é obrigatório")
 
       ->key('city', v::stringType()
-        ->length(5)
+        ->length(5)->setTemplate("{{name}} deve ter pelo menos 5 caracteres.")
         ->setName('Cidade'))
       ->setTemplate("{{name}} é obrigatório")
 
@@ -60,48 +60,48 @@ class PropertyService extends Services
         ->setName('CEP'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('price', v::floatType()
-        ->min(0)
+      ->key('price', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Preço'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('total_area', v::floatType()
-        ->min(0)
+      ->key('total_area', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Área total'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('build_area', v::floatType()
-        ->min(0)
+      ->key('build_area', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Área construída'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('bedrooms', v::intType()
-        ->min(0)
+      ->key('bedrooms', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Quartos'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('bathrooms', v::intType()
-        ->min(0)
+      ->key('bathrooms', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Banheiros'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('garage', v::intType()
-        ->min(0)
+      ->key('garage', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Garagens'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('owner_id', v::intType()
-        ->min(1)
+      ->key('owner_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido.")
         ->setName('Proprietário'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('purpose_id', v::intType()
-        ->min(1)
+      ->key('purpose_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido.")
         ->setName('Propósito'))
       ->setTemplate("{{name}} é obrigatório")
 
-      ->key('property_type_id', v::intType()
-        ->min(1)
+      ->key('property_type_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido.")
         ->setName('Tipo de propriedade'))
       ->setTemplate("{{name}} é obrigatório");
 
@@ -117,8 +117,8 @@ class PropertyService extends Services
       $this->propertyDAO->updateById($property, $id);
 
       return ['success' => $this->successMessages['user']['update']];
-    } catch (\InvalidArgumentException $e) {
-      return ['error' => $e->getMessage()];
+    } catch (NestedValidationException $e) {
+      return ['error' => $e->getMessages()];
     }
   }
 
@@ -126,55 +126,60 @@ class PropertyService extends Services
   {
     $schema =
       v::key('street', v::stringType()
-        ->length(10)
+        ->length(5)->setTemplate("{{name}} deve ter pelo menos 5 caracteres.")
         ->setName('Rua'), false)
 
       ->key('neighborhood', v::stringType()
-        ->length(5)
+        ->length(5)->setTemplate("{{name}} deve ter pelo menos 5 caracteres.")
         ->setName('Bairro'), false)
 
       ->key('city', v::stringType()
-        ->length(5)
+        ->length(5)->setTemplate("{{name}} deve ter pelo menos 5 caracteres.")
         ->setName('Cidade'), false)
 
       ->key('zip_code', v::postalCode('BR')
         ->setName('CEP'), false)
 
-      ->key('price', v::floatType()
-        ->min(0)
+      ->key('price', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Preço'), false)
 
-      ->key('total_area', v::floatType()
-        ->min(0)
+      ->key('total_area', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Área total'), false)
 
-      ->key('build_area', v::floatType()
-        ->min(0)
+      ->key('build_area', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Área construída'), false)
 
-      ->key('bedrooms', v::intType()
-        ->min(0)
+      ->key('bedrooms', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Quartos'), false)
 
-      ->key('bathrooms', v::intType()
-        ->min(0)
+      ->key('bathrooms', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Banheiros'), false)
 
-      ->key('garage', v::intType()
-        ->min(0)
+      ->key('garage', v::numericVal()
+        ->min(0)->setTemplate("Valor mínimo de {{name}} é 0.")
         ->setName('Garagens'), false)
 
-      ->key('owner_id', v::intType()
-        ->min(1)
+      ->key('owner_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido para {{name}}.")
         ->setName('Proprietário'), false)
 
-      ->key('purpose_id', v::intType()
-        ->min(1)
+      ->key('purpose_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido para {{name}}.")
         ->setName('Propósito'), false)
 
-      ->key('property_type_id', v::intType()
-        ->min(1)
-        ->setName('Tipo de propriedade'), false);
+      ->key('property_type_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido para {{name}}.")
+        ->setName('Tipo de propriedade'), false)
+
+      ->key('active', v::numericVal()
+        ->in([0, 1])
+        ->setTemplate("Valor iválido para {{name}}.")
+        ->setName('Ativo'), false);
 
     $schema->assert($data);
   }
