@@ -58,8 +58,9 @@ $details = [
     'value' => $property->build_area,
   ],
 ];
-?>
 
+require_once __DIR__ . '/../partials/readonly.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -86,67 +87,52 @@ $details = [
         <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
           <legend class="c-fieldset__legend">Endereço</legend>
           <?php foreach ($adress as $item): ?>
-            <div class="c-form-item">
-              <label class="c-label"><?= $item['labelText'] ?></label>
-              <div
-                class="c-input c-input--dashboard"
-                role="textbox"
-                aria-readonly="true"><?= htmlspecialchars($item['value']) ?></div>
-            </div>
+
+            <?= Readonly(
+              label: $item['labelText'],
+              value: htmlspecialchars($item['value'])
+            ) ?>
+
           <?php endforeach ?>
         </fieldset>
 
         <fieldset class="c-fieldset c-fieldset--col-3">
           <legend class="c-fieldset__legend">Detalhes do imóvel</legend>
           <?php foreach ($details as $item): ?>
-            <div class="c-form-item">
-              <label class="c-label"><?= $item['labelText'] ?></label>
-              <div
-                class="c-input c-input--dashboard"
-                role="textbox"
-                aria-readonly="true"><?= htmlspecialchars($item['value']) ?></div>
-            </div>
+
+            <?= Readonly(
+              label: $item['labelText'],
+              value: htmlspecialchars($item['value'])
+            ) ?>
+
           <?php endforeach ?>
         </fieldset>
 
         <fieldset class="c-fieldset c-fieldset--col-2">
           <legend class="c-fieldset__legend">Informações comerciais</legend>
 
-          <div class="c-form-item">
-            <label class="c-label">Preço</label>
-            <div
-              class="c-input c-input--dashboard"
-              role="textbox"
-              aria-readonly="true">R$ <?= number_format($property->price, 2, ',', '.') ?></div>
-          </div>
+          <?= Readonly(
+            label: 'Preço',
+            value: 'R$ ' . number_format($property->price, 2, ',', '.')
+          ) ?>
 
-          <div class="c-form-item">
-            <label class="c-label">Tipo de imóvel</label>
-            <div
-              class="c-select c-select--dashboard"
-              role="textbox"
-              aria-readonly="true"><?= ucfirst($property_type->description) ?></div>
-          </div>
+          <?= Readonly(
+            label: 'Tipo de imóvel',
+            value: ucfirst($property_type->description)
+          ) ?>
 
-          <div class="c-form-item">
-            <label class="c-label">Finalidade</label>
-            <div
-              class="c-select c-select--dashboard"
-              role="textbox"
-              aria-readonly="true"><?= ucfirst($purpose->description) ?></div>
-          </div>
+          <?= Readonly(
+            label: 'Finalidade',
+            value: ucfirst($purpose->description)
+          ) ?>
 
-          <div class="c-form-item">
-            <label class="c-label">Proprietário</label>
-            <div
-              class="c-select c-select--dashboard"
-              role="textbox"
-              aria-readonly="true"><?= ucfirst($owner->name) ?></div>
-          </div>
+          <?= Readonly(
+            label: 'Proprietário',
+            value: ucfirst($owner->name)
+          ) ?>
 
         </fieldset>
       </section>
-
     </div>
   </div>
 </body>

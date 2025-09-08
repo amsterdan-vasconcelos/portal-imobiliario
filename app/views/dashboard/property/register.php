@@ -50,14 +50,9 @@ $details = [
   ],
 ];
 
-$existMessage = !empty($success) || !empty($error);
-if ($existMessage) {
-  $class = !empty($success) ? 'success' : 'error';
-  $title = !empty($success)
-    ? '<i class="fa-solid fa-check"></i> Sucesso:'
-    : '<i class="fa-solid fa-circle-exclamation"></i> Erro:';
-  $description = $success ?? $error;
-}
+require_once __DIR__ . '/../partials/alert.php';
+require_once __DIR__ . '/../partials/select.php';
+require_once __DIR__ . '/../partials/input.php';
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +64,11 @@ if ($existMessage) {
 </head>
 
 <body>
+  <?= Alert(
+    success: $success ?? null,
+    error: $error ?? null
+  ) ?>
+
   <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
@@ -87,81 +87,71 @@ if ($existMessage) {
       <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
         <legend class="c-fieldset__legend">Endereço</legend>
         <?php foreach ($adress as $item): ?>
-          <div class="c-form-item">
-            <label class="c-label" for="<?= $item['id'] ?>"><?= $item['labelText'] ?></label>
-            <input
-              class="c-input c-input--dashboard"
-              type="text" autocomplete="" id="<?= $item['id'] ?>" name="<?= $item['name'] ?>"
-              autofocus>
-          </div>
+          <?= Input(
+            type: 'text',
+            name: $item['name'],
+            id: $item['id'],
+            label: $item['labelText'],
+            required: true,
+            attrs: ['autofocus' => 'true']
+          ) ?>
         <?php endforeach ?>
       </fieldset>
 
       <fieldset class="c-fieldset c-fieldset--col-3">
         <legend class="c-fieldset__legend">Detalhes do imóvel</legend>
         <?php foreach ($details as $item): ?>
-          <div class="c-form-item">
-            <label class="c-label" for="<?= $item['id'] ?>"><?= $item['labelText'] ?></label>
-            <input
-              class="c-input c-input--dashboard"
-              type="number" id="<?= $item['id'] ?>" name="<?= $item['name'] ?>"
-              autofocus>
-          </div>
+          <?= Input(
+            type: 'number',
+            name: $item['name'],
+            id: $item['id'],
+            label: $item['labelText'],
+            required: true,
+          ) ?>
         <?php endforeach ?>
       </fieldset>
 
       <fieldset class="c-fieldset c-fieldset--col-2">
         <legend class="c-fieldset__legend">Informações comerciais</legend>
 
-        <div class="c-form-item">
-          <label class="c-label" for="price">Preço</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="number" id="price" name="price"
-            autofocus>
-        </div>
+        <?= Input(
+          type: 'number',
+          name: 'price',
+          id: 'price',
+          label: 'Preço',
+          required: true,
+          attrs: ['step' => '0.01']
+        ) ?>
 
-        <div class="c-form-item">
-          <label class="c-label" for="property_type">Tipo de imóvel</label>
-          <select class="c-select c-select--dashboard" name="property_type_id" id="property_type">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              selected disabled value="">-- selecione --</option>
-            <?php foreach ($property_types as $property_type): ?>
-              <option class="c-select__option" value="<?= $property_type->id ?>">
-                <?= ucfirst($property_type->description) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
+        <?= Select(
+          options: $property_types,
+          name: 'property_type_id',
+          id: 'property_type',
+          label: 'Tipo de imóvel',
+          optionLabel: fn($p) => ucfirst($p->description),
+          optionValue: fn($p) => $p->id,
+          required: true
+        ) ?>
 
-        <div class="c-form-item">
-          <label class="c-label" for="purpose">Finalidade</label>
-          <select class="c-select c-select--dashboard" name="purpose_id" id="purpose">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              selected disabled value="">-- selecione --</option>
-            <?php foreach ($purposes as $purpose): ?>
-              <option class="c-select__option" value="<?= $purpose->id ?>">
-                <?= ucfirst($purpose->description) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
+        <?= Select(
+          options: $purposes,
+          name: 'purpose_id',
+          id: 'purpose',
+          label: 'Finalidade',
+          optionLabel: fn($p) => ucfirst($p->description),
+          optionValue: fn($p) => $p->id,
+          required: true
+        ) ?>
 
-        <div class="c-form-item">
-          <label class="c-label" for="owner">Proprietário</label>
-          <select class="c-select c-select--dashboard" name="owner_id" id="owner">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              selected disabled value="">-- selecione --</option>
-            <?php foreach ($owners as $owner): ?>
-              <option class="c-select__option" value="<?= $owner->id ?>">
-                <?= ucfirst($owner->name) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
+        <?= Select(
+          options: $owners,
+          name: 'owner_id',
+          id: 'owner',
+          label: 'Proprietário',
+          optionLabel: fn($p) => ucfirst($p->name),
+          optionValue: fn($p) => $p->id,
+          required: true
+        ) ?>
 
       </fieldset>
 
@@ -169,19 +159,7 @@ if ($existMessage) {
         Adicionar
       </button>
     </form>
-
   </div>
-  </div>
-  <?php if ($existMessage): ?>
-    <div class="c-modal__overlay">
-      <div class="c-modal <?= $class ?>">
-        <h2
-          class="c-modal__title"><?= $title ?></h2>
-        <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/property/register">Fechar</a>
-      </div>
-    </div>
-  <?php endif; ?>
 </body>
 
 </html>

@@ -3,14 +3,7 @@ $classActiveIcon = $property->active
   ? 'fa-solid fa-circle active'
   : 'fa-solid fa-square inactive';
 
-$existMessage = !empty($success) || !empty($error);
-if ($existMessage) {
-  $class = !empty($success) ? 'success' : 'error';
-  $title = !empty($success)
-    ? '<i class="fa-solid fa-check"></i> Sucesso:'
-    : '<i class="fa-solid fa-circle-exclamation"></i> Erro:';
-  $description = $success ?? $error;
-}
+require_once __DIR__ . '/../partials/alert.php'
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +16,12 @@ if ($existMessage) {
 </head>
 
 <body>
+  <?= Alert(
+    success: $success ?? null,
+    error: $error ?? null,
+    redirect: 'property'
+  ) ?>
+
   <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
@@ -73,16 +72,6 @@ if ($existMessage) {
       </div>
     </div>
   </div>
-  <?php if ($existMessage): ?>
-    <div class="c-modal__overlay">
-      <div class="c-modal <?= $class ?>">
-        <h2
-          class="c-modal__title"><?= $title ?></h2>
-        <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/property">Fechar</a>
-      </div>
-    </div>
-  <?php endif; ?>
 </body>
 
 </html>

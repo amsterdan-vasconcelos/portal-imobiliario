@@ -23,7 +23,7 @@ class DashboardPropertyController
       'update'   => $this->handleUpdate($id),
       'delete'   => $this->handleDelete($id),
       'details'   => $this->handleDetails($id),
-      default    => $this->handleIndex(),
+      default    => $this->handleIndex($id),
     };
   }
 
@@ -96,12 +96,12 @@ class DashboardPropertyController
     ];
   }
 
-  private function handleIndex(): array
+  private function handleIndex(?int $id): array
   {
     $result = [];
 
     if ($_POST) {
-      $result = $this->propertyService->updateById($_POST, $_POST['id']);
+      $result = $this->propertyService->updateById($_POST, $id);
     }
 
     $properties = $this->propertyService->getAll();
