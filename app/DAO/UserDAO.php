@@ -9,17 +9,33 @@ class UserDAO extends Connection
 {
   public function getAll()
   {
+    $sql = '
+    select u.*, 
+    ap.description as access_profile 
+    from user as u 
+    join access_profile as ap 
+    on u.access_profile_id = ap.id
+    ';
+
     return $this->select(
-      table: 'user',
+      sql: $sql,
       className: \App\Models\User::class
     );
   }
 
   public function getById(int $id)
   {
+    $sql = '
+    select u.*, 
+    ap.description as access_profile 
+    from user as u 
+    join access_profile as ap 
+    on u.access_profile_id = ap.id
+    where u.id = :id
+    ';
+
     return $this->select(
-      table: 'user',
-      condition: 'where id = :id',
+      sql: $sql,
       values: ['id' => $id],
       className: \App\Models\User::class
     );

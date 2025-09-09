@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+use DateTime;
+
 class User
 {
+  private ?int $id;
+  private ?string $created_at;
+  private ?string $access_profile;
+
   public function __construct(
-    private ?int $id = null,
     private ?string $name = null,
     private ?string $username = null,
     private ?string $email = null,
+    private ?int $active = null,
     private ?string $password = null,
-    private ?bool $active = null,
-    private ?string $profile_id = null,
-    private ?string $created_at = null,
+    private ?string $access_profile_id = null,
   ) {}
 
   public function getId()
@@ -45,29 +49,34 @@ class User
     return $this->active;
   }
 
-  public function getProfileId()
+  public function getAccessProfileId()
   {
-    return $this->profile_id;
+    return $this->access_profile_id;
   }
 
-  public function getCreatedAt()
+  public function getCreatedAt(?string $format = null)
   {
+    if ($format && is_string($format)) {
+      return (new DateTime($this->created_at))->format($format);
+    }
+
     return $this->created_at;
+  }
+
+  public function getAccessProfile()
+  {
+    return $this->access_profile;
   }
 
   public function toArray()
   {
     return [
-      'id' => $this->id,
       'name' => $this->name,
       'username' => $this->username,
       'email' => $this->email,
       'password' => $this->password,
-      'active' => $this->active === true ? 1 : (
-        $this->active === false ? 0 : null
-      ),
-      'profile_id' => $this->profile_id,
-      'created_at' => $this->created_at,
+      'access_profile_id' => $this->access_profile_id,
+      'active' => $this->active
     ];
   }
 

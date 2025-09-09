@@ -1,16 +1,9 @@
 <?php
-$classActiveIcon = $user->active
+$classActiveIcon = $user->getActive()
   ? 'fa-solid fa-circle active'
   : 'fa-solid fa-square inactive';
 
-$existMessage = !empty($success) || !empty($error);
-if ($existMessage) {
-  $class = !empty($success) ? 'success' : 'error';
-  $title = !empty($success)
-    ? '<i class="fa-solid fa-check"></i> Sucesso:'
-    : '<i class="fa-solid fa-circle-exclamation"></i> Erro:';
-  $description = $success ?? $error;
-}
+require_once __DIR__ . '/../partials/alert.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +15,11 @@ if ($existMessage) {
 </head>
 
 <body>
+  <?= Alert(
+    success: $success ?? null,
+    error: $error ?? null,
+    redirect: 'user'
+  ) ?>
   <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
@@ -35,7 +33,9 @@ if ($existMessage) {
       </div>
 
       <table class="c-table">
-        <caption class="c-table__caption">Tem certeza que deseja deletar este usuário?</caption>
+        <caption class="c-table__caption">
+          Tem certeza que deseja deletar este usuário?
+        </caption>
         <thead class="c-table__header">
           <tr class="c-table__row">
             <th class="c-table__head" scope="col">Nome</th>
@@ -48,36 +48,31 @@ if ($existMessage) {
         </thead>
         <tbody class="c-table__body">
           <tr class="c-table__row">
-            <th class="c-table__head" scope="row"><?= $user->name ?></td>
-            <td class="c-table__cell"><?= $user->username ?></td>
-            <td class="c-table__cell"><?= $user->email ?></td>
-            <td class="c-table__cell"><?= $user->access_profile ?></td>
+            <th class="c-table__head" scope="row"><?= ucfirst($user->getName()) ?></td>
+            <td class="c-table__cell"><?= $user->getUsername() ?></td>
+            <td class="c-table__cell"><?= $user->getEmail() ?></td>
+            <td class="c-table__cell"><?= ucfirst($user->getAccessProfile()) ?></td>
             <td class="c-table__cell">
               <i class="<?= $classActiveIcon ?>"></i>
             </td>
-            <td class="c-table__cell"><?= $user->created_at ?></td>
+            <td class="c-table__cell"><?= $user->getCreatedAt('d/m/y') ?></td>
           </tr>
         </tbody>
       </table>
       <div>
-        <form style="display: flex; gap: .5rem; padding-top: 1rem;" action="<?= BASE_URL . '/dashboard/user/delete/' . $user->id ?>" method="post">
-          <a class="c-button c-button--dashboard c-button--full" href="<?= BASE_URL ?>/dashboard/user">Não</a>
+        <form
+          style="display: flex; gap: .5rem; padding-top: 1rem;"
+          action="<?= BASE_URL . '/dashboard/user/delete/' . $user->getId() ?>"
+          method="post">
+          <a
+            class="c-button c-button--dashboard c-button--full"
+            href="<?= BASE_URL ?>/dashboard/user">Não</a>
           <input type="hidden" name="delete">
           <button class="c-button c-button--dashboard c-button--full">Sim</button>
         </form>
       </div>
     </div>
   </div>
-  <?php if ($existMessage): ?>
-    <div class="c-modal__overlay">
-      <div class="c-modal <?= $class ?>">
-        <h2
-          class="c-modal__title"><?= $title ?></h2>
-        <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL ?>/dashboard/user">Fechar</a>
-      </div>
-    </div>
-  <?php endif; ?>
 </body>
 
 </html>

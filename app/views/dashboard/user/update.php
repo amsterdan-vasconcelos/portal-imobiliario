@@ -1,12 +1,7 @@
 <?php
-$existMessage = !empty($success) || !empty($error);
-if ($existMessage) {
-  $class = !empty($success) ? 'success' : 'error';
-  $title = !empty($success)
-    ? '<i class="fa-solid fa-check"></i> Sucesso:'
-    : '<i class="fa-solid fa-circle-exclamation"></i> Erro:';
-  $description = $success ?? $error;
-}
+require_once __DIR__ . '/../partials/alert.php';
+require_once __DIR__ . '/../partials/input.php';
+require_once __DIR__ . '/../partials/select.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +13,10 @@ if ($existMessage) {
 </head>
 
 <body>
+  <?= Alert(
+    success: $success ?? null,
+    error: $error ?? null,
+  ) ?>
   <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
@@ -32,47 +31,44 @@ if ($existMessage) {
 
       <form
         class="c-form c-form--dashboard"
-        action="<?= BASE_URL ?>/dashboard/user/update/<?= $user->id ?>" method="post">
-        <div class="c-form__item">
-          <label class="c-label" for="name">Nome</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="text" id="name" name="name"
-            value="<?= $user->name ?>"
-            autofocus>
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="username">Username</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="text" id="username" name="username"
-            value="<?= $user->username ?>">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="email">Email</label>
-          <input
-            class="c-input c-input--dashboard"
-            type="email" id="email" name="email"
-            value="<?= $user->email ?>">
-        </div>
-        <div class="c-form__item">
-          <label class="c-label" for="access_profile">Perfil de acesso</label>
-          <select class="c-select c-select--dashboard" name="profile_id" id="access_profile">
-            <option
-              class="c-select__option c-select__option--placeholder"
-              disabled value="">
-              -- selecione --
-            </option>
-            <?php foreach ($access_profiles as $access_profile): ?>
-              <option
-                class="c-select__option"
-                <?= $user->profile_id === $access_profile->id ? 'selected' : '' ?>
-                value="<?= $access_profile->id ?>">
-                <?= ucfirst($access_profile->description) ?>
-              </option>
-            <?php endforeach ?>
-          </select>
-        </div>
+        action="<?= BASE_URL ?>/dashboard/user/update/<?= $user->getId() ?>"
+        method="post">
+
+        <?= Input(
+          type: 'text',
+          name: 'name',
+          label: 'Nome',
+          value: ucfirst($user->getName()),
+          required: true,
+          attrs: ['autofocus' => 'true']
+        ) ?>
+
+        <?= Input(
+          type: 'text',
+          name: 'username',
+          label: 'Username',
+          value: $user->getUsername(),
+          required: true
+        ) ?>
+
+        <?= Input(
+          type: 'email',
+          name: 'email',
+          label: 'Email',
+          value: $user->getEmail(),
+          required: true
+        ) ?>
+
+        <?= Select(
+          options: $access_profiles,
+          name: 'access_profile_id',
+          id: 'access_profile',
+          label: 'Perfil de acesso',
+          value: $user->getAccessProfileId(),
+          optionLabel: fn($ap) => ucfirst($ap->getDescription()),
+          optionValue: fn($ap) => $ap->getId(),
+          required: true
+        ) ?>
 
         <button
           class="c-button c-button--dashboard c-button--1/2"
@@ -83,16 +79,6 @@ if ($existMessage) {
 
     </div>
   </div>
-  <?php if ($existMessage): ?>
-    <div class="c-modal__overlay">
-      <div class="c-modal <?= $class ?>">
-        <h2
-          class="c-modal__title"><?= $title ?></h2>
-        <p class="c-modal__description"><?= $description ?></p>
-        <a class="c-modal__button" href="<?= BASE_URL . '/dashboard/user/update/' . $user->id ?>">Fechar</a>
-      </div>
-    </div>
-  <?php endif; ?>
 </body>
 
 </html>

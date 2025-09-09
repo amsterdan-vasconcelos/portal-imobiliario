@@ -1,5 +1,10 @@
 <?php
+
+use App\Models\User;
+
 $userExist = isset($users) && count($users) > 0;
+require_once __DIR__ . '/../partials/activeFormIcon.php';
+require_once __DIR__ . '/../partials/alert.php'
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +16,7 @@ $userExist = isset($users) && count($users) > 0;
 </head>
 
 <body>
+  <?php Alert(error: $error ?? null) ?>
   <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
@@ -43,31 +49,27 @@ $userExist = isset($users) && count($users) > 0;
         <tbody class="c-table__body">
           <?php
           if ($userExist):
+            /** @var User */
             foreach ($users as $user):
-              $classActiveIcon = $user->active
+              $classActiveIcon = $user->getActive()
                 ? 'fa-solid fa-circle active'
                 : 'fa-solid fa-square inactive';
           ?>
               <tr class="c-table__row">
-                <th class="c-table__head" scope="row"><?= $user->name ?></td>
-                <td class="c-table__cell"><?= $user->username ?></td>
-                <td class="c-table__cell"><?= $user->email ?></td>
-                <td class="c-table__cell"><?= $user->access_profile ?></td>
+                <th class="c-table__head" scope="row"><?= ucfirst($user->getName()) ?></td>
+                <td class="c-table__cell"><?= $user->getUsername() ?></td>
+                <td class="c-table__cell"><?= $user->getEmail() ?></td>
+                <td class="c-table__cell"><?= ucfirst($user->getAccessProfile()) ?></td>
                 <td class="c-table__cell">
-                  <form action="<?= BASE_URL ?>/dashboard/user" method="post">
-                    <input type="hidden" name="id" value="<?= $user->id ?>">
-                    <input
-                      type="hidden" name="active"
-                      value="<?= !$user->active ? 'true' : 'false' ?>">
-                    <button>
-                      <i class="<?= $classActiveIcon ?>"></i>
-                    </button>
-                  </form>
+                  <?= ActiveFormIcon(
+                    action: "user/index/{$user->getId()}",
+                    active: $user->getActive()
+                  ) ?>
                 </td>
-                <td class="c-table__cell"><?= $user->created_at ?></td>
+                <td class="c-table__cell"><?= $user->getCreatedAt('d/m/y') ?></td>
                 <td class="c-table__cell">
-                  <a href="<?= BASE_URL . "/dashboard/user/update/$user->id" ?>"><i class="fa-solid fa-pen pen"></i></a>
-                  <a href="<?= BASE_URL . "/dashboard/user/delete/$user->id" ?>"><i class="fa-solid fa-trash trash"></i></a>
+                  <a href="<?= BASE_URL . "/dashboard/user/update/{$user->getId()}" ?>"><i class="fa-solid fa-pen pen"></i></a>
+                  <a href="<?= BASE_URL . "/dashboard/user/delete/{$user->getId()}" ?>"><i class="fa-solid fa-trash trash"></i></a>
                 </td>
               </tr>
           <?php

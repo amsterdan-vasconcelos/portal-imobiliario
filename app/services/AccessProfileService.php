@@ -19,6 +19,6 @@ class AccessProfileService
   /** @return AccessProfile */
   public function getById(int $id)
   {
-    return $this->access_profile->getById($id);
+    return $this->access_profile->getById($id)[0];
   }
 }

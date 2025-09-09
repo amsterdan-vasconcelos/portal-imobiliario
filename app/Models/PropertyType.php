@@ -4,8 +4,9 @@ namespace App\Models;
 
 class PropertyType
 {
+  private ?int $id;
+
   public function __construct(
-    private ?int $id = null,
     private ?string $description = null
   ) {}
 

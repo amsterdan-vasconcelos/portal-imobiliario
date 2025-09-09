@@ -2,6 +2,9 @@
 
 namespace App\services;
 
+use Respect\Validation\Validator as v;
+use Respect\Validation\Exceptions\NestedValidationException;
+
 use App\DAO\UserDAO;
 use App\Models\User;
 
@@ -26,67 +29,104 @@ class UserService extends Services
   public function register(array $data)
   {
     try {
-      $name = $this->validateName($data['name'] ?? null);
-      $username = $this->validateUsername($data['username'] ?? null);
-      $email = $this->validateEmail($data['email'] ?? null);
-      $password = $this->validatePassword(
-        $data['password'] ?? null,
-        $data['confirm_password'] ?? null
-      );
-      $profile_id = $this->validateInt($data['profile_id'] ?? null, 'Perfil de acesso');
-
-      $user = new User(
-        name: $name,
-        username: $username,
-        email: $email,
-        password: password_hash($password, PASSWORD_BCRYPT),
-        profile_id: $profile_id
-      );
-
+      $data = array_filter($data, fn($value) => $value !== '');
+      $this->registerValidate($data);
+      unset($data['confirm_password']);
+      $user = new User(...$data);
       $this->userDAO->register($user);
+
       return ['success' => $this->successMessages['user']['register']];
-    } catch (\InvalidArgumentException $e) {
-      return ['error' => $e->getMessage()];
+    } catch (NestedValidationException $e) {
+      return ['error' => $e->getMessages()];
     }
+  }
+
+  private function registerValidate(array $data)
+  {
+    $schema =
+      v::key('name', v::stringType()
+        ->length(3)->setTemplate("{{name}} deve ter pelo menos 3 caracteres.")
+        ->setName('Nome'), false)
+
+      ->key('username', v::stringType()
+        ->length(5)
+        ->regex('/^[a-z_]+$/')
+        ->setTemplate(
+          "{{name}} deve ter pelo menos 5 caracteres e deve ser 
+            composto apenas por letras minúsculas e underscores (_)."
+        )
+        ->setName('Username'), false)
+
+      ->key('email', v::email()
+        ->setTemplate("{{name}} inválido.")
+        ->setName('Email'), false)
+
+
+      ->key('access_profile_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido para {{name}}.")
+        ->setName('Perfil de acesso'), false)
+
+      ->key('active', v::numericVal()
+        ->in([0, 1])
+        ->setTemplate("Valor iválido para {{name}}.")
+        ->setName('Ativo'), false)
+
+      ->key('password', v::stringType()
+        ->length(8)->setTemplate("A senha deve ter no mínimo 8 caracteres.")
+        ->setName('Senha'), false)
+
+      ->key('confirm_password', v::stringType()
+        ->equals($data['password'])->setTemplate("As senhas não coincidem.")
+        ->setName('Confirmar senha'), false);
+
+    $schema->assert($data);
   }
 
   public function updateById(array $data, int $id)
   {
     try {
-      $name = $data['name'] ?? null;
-      $name = $name ? $this->validateName($name) : $name;
-
-      $username = $data['username'] ?? null;
-      $username = $username ? $this->validateUsername($username) : $username;
-
-      $email = $data['email'] ?? null;
-      $email = $email ? $this->validateEmail($email) : $email;
-
-      $profile_id = $data['profile_id'] ?? null;
-      $profile_id = $profile_id ? $this->validateInt($profile_id, 'Perfil de acesso') : $profile_id;
-
-      $password = $data['password'] ?? null;
-      $confirm_password = $data['confirm_password'] ?? null;
-      $password = $password ? $this->validatePassword($password, $confirm_password) : $password;
-
-      $active = $data['active'] ?? null;
-      $active = $active ? $this->validateActive($active) : $active;
-
-      $user = new User(
-        name: $name,
-        username: $username,
-        email: $email,
-        profile_id: $profile_id,
-        password: $password,
-        active: $active
-      );
-
+      $data = array_filter($data, fn($value) => $value !== '');
+      $this->updateValidate($data);
+      $user = new User(...$data);
       $this->userDAO->updateById($user, $id);
 
       return ['success' => $this->successMessages['user']['update']];
-    } catch (\InvalidArgumentException $e) {
-      return ['error' => $e->getMessage()];
+    } catch (NestedValidationException $e) {
+      return ['error' => $e->getMessages()];
     }
+  }
+
+  private function updateValidate(array $data)
+  {
+    $schema =
+      v::key('name', v::stringType()
+        ->length(3)->setTemplate("{{name}} deve ter pelo menos 3 caracteres.")
+        ->setName('Nome'), false)
+
+      ->key('username', v::stringType()
+        ->length(5)
+        ->regex('/^[a-z_]+$/')
+        ->setTemplate(
+          "{{name}} deve ter pelo menos 5 caracteres e deve ser 
+            composto apenas por letras minúsculas e underscores (_)."
+        )
+        ->setName('Username'), false)
+
+      ->key('email', v::email()
+        ->setTemplate("{{name}} inválido.")
+        ->setName('Email'), false)
+
+
+      ->key('access_profile_id', v::numericVal()
+        ->min(1)->setTemplate("Id inválido para {{name}}.")
+        ->setName('Perfil de acesso'), false)
+
+      ->key('active', v::numericVal()
+        ->in([0, 1])
+        ->setTemplate("Valor iválido para {{name}}.")
+        ->setName('Ativo'), false);
+
+    $schema->assert($data);
   }
 
   public function deleteById($id)
@@ -94,8 +134,8 @@ class UserService extends Services
     try {
       $this->userDAO->deleteById($id);
       return ['success' => $this->successMessages['user']['delete']];
-    } catch (\InvalidArgumentException $e) {
-      return ['error' => $e->getMessage()];
+    } catch (NestedValidationException $e) {
+      return ['error' => $e->getMessages()];
     }
   }
 }
