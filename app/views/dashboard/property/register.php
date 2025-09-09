@@ -128,8 +128,8 @@ require_once __DIR__ . '/../partials/input.php';
           name: 'property_type_id',
           id: 'property_type',
           label: 'Tipo de imóvel',
-          optionLabel: fn($p) => ucfirst($p->description),
-          optionValue: fn($p) => $p->id,
+          optionLabel: fn($p) => ucfirst($p->getDescription()),
+          optionValue: fn($p) => $p->getId(),
           required: true
         ) ?>
 
@@ -138,8 +138,8 @@ require_once __DIR__ . '/../partials/input.php';
           name: 'purpose_id',
           id: 'purpose',
           label: 'Finalidade',
-          optionLabel: fn($p) => ucfirst($p->description),
-          optionValue: fn($p) => $p->id,
+          optionLabel: fn($p) => ucfirst($p->getDescription()),
+          optionValue: fn($p) => $p->getId(),
           required: true
         ) ?>
 
@@ -148,8 +148,8 @@ require_once __DIR__ . '/../partials/input.php';
           name: 'owner_id',
           id: 'owner',
           label: 'Proprietário',
-          optionLabel: fn($p) => ucfirst($p->name),
-          optionValue: fn($p) => $p->id,
+          optionLabel: fn($p) => ucfirst($p->getName()),
+          optionValue: fn($p) => $p->getId(),
           required: true
         ) ?>
 

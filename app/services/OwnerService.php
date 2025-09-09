@@ -14,14 +14,16 @@ class OwnerService extends Services
     private $ownerDAO = new OwnerDAO()
   ) {}
 
+  /** @return Owner[] */
   public function getAll()
   {
     return $this->ownerDAO->getAll();
   }
 
+  /** @return Owner */
   public function getById(int $id)
   {
-    return $this->ownerDAO->getById($id);
+    return $this->ownerDAO->getById($id)[0];
   }
 
   public function register(array $data)

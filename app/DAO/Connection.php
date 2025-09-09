@@ -2,6 +2,9 @@
 
 namespace App\DAO;
 
+use App\Models\Property;
+use DateTime;
+
 class Connection
 {
   private static $connection;
@@ -42,16 +45,22 @@ class Connection
     }
   }
 
-  protected function select(string $table, $condition = '', $values = [])
-  {
+  protected function select(
+    string $table = '',
+    string $condition = '',
+    array $values = [],
+    ?string $sql = null,
+    string $className = ''
+  ) {
     $params = array_combine(
       array_map(fn($key) => ":$key", array_keys($values)),
       array_values($values)
     );
 
-    $sql = "select * from $table $condition order by id asc;";
+    $sql = $sql ?? "select * from $table $condition order by id asc;";
     $stmt = $this->executeQuery($sql, $params);
-    return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $className);
+    return $stmt->fetchAll();
   }
 
   protected function insert(string $table, array $values)

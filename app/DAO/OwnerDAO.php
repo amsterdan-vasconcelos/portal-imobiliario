@@ -9,12 +9,20 @@ class OwnerDAO extends Connection
 {
   public function getAll()
   {
-    return $this->select('owner');
+    return $this->select(
+      table: 'owner',
+      className: \App\Models\Owner::class
+    );
   }
 
   public function getById(int $id)
   {
-    return $this->select('owner', 'where id = :id', ['id' => $id]);
+    return $this->select(
+      table: 'owner',
+      condition: 'where id = :id',
+      values: ['id' => $id],
+      className: \App\Models\Owner::class
+    );
   }
 
   public function register(Owner $owner)

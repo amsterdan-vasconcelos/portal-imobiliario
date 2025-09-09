@@ -4,9 +4,13 @@ namespace App\Models;
 
 class Property
 {
+  private ?int $id;
+  private ?string $created_at;
+  private ?string $owner;
+  private ?string $purpose;
+  private ?string $property_type;
+
   public function __construct(
-    private ?int $id = null,
-    private ?string $code = null,
     private ?float $price = null,
     private ?string $zip_code = null,
     private ?string $street = null,
@@ -21,17 +25,11 @@ class Property
     private ?int $owner_id = null,
     private ?int $purpose_id = null,
     private ?int $property_type_id = null,
-    private ?string $created_at = null,
   ) {}
 
   public function getId()
   {
     return $this->id;
-  }
-
-  public function getCode()
-  {
-    return $this->code;
   }
 
   public function getPrice()
@@ -84,7 +82,7 @@ class Property
     return $this->build_area;
   }
 
-  public function getStatus()
+  public function getActive()
   {
     return $this->active;
   }
@@ -104,6 +102,21 @@ class Property
     return $this->property_type_id;
   }
 
+  public function getOwner()
+  {
+    return $this->owner;
+  }
+
+  public function getPurpose()
+  {
+    return $this->purpose;
+  }
+
+  public function getPropertyType()
+  {
+    return $this->property_type;
+  }
+
   public function getCreatedAt()
   {
     return $this->created_at;
@@ -112,8 +125,6 @@ class Property
   public function toArray()
   {
     return [
-      'id' => $this->id,
-      'code' => $this->code,
       'price' => $this->price,
       'zip_code' => $this->zip_code,
       'street' => $this->street,
@@ -128,7 +139,6 @@ class Property
       'owner_id' => $this->owner_id,
       'purpose_id' => $this->purpose_id,
       'property_type_id' => $this->property_type_id,
-      'created_at' => $this->created_at,
     ];
   }
 

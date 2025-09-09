@@ -8,11 +8,19 @@ class AccessProfileDAO extends Connection
 {
   public function getAll()
   {
-    return $this->select('access_profile');
+    return $this->select(
+      table: 'access_profile',
+      className: \App\Models\AccessProfile::class
+    );
   }
 
   public function getById(int $id)
   {
-    return $this->select('access_profile', 'where id = :id', ['id' => $id]);
+    return $this->select(
+      table: 'access_profile',
+      condition: 'where id = :id',
+      values: ['id' => $id],
+      className: \App\Models\AccessProfile::class
+    );
   }
 }

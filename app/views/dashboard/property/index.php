@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\Property;
+
 $propertyExist = isset($properties) && count($properties) > 0;
 
 require_once __DIR__ . '/../partials/alert.php';
@@ -53,30 +56,31 @@ require_once __DIR__ . '/../partials/activeFormIcon.php'
           <tbody class="c-table__body">
             <?php
             if ($propertyExist):
+              /** @var Property */
               foreach ($properties as $property):
             ?>
                 <tr class="c-table__row">
-                  <td class="c-table__cell"><?= $property->price ?></td>
-                  <td class="c-table__cell"><?= $property->street ?></td>
-                  <td class="c-table__cell"><?= $property->neighborhood ?></td>
-                  <td class="c-table__cell"><?= $property->city ?></td>
-                  <td class="c-table__cell"><?= $property->property_type ?></td>
-                  <td class="c-table__cell"><?= $property->purpose ?></td>
-                  <td class="c-table__cell"><?= $property->owner ?></td>
+                  <td class="c-table__cell"><?= $property->getPrice() ?></td>
+                  <td class="c-table__cell"><?= $property->getStreet() ?></td>
+                  <td class="c-table__cell"><?= $property->getNeighborhood() ?></td>
+                  <td class="c-table__cell"><?= $property->getCity() ?></td>
+                  <td class="c-table__cell"><?= $property->getPropertyType() ?></td>
+                  <td class="c-table__cell"><?= $property->getPurpose() ?></td>
+                  <td class="c-table__cell"><?= $property->getOwner() ?></td>
                   <td class="c-table__cell">
                     <?= ActiveFormIcon(
-                      action: "property/index/$property->id",
-                      active: $property->active
+                      action: "property/index/{$property->getId()}",
+                      active: $property->getActive()
                     ) ?>
                   </td>
                   <td class="c-table__cell">
-                    <a href="<?= BASE_URL . "/dashboard/property/details/$property->id" ?>">
+                    <a href="<?= BASE_URL . "/dashboard/property/details/{$property->getId()}" ?>">
                       <i class="fa-solid fa-eye"></i>
                     </a>
-                    <a href="<?= BASE_URL . "/dashboard/property/update/$property->id" ?>">
+                    <a href="<?= BASE_URL . "/dashboard/property/update/{$property->getId()}" ?>">
                       <i class="fa-solid fa-pen pen"></i>
                     </a>
-                    <a href="<?= BASE_URL . "/dashboard/property/delete/$property->id" ?>">
+                    <a href="<?= BASE_URL . "/dashboard/property/delete/{$property->getId()}" ?>">
                       <i class="fa-solid fa-trash trash"></i>
                     </a>
                   </td>

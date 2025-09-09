@@ -15,6 +15,11 @@ class Services
       'update'   => 'Usuário atualizado com sucesso!',
       'delete'   => 'Usuário removido com sucesso!',
     ],
+    'property' => [
+      'register' => 'Imóvel adicionado com sucesso!',
+      'update'   => 'Imóvel atualizado com sucesso!',
+      'delete'   => 'Imóvel removido com sucesso!',
+    ],
   ];
 
   protected function validateName(?string $name)

@@ -1,5 +1,6 @@
 <?php
-$classActiveIcon = $property->active
+
+$classActiveIcon = $property->getActive()
   ? 'fa-solid fa-circle active'
   : 'fa-solid fa-square inactive';
 
@@ -50,13 +51,13 @@ require_once __DIR__ . '/../partials/alert.php'
         </thead>
         <tbody class="c-table__body">
           <tr class="c-table__row">
-            <td class="c-table__cell"><?= $property->price ?></td>
-            <td class="c-table__cell"><?= $property->street ?></td>
-            <td class="c-table__cell"><?= $property->neighborhood ?></td>
-            <td class="c-table__cell"><?= $property->city ?></td>
-            <td class="c-table__cell"><?= $property->property_type ?></td>
-            <td class="c-table__cell"><?= $property->purpose ?></td>
-            <td class="c-table__cell"><?= $property->owner ?></td>
+            <td class="c-table__cell"><?= $property->getPrice() ?></td>
+            <td class="c-table__cell"><?= $property->getStreet() ?></td>
+            <td class="c-table__cell"><?= $property->getNeighborhood() ?></td>
+            <td class="c-table__cell"><?= $property->getCity() ?></td>
+            <td class="c-table__cell"><?= $property->getPropertyType() ?></td>
+            <td class="c-table__cell"><?= $property->getPurpose() ?></td>
+            <td class="c-table__cell"><?= $property->getOwner() ?></td>
             <td class="c-table__cell">
               <i class="<?= $classActiveIcon ?>"></i>
             </td>
@@ -64,10 +65,19 @@ require_once __DIR__ . '/../partials/alert.php'
         </tbody>
       </table>
       <div>
-        <form style="display: flex; gap: .5rem; padding-top: 1rem;" action="<?= BASE_URL . '/dashboard/property/delete/' . $property->id ?>" method="post">
-          <a class="c-button c-button--dashboard c-button--full" href="<?= BASE_URL ?>/dashboard/property">Não</a>
+        <form
+          style="display: flex; gap: .5rem; padding-top: 1rem;"
+          action="<?= BASE_URL . '/dashboard/property/delete/' . $property->getId() ?>"
+          method="post">
+          <a
+            class="c-button c-button--dashboard c-button--full"
+            href="<?= BASE_URL ?>/dashboard/property">
+            Não
+          </a>
           <input type="hidden" name="delete">
-          <button class="c-button c-button--dashboard c-button--full">Sim</button>
+          <button class="c-button c-button--dashboard c-button--full">
+            Sim
+          </button>
         </form>
       </div>
     </div>

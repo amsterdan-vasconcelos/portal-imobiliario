@@ -8,11 +8,19 @@ class PropertyTypeDAO extends Connection
 {
   public function getAll()
   {
-    return $this->select('property_type');
+    return $this->select(
+      table: 'property_type',
+      className: \App\Models\PropertyType::class
+    );
   }
 
   public function getById(int $id)
   {
-    return $this->select('property_type', 'where id = :id', ['id' => $id]);
+    return $this->select(
+      table: 'property_type',
+      condition: 'where id = :id',
+      values: ['id' => $id],
+      className: \App\Models\PropertyType::class
+    );
   }
 }

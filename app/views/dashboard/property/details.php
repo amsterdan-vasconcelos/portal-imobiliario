@@ -4,25 +4,25 @@ $adress = [
     'labelText' => 'CEP',
     'id' => 'zip_code',
     'name' => 'zip_code',
-    'value' => $property->zip_code,
+    'value' => $property->getZipCode(),
   ],
   [
     'labelText' => 'Rua',
     'id' => 'street',
     'name' => 'street',
-    'value' => $property->street,
+    'value' => $property->getStreet(),
   ],
   [
     'labelText' => 'Bairro',
     'id' => 'neighborhood',
     'name' => 'neighborhood',
-    'value' => $property->neighborhood,
+    'value' => $property->getNeighborhood(),
   ],
   [
     'labelText' => 'Cidade',
     'id' => 'city',
     'name' => 'city',
-    'value' => $property->city,
+    'value' => $property->getCity(),
   ],
 ];
 
@@ -31,31 +31,31 @@ $details = [
     'labelText' => 'Quartos',
     'id' => 'bedrooms',
     'name' => 'bedrooms',
-    'value' => $property->bedrooms,
+    'value' => $property->getBedRooms(),
   ],
   [
     'labelText' => 'Banheiros',
     'id' => 'bathrooms',
     'name' => 'bathrooms',
-    'value' => $property->bathrooms,
+    'value' => $property->getBathrooms(),
   ],
   [
     'labelText' => 'Vagas na garagem',
     'id' => 'garage',
     'name' => 'garage',
-    'value' => $property->garage,
+    'value' => $property->getGarage(),
   ],
   [
     'labelText' => 'Área total',
     'id' => 'total_area',
     'name' => 'total_area',
-    'value' => $property->total_area,
+    'value' => $property->getTotalArea(),
   ],
   [
     'labelText' => 'Área construída',
     'id' => 'build_area',
     'name' => 'build_area',
-    'value' => $property->build_area,
+    'value' => $property->getBuildArea(),
   ],
 ];
 
@@ -113,22 +113,22 @@ require_once __DIR__ . '/../partials/readonly.php';
 
           <?= Readonly(
             label: 'Preço',
-            value: 'R$ ' . number_format($property->price, 2, ',', '.')
+            value: 'R$ ' . number_format($property->getPrice(), 2, ',', '.')
           ) ?>
 
           <?= Readonly(
             label: 'Tipo de imóvel',
-            value: ucfirst($property_type->description)
+            value: ucfirst($property->getPropertyType())
           ) ?>
 
           <?= Readonly(
             label: 'Finalidade',
-            value: ucfirst($purpose->description)
+            value: ucfirst($property->getPurpose())
           ) ?>
 
           <?= Readonly(
             label: 'Proprietário',
-            value: ucfirst($owner->name)
+            value: ucfirst($property->getOwner())
           ) ?>
 
         </fieldset>

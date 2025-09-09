@@ -1,28 +1,29 @@
 <?php
+
 $adress = [
   [
     'labelText' => 'CEP',
     'id' => 'zip_code',
     'name' => 'zip_code',
-    'value' => $property->zip_code,
+    'value' => $property->getZipCode(),
   ],
   [
     'labelText' => 'Rua',
     'id' => 'street',
     'name' => 'street',
-    'value' => $property->street,
+    'value' => $property->getStreet(),
   ],
   [
     'labelText' => 'Bairro',
     'id' => 'neighborhood',
     'name' => 'neighborhood',
-    'value' => $property->neighborhood,
+    'value' => $property->getNeighborhood(),
   ],
   [
     'labelText' => 'Cidade',
     'id' => 'city',
     'name' => 'city',
-    'value' => $property->city,
+    'value' => $property->getCity(),
   ],
 ];
 
@@ -31,31 +32,31 @@ $details = [
     'labelText' => 'Quartos',
     'id' => 'bedrooms',
     'name' => 'bedrooms',
-    'value' => $property->bedrooms,
+    'value' => $property->getBedRooms(),
   ],
   [
     'labelText' => 'Banheiros',
     'id' => 'bathrooms',
     'name' => 'bathrooms',
-    'value' => $property->bathrooms,
+    'value' => $property->getBathrooms(),
   ],
   [
     'labelText' => 'Vagas na garagem',
     'id' => 'garage',
     'name' => 'garage',
-    'value' => $property->garage,
+    'value' => $property->getGarage(),
   ],
   [
     'labelText' => 'Área total',
     'id' => 'total_area',
     'name' => 'total_area',
-    'value' => $property->total_area,
+    'value' => $property->getTotalArea(),
   ],
   [
     'labelText' => 'Área construída',
     'id' => 'build_area',
     'name' => 'build_area',
-    'value' => $property->build_area,
+    'value' => $property->getBuildArea(),
   ],
 ];
 
@@ -92,8 +93,7 @@ require_once __DIR__ . '/../partials/input.php';
 
       <form
         class="l-form l-form--col-2"
-        action="<?= BASE_URL ?>/dashboard/property/update/<?= $property->id ?>" method="post">
-
+        action="<?= BASE_URL ?>/dashboard/property/update/<?= $property->getId() ?>" method="post">
         <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
           <legend class="c-fieldset__legend">Endereço</legend>
           <?php foreach ($adress as $item): ?>
@@ -131,7 +131,7 @@ require_once __DIR__ . '/../partials/input.php';
             name: 'price',
             id: 'price',
             label: 'Preço',
-            value: $property->price,
+            value: $property->getPrice(),
             required: true,
             attrs: ['step' => '0.01']
           ) ?>
@@ -141,9 +141,9 @@ require_once __DIR__ . '/../partials/input.php';
             name: 'property_type_id',
             id: 'property_type',
             label: 'Tipo de imóvel',
-            value: $property->property_type_id,
-            optionLabel: fn($p) => ucfirst($p->description),
-            optionValue: fn($p) => $p->id,
+            value: $property->getPropertyTypeId(),
+            optionLabel: fn($p) => ucfirst($p->getDescription()),
+            optionValue: fn($p) => $p->getId(),
             required: true
           ) ?>
 
@@ -152,9 +152,9 @@ require_once __DIR__ . '/../partials/input.php';
             name: 'purpose_id',
             id: 'purpose',
             label: 'Finalidade',
-            value: $property->purpose_id,
-            optionLabel: fn($p) => ucfirst($p->description),
-            optionValue: fn($p) => $p->id,
+            value: $property->getPurposeId(),
+            optionLabel: fn($p) => ucfirst($p->getDescription()),
+            optionValue: fn($p) => $p->getId(),
             required: true
           ) ?>
 
@@ -163,9 +163,9 @@ require_once __DIR__ . '/../partials/input.php';
             name: 'owner_id',
             id: 'owner',
             label: 'Proprietário',
-            value: $property->owner_id,
-            optionLabel: fn($p) => ucfirst($p->name),
-            optionValue: fn($p) => $p->id,
+            value: $property->getOwnerId(),
+            optionLabel: fn($p) => ucfirst($p->getName()),
+            optionValue: fn($p) => $p->getId(),
             required: true
           ) ?>
 

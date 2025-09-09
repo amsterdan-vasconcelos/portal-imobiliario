@@ -11,14 +11,16 @@ class UserService extends Services
     private $userDAO = new UserDAO
   ) {}
 
+  /** @return User[] */
   public function getAll()
   {
     return $this->userDAO->getAll();
   }
 
+  /** @return User */
   public function getById(int $id)
   {
-    return $this->userDAO->getById($id);
+    return $this->userDAO->getById($id)[0];
   }
 
   public function register(array $data)

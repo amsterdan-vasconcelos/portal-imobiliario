@@ -9,12 +9,41 @@ class PropertyDAO extends Connection
 {
   public function getAll()
   {
-    return $this->select('property');
+    $sql = '
+    select p.*, 
+    pt.description as property_type, 
+    pu.description as purpose, 
+    o.name as owner
+    from property as p
+    join property_type as pt
+    on p.property_type_id = pt.id
+    join purpose as pu
+    on p.purpose_id = pu.id
+    join owner as o
+    on p.owner_id = o.id
+    ';
+
+    return $this->select(sql: $sql, className: \App\Models\Property::class);
   }
 
   public function getById(int $id)
   {
-    return $this->select('property', 'where id = :id', ['id' => $id]);
+    $sql = '
+    select p.*, 
+    pt.description as property_type, 
+    pu.description as purpose, 
+    o.name as owner
+    from property as p
+    join property_type as pt
+    on p.property_type_id = pt.id
+    join purpose as pu
+    on p.purpose_id = pu.id
+    join owner as o
+    on p.owner_id = o.id
+    where p.id = :id
+    ';
+
+    return $this->select(sql: $sql, values: ['id' => $id], className: \App\Models\Property::class);
   }
 
   public function register(Property $property)

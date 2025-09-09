@@ -53,7 +53,7 @@ class DashboardPropertyController
 
     return [
       ...$result,
-      'property' => $this->propertyService->getById($id)[0],
+      'property' => $this->propertyService->getById($id),
       'property_types' => $this->propertyTypeService->getAll(),
       'purposes' => $this->purposeService->getAll(),
       'owners' => $this->ownerService->getAll(),
@@ -62,15 +62,7 @@ class DashboardPropertyController
 
   private function handleDelete(int $id): array
   {
-    $property = $this->propertyService->getById($id)[0];
-    $property_type =
-      $this->propertyTypeService->getById($property->property_type_id)[0];
-    $purpose = $this->purposeService->getById($property->purpose_id)[0];
-    $owner = $this->ownerService->getById($property->owner_id)[0];
-
-    $property->property_type = $property_type->description;
-    $property->purpose = $purpose->description;
-    $property->owner = $owner->name;
+    $property = $this->propertyService->getById($id);
 
     $result = ['property' => $property];
 
@@ -86,14 +78,9 @@ class DashboardPropertyController
 
   private function handleDetails(int $id): array
   {
-    $property = $this->propertyService->getById($id)[0];
+    $property = $this->propertyService->getById($id);
 
-    return [
-      'property' => $property,
-      'property_type' => $this->propertyTypeService->getById($property->property_type_id)[0],
-      'purpose' => $this->purposeService->getById($property->purpose_id)[0],
-      'owner' => $this->ownerService->getById($property->owner_id)[0],
-    ];
+    return ['property' => $property];
   }
 
   private function handleIndex(?int $id): array
@@ -105,17 +92,6 @@ class DashboardPropertyController
     }
 
     $properties = $this->propertyService->getAll();
-
-    foreach ($properties as $property) {
-      $property_type =
-        $this->propertyTypeService->getById($property->property_type_id)[0];
-      $purpose = $this->purposeService->getById($property->purpose_id)[0];
-      $owner = $this->ownerService->getById($property->owner_id)[0];
-
-      $property->property_type = $property_type->description;
-      $property->purpose = $purpose->description;
-      $property->owner = $owner->name;
-    }
 
     return [...$result, 'properties' => $properties];
   }

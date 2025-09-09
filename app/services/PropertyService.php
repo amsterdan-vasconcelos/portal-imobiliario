@@ -14,14 +14,16 @@ class PropertyService extends Services
     private $propertyDAO = new PropertyDAO
   ) {}
 
-  public function getAll()
+  /** @return Property[] */
+  public function getAll(): array
   {
     return $this->propertyDAO->getAll();
   }
 
+  /** @return Property */
   public function getById(int $id)
   {
-    return $this->propertyDAO->getById($id);
+    return $this->propertyDAO->getById($id)[0];
   }
 
   public function register(array $data)
@@ -32,7 +34,7 @@ class PropertyService extends Services
       $property = new Property(...$data);
       $this->propertyDAO->register($property);
 
-      return ['success' => $this->successMessages['user']['register']];
+      return ['success' => $this->successMessages['property']['register']];
     } catch (NestedValidationException $e) {
       return ['error' => $e->getMessages()];
     }
@@ -116,7 +118,7 @@ class PropertyService extends Services
       $property = new Property(...$data);
       $this->propertyDAO->updateById($property, $id);
 
-      return ['success' => $this->successMessages['user']['update']];
+      return ['success' => $this->successMessages['property']['update']];
     } catch (NestedValidationException $e) {
       return ['error' => $e->getMessages()];
     }
@@ -188,7 +190,7 @@ class PropertyService extends Services
   {
     try {
       $this->propertyDAO->deleteById($id);
-      return ['success' => $this->successMessages['user']['delete']];
+      return ['success' => $this->successMessages['property']['delete']];
     } catch (\InvalidArgumentException $e) {
       return ['error' => $e->getMessage()];
     }

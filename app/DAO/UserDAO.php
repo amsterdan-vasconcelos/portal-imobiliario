@@ -9,12 +9,20 @@ class UserDAO extends Connection
 {
   public function getAll()
   {
-    return $this->select('user');
+    return $this->select(
+      table: 'user',
+      className: \App\Models\User::class
+    );
   }
 
   public function getById(int $id)
   {
-    return $this->select('user', 'where id = :id', ['id' => $id]);
+    return $this->select(
+      table: 'user',
+      condition: 'where id = :id',
+      values: ['id' => $id],
+      className: \App\Models\User::class
+    );
   }
 
   public function register(User $user)
