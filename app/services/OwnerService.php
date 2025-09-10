@@ -42,30 +42,23 @@ class OwnerService extends Services
   private function registerValidate($data)
   {
     $schema =
-      v::key(
-        'name',
-        v::stringType()
-          ->length(3, 50)
-          ->setName('Nome')
-          ->setTemplate(
-            "{{name}} deve ter entre {{minValue}} e {{maxValue}} caracteres."
-          )
-      )->setTemplate("{{name}} é obrigatório")
-      ->key(
-        'phone',
-        v::stringType()
-          ->length(10, null)
-          ->setName('Telefone')
-          ->setTemplate(
-            "{{name}} deve ter no mínimo {{minValue}} caracteres."
-          )
-      )->setTemplate("{{name}} é obrigatório")
-      ->key(
-        'gender',
-        v::stringType()
-          ->length(1, 1)
-          ->setName('Gênero')
-      )->setTemplate("{{name}} é obrigatório");
+      v::key('name', v::stringType()
+        ->length(3, 50)
+        ->setName('Nome')
+        ->setTemplate(
+          "{{name}} deve ter entre {{minValue}} e {{maxValue}} caracteres."
+        ))->setTemplate("{{name}} é obrigatório")
+
+      ->key('phone', v::stringType()
+        ->length(10, null)
+        ->setName('Telefone')
+        ->setTemplate(
+          "{{name}} deve ter no mínimo {{minValue}} caracteres."
+        ))->setTemplate("{{name}} é obrigatório")
+
+      ->key('gender', v::stringType()
+        ->length(1, 1)
+        ->setName('Gênero'))->setTemplate("{{name}} é obrigatório");
 
     $schema->assert($data);
   }
@@ -87,39 +80,29 @@ class OwnerService extends Services
   private function updateValidate($data)
   {
     $schema =
-      v::key(
-        'name',
-        v::stringType()
-          ->length(3, 50)
-          ->setName('Nome')
-          ->setTemplate(
-            "{{name}} deve ter entre {{minValue}} e {{maxValue}} caracteres."
-          ),
-        false
-      )
-      ->key(
-        'phone',
-        v::stringType()
-          ->length(10, null)
-          ->setName('Telefone')
-          ->setTemplate(
-            "{{name}} deve ter no mínimo {{minValue}} caracteres."
-          ),
-        false
-      )
-      ->key(
-        'gender',
-        v::stringType()
-          ->length(1, 1)
-          ->setName('Gênero')
-      )
-      ->key(
-        'active',
-        v::boolType()
-          ->setName('Ativo')
-          ->setTemplate('{{name}} deve ser verdadeiro ou falso'),
-        false
-      );
+      v::key('name', v::stringType()
+        ->length(3, 50)
+        ->setName('Nome')
+        ->setTemplate(
+          "{{name}} deve ter entre {{minValue}} e {{maxValue}} caracteres."
+        ), false)
+
+      ->key('phone', v::stringType()
+        ->length(10, null)
+        ->setName('Telefone')
+        ->setTemplate(
+          "{{name}} deve ter no mínimo {{minValue}} caracteres."
+        ), false)
+
+      ->key('gender', v::stringType()
+        ->length(1, 1)
+        ->setTemplate("Valor iválido para {{name}}.")
+        ->setName('Gênero'), false)
+
+      ->key('active', v::numericVal()
+        ->in([0, 1])
+        ->setTemplate("Valor iválido para {{name}}.")
+        ->setName('Ativo'), false);
 
     $schema->assert($data);
   }

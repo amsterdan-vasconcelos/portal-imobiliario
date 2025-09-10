@@ -1,5 +1,11 @@
 <?php
-$ownerExist = isset($owners) && count($owners) > 0
+
+use App\Models\Owner;
+
+$ownerExist = isset($owners) && count($owners) > 0;
+
+require_once __DIR__ . '/../partials/activeFormIcon.php';
+require_once __DIR__ . '/../partials/alert.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +17,7 @@ $ownerExist = isset($owners) && count($owners) > 0
 </head>
 
 <body>
+  <?= Alert(error: $error ?? null) ?>
   <?php require_once __DIR__ . '/../../shared/header.php' ?>
 
   <div class="l-dashboard">
@@ -21,7 +28,9 @@ $ownerExist = isset($owners) && count($owners) > 0
 
       <div class="c-dashboard-header">
         <h1 class="c-dashboard-header__title">Proprietários</h1>
-        <a href="<?= BASE_URL ?>/dashboard/owner/register" class="c-dashboard-header__button">
+        <a
+          href="<?= BASE_URL ?>/dashboard/owner/register"
+          class="c-dashboard-header__button">
           <i class="fa-solid fa-plus"></i>
           Add Proprietário
         </a>
@@ -41,34 +50,36 @@ $ownerExist = isset($owners) && count($owners) > 0
         <tbody class="c-table__body">
           <?php
           if ($ownerExist):
+            /** @var Owner */
             foreach ($owners as $owner):
-              $classGenderIcon = $owner->gender === 'M'
+              $classGenderIcon = $owner->getGender() === 'M'
                 ? 'fa-solid fa-mars mars'
                 : 'fa-solid fa-venus venus';
-              $classActiveIcon = $owner->active
+              $classActiveIcon = $owner->getActive()
                 ? 'fa-solid fa-circle active'
                 : 'fa-solid fa-square inactive';
           ?>
               <tr class="c-table__row">
-                <th class="c-table__head" scope="row"><?= $owner->name ?></td>
-                <td class="c-table__cell"><?= $owner->phone ?></td>
+                <th class="c-table__head" scope="row"><?= $owner->getName() ?></td>
+                <td class="c-table__cell"><?= $owner->getPhone() ?></td>
                 <td class="c-table__cell">
                   <i class="<?= $classGenderIcon ?>"></i>
                 </td>
                 <td class="c-table__cell">
-                  <form action="<?= BASE_URL ?>/dashboard/owner" method="post">
-                    <input type="hidden" name="id" value="<?= $owner->id ?>">
-                    <input
-                      type="hidden" name="active"
-                      value="<?= !$owner->active ? 'true' : 'false' ?>">
-                    <button>
-                      <i class="<?= $classActiveIcon ?>"></i>
-                    </button>
-                  </form>
+                  <?= ActiveFormIcon(
+                    action: "owner/index/{$owner->getId()}",
+                    active: $owner->getActive()
+                  ) ?>
                 </td>
                 <td class="c-table__cell">
-                  <a href="<?= BASE_URL . "/dashboard/owner/update/$owner->id" ?>"><i class="fa-solid fa-pen pen"></i></a>
-                  <a href="<?= BASE_URL . "/dashboard/owner/delete/$owner->id" ?>"><i class="fa-solid fa-trash trash"></i></a>
+                  <a
+                    href="<?= BASE_URL . "/dashboard/owner/update/{$owner->getId()}" ?>">
+                    <i class="fa-solid fa-pen pen"></i>
+                  </a>
+                  <a
+                    href="<?= BASE_URL . "/dashboard/owner/delete/{$owner->getId()}" ?>">
+                    <i class="fa-solid fa-trash trash"></i>
+                  </a>
                 </td>
               </tr>
           <?php

@@ -4,12 +4,13 @@ namespace App\Models;
 
 class Owner
 {
+  private ?int $id = null;
+
   public function __construct(
     private ?string $name = null,
     private ?string $phone = null,
     private ?string $gender = null,
-    private ?int $id = null,
-    private ?bool $active = null
+    private ?int $active = null
   ) {}
 
   public function getId()
@@ -40,13 +41,10 @@ class Owner
   public function toArray()
   {
     return [
-      'id' => $this->id,
       'name' => $this->name,
       'phone' => $this->phone,
       'gender' => $this->gender,
-      'active' => $this->active === true ? 1 : (
-        $this->active === false ? 0 : null
-      )
+      'active' => $this->active
     ];
   }
 

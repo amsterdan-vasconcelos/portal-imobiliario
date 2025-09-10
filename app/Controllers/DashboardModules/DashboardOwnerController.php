@@ -16,7 +16,7 @@ class DashboardOwnerController
       'register' => $this->handleRegister(),
       'update'   => $this->handleUpdate($id),
       'delete'   => $this->handleDelete($id),
-      default    => $this->handleIndex(),
+      default    => $this->handleIndex($id),
     };
   }
 
@@ -37,12 +37,12 @@ class DashboardOwnerController
       $result = $this->ownerService->updateById($_POST, $id);
     }
 
-    return [...$result, 'owner' => $this->ownerService->getById($id)[0]];
+    return [...$result, 'owner' => $this->ownerService->getById($id)];
   }
 
   private function handleDelete(int $id): array
   {
-    $result = ['owner' => $this->ownerService->getById($id)[0]];
+    $result = ['owner' => $this->ownerService->getById($id)];
 
     if ($_POST) {
       $result = [...$result, ...$this->ownerService->deleteById($id)];
@@ -51,12 +51,12 @@ class DashboardOwnerController
     return $result;
   }
 
-  private function handleIndex(): array
+  private function handleIndex(?int $id): array
   {
     $result = [];
 
     if ($_POST) {
-      $result = $this->ownerService->updateById($_POST, $_POST['id']);
+      $result = $this->ownerService->updateById($_POST, $id);
     }
 
     return [...$result, 'owners' => $this->ownerService->getAll()];
