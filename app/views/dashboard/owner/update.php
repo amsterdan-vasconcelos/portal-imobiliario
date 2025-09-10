@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../partials/alert.php';
 require_once __DIR__ . '/../partials/input.php';
+require_once __DIR__ . '/../partials/radio.php';
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +31,7 @@ require_once __DIR__ . '/../partials/input.php';
       </div>
 
       <form
-        class="c-form c-form--dashboard"
+        class="l-form l-form--col-2"
         action="<?= BASE_URL ?>/dashboard/owner/update/<?= $owner->getId() ?>"
         method="post">
         <?= Input(
@@ -50,26 +51,30 @@ require_once __DIR__ . '/../partials/input.php';
           required: true,
         ) ?>
 
-        <fieldset class="c-fieldset">
+        <fieldset class="c-fieldset c-fieldset--col-2">
           <legend class="c-fieldset__legend">Gênero</legend>
-          <div class="c-fieldset__item">
-            <label class="c-label" for="F">Femino</label>
-            <input
-              type="radio"
-              name="gender"
-              id="F" <?= $owner->getGender() === 'F' ? 'checked' : '' ?> value="F">
-          </div>
-          <div class="c-fieldset__item">
-            <label class="c-label" for="M">Masculino</label>
-            <input
-              type="radio"
-              name="gender"
-              id="M" <?= $owner->getGender() === 'M' ? 'checked' : '' ?> value="M">
-          </div>
+          <?= Radio(
+            name: 'gender',
+            id: 'F',
+            label: 'Feminino',
+            value: 'F',
+            checked: $owner->getGender() === 'F',
+            required: true,
+          ) ?>
+
+          <?= Radio(
+            name: 'gender',
+            id: 'M',
+            label: 'Masculino',
+            value: 'M',
+            checked: $owner->getGender() === 'M',
+            required: true,
+          ) ?>
         </fieldset>
 
         <button
-          class="c-button c-button--dashboard c-button--1/2"
+          style="grid-column: 1 / 2;"
+          class="c-button c-button--dashboard"
           type="submit">
           Atualizar
         </button>
