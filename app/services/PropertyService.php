@@ -32,9 +32,12 @@ class PropertyService extends Services
       $data = array_filter($data, fn($value) => $value !== '');
       $this->registerValidate($data);
       $property = new Property(...$data);
-      $this->propertyDAO->register($property);
+      $id = $this->propertyDAO->register($property);
 
-      return ['success' => $this->successMessages['property']['register']];
+      return [
+        'id' => $id,
+        'success' => $this->successMessages['property']['register']
+      ];
     } catch (NestedValidationException $e) {
       return ['error' => $e->getMessages()];
     }

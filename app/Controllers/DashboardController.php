@@ -10,6 +10,7 @@ use App\services\AccessProfileService;
 use App\services\OwnerService;
 use App\services\PropertyService;
 use App\services\PropertyTypeService;
+use App\services\PropertyImageService;
 use App\services\PurposeService;
 use App\services\UserService;
 
@@ -21,6 +22,7 @@ class DashboardController extends Controller
     private $accessProfileService = new AccessProfileService(),
     private $propertyService = new PropertyService(),
     private $propertyTypeService = new PropertyTypeService(),
+    private $propertyImageService = new PropertyImageService(),
     private $purposeService = new PurposeService(),
   ) {}
 
@@ -59,6 +61,7 @@ class DashboardController extends Controller
       $this->propertyTypeService,
       $this->purposeService,
       $this->ownerService,
+      $this->propertyImageService,
     );
 
     $result = $controller->handle($param, $id);

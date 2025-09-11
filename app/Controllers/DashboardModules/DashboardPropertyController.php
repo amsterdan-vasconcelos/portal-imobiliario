@@ -3,6 +3,7 @@
 namespace App\Controllers\DashboardModules;
 
 use App\services\OwnerService;
+use App\services\PropertyImageService;
 use App\services\PropertyService;
 use App\services\PropertyTypeService;
 use App\services\PurposeService;
@@ -13,7 +14,8 @@ class DashboardPropertyController
     private PropertyService $propertyService,
     private PropertyTypeService $propertyTypeService,
     private PurposeService $purposeService,
-    private OwnerService $ownerService
+    private OwnerService $ownerService,
+    private PropertyImageService $propertyImageService
   ) {}
 
   public function handle(string $param, ?int $id): array
@@ -32,7 +34,17 @@ class DashboardPropertyController
     $result = [];
 
     if ($_POST) {
-      $result = $this->propertyService->register($_POST);
+      $response = $this->propertyService->register($_POST);
+
+      if (isset($_FILES['images'])) {
+        $result = $this->propertyImageService->uploadMultiple(
+          $_FILES['images'],
+          $response['id']
+        );
+      }
+
+      unset($response['id']);
+      $result = [...$result, $response];
     }
 
     return [

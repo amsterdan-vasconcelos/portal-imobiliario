@@ -83,7 +83,9 @@ require_once __DIR__ . '/../partials/input.php';
 
     <form
       class="l-form l-form--col-2"
-      action="<?= BASE_URL ?>/dashboard/property/register" method="post">
+      action="<?= BASE_URL ?>/dashboard/property/register"
+      method="post"
+      enctype="multipart/form-data">
       <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
         <legend class="c-fieldset__legend">Endereço</legend>
         <?php foreach ($adress as $item): ?>
@@ -154,6 +156,8 @@ require_once __DIR__ . '/../partials/input.php';
         ) ?>
 
       </fieldset>
+
+      <input type="file" name="images[]" multiple>
 
       <button class="c-button c-button--dashboard" type="submit">
         Adicionar
