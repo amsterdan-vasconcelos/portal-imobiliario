@@ -7,7 +7,8 @@ class PropertyImage
   private ?int $id;
 
   public function __construct(
-    private ?string $image = null,
+    private ?string $name = null,
+    private ?string $path = null,
     private ?string $property_id = null
   ) {}
 
@@ -16,9 +17,14 @@ class PropertyImage
     return $this->id;
   }
 
+  public function getName()
+  {
+    return $this->name;
+  }
+
   public function getPath()
   {
-    return $this->image;
+    return $this->path;
   }
 
   public function getPropertyId()
@@ -29,7 +35,8 @@ class PropertyImage
   public function toArray()
   {
     return [
-      'image' => $this->image,
+      'name' => $this->name,
+      'path' => $this->path,
       'property_id' => $this->property_id,
     ];
   }

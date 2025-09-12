@@ -53,7 +53,12 @@ class PropertyImageService
       if (move_uploaded_file($tmpName, $destination)) {
         $imagePath = "storage/property-images/$propertyId/" . $newFileName;
 
-        $image = new PropertyImage($imagePath, $propertyId);
+        $image = new PropertyImage(
+          name: $originalName,
+          path: $imagePath,
+          property_id: $propertyId
+        );
+
         $this->propertyImageDAO->register($image);
       }
     }
