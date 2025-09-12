@@ -157,13 +157,102 @@ require_once __DIR__ . '/../partials/input.php';
 
       </fieldset>
 
-      <input type="file" name="images[]" multiple>
+      <fieldset class="c-fieldset l-form__item-span-2">
+        <legend class="c-fieldset__legend">Imagens</legend>
+        <label class="c-label">
+          <i class="fa-solid fa-image"></i>
+          Clique para escolher as imagens
+          <input
+            style="display: none;"
+            data-js="image-input"
+            type="file"
+            name="images[]"
+            multiple accept="image/*">
+        </label>
+        <div
+          data-js="preview-container"
+          style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+        </div>
+      </fieldset>
 
       <button class="c-button c-button--dashboard" type="submit">
         Adicionar
       </button>
     </form>
   </div>
+  <script>
+    const imageInput = document.querySelector('[data-js="image-input"]');
+    const previewContainer = document.querySelector('[data-js="preview-container"]');
+
+    let selectedFiles = [];
+
+    const renderPreviews = () => {
+      previewContainer.innerHTML = '';
+
+      selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.position = 'relative';
+
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = file.name;
+          img.style.width = '120px';
+          img.style.height = '120px';
+          img.style.objectFit = 'cover';
+          img.style.border = '1px solid #ccc';
+          img.style.borderRadius = '4px';
+          img.style.display = 'block';
+
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = '×';
+          removeBtn.type = 'button';
+          removeBtn.style.position = 'absolute';
+          removeBtn.style.top = '2px';
+          removeBtn.style.right = '2px';
+          removeBtn.style.background = 'rgba(0,0,0,0.6)';
+          removeBtn.style.color = 'white';
+          removeBtn.style.border = 'none';
+          removeBtn.style.borderRadius = '50%';
+          removeBtn.style.width = '24px';
+          removeBtn.style.height = '24px';
+          removeBtn.style.cursor = 'pointer';
+
+          removeBtn.addEventListener('click', () => {
+            selectedFiles.splice(index, 1);
+            updateFileInput();
+            renderPreviews();
+          });
+
+          wrapper.appendChild(img);
+          wrapper.appendChild(removeBtn);
+          previewContainer.appendChild(wrapper);
+        };
+
+        reader.readAsDataURL(file);
+      });
+    };
+
+    const updateFileInput = () => {
+      const dataTransfer = new DataTransfer();
+      selectedFiles.forEach(file => dataTransfer.items.add(file));
+      imageInput.files = dataTransfer.files;
+    };
+
+    const handleChange = (e) => {
+      const files = Array.from(e.target.files);
+
+      selectedFiles = [...selectedFiles, ...files.filter(f => f.type.startsWith('image/'))];
+
+      updateFileInput();
+      renderPreviews();
+    };
+
+    imageInput.addEventListener('change', handleChange);
+  </script>
+
 </body>
 
 </html>

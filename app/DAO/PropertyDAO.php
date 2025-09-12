@@ -21,6 +21,7 @@ class PropertyDAO extends Connection
     on p.purpose_id = pu.id
     join owner as o
     on p.owner_id = o.id
+    order by id asc
     ';
 
     return $this->select(sql: $sql, className: \App\Models\Property::class);

@@ -16,14 +16,14 @@ class PropertyImage
     return $this->id;
   }
 
-  public function getImage()
+  public function getPath()
   {
     return $this->image;
   }
 
   public function getPropertyId()
   {
-    return $this->image;
+    return $this->property_id;
   }
 
   public function toArray()

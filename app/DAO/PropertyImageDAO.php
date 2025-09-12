@@ -7,12 +7,12 @@ use App\Models\PropertyImage;
 
 class PropertyImageDAO extends Connection
 {
-  public function getAll(string|int $propertyId)
+  public function getByPropertyId(string|int $propertyId)
   {
     return $this->select(
       table: 'property_image',
-      condition: "where id = :id",
-      values: ['id' => $propertyId],
+      condition: "where property_id = :property_id",
+      values: ['property_id' => $propertyId],
       className: \App\Models\PropertyImage::class
     );
   }
