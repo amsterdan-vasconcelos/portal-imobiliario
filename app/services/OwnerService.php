@@ -30,6 +30,7 @@ class OwnerService extends Services
   {
     try {
       $this->registerValidate($data);
+      $data['user_id'] = $_SESSION['user']['id'];
       $owner = new Owner(...$data);
       $this->ownerDAO->register($owner);
 

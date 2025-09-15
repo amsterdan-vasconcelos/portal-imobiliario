@@ -31,6 +31,7 @@ class PropertyService extends Services
     try {
       $data = array_filter($data, fn($value) => $value !== '');
       $this->registerValidate($data);
+      $data['user_id'] = $_SESSION['user']['id'];
       $property = new Property(...$data);
       $id = $this->propertyDAO->register($property);
 

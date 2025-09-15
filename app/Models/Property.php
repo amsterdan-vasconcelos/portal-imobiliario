@@ -21,10 +21,12 @@ class Property
     private ?int $garage = null,
     private ?float $total_area = null,
     private ?float $build_area = null,
+    private ?string $cover_image = null,
     private ?int $active = null,
     private ?int $owner_id = null,
     private ?int $purpose_id = null,
     private ?int $property_type_id = null,
+    private ?int $user_id = null,
   ) {}
 
   public function getId()
@@ -82,6 +84,11 @@ class Property
     return $this->build_area;
   }
 
+  public function getCoverImage()
+  {
+    return $this->cover_image;
+  }
+
   public function getActive()
   {
     return $this->active;
@@ -98,6 +105,11 @@ class Property
   }
 
   public function getPropertyTypeId()
+  {
+    return $this->property_type_id;
+  }
+
+  public function getUserId()
   {
     return $this->property_type_id;
   }
@@ -135,10 +147,12 @@ class Property
       'garage' => $this->garage,
       'total_area' => $this->total_area,
       'build_area' => $this->build_area,
+      'cover_image' => $this->cover_image,
       'active' => $this->active,
       'owner_id' => $this->owner_id,
       'purpose_id' => $this->purpose_id,
       'property_type_id' => $this->property_type_id,
+      'user_id' => $this->user_id,
     ];
   }
 

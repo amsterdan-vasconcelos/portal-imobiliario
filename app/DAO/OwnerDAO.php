@@ -11,6 +11,8 @@ class OwnerDAO extends Connection
   {
     return $this->select(
       table: 'owner',
+      condition: 'where user_id = :user_id',
+      values: ['user_id' => $_SESSION['user']['id']],
       className: \App\Models\Owner::class
     );
   }

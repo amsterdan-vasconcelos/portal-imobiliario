@@ -11,9 +11,9 @@ class PropertyDAO extends Connection
   {
     $sql = '
     select p.*, 
-    pt.description as property_type, 
-    pu.description as purpose, 
-    o.name as owner
+        pt.description as property_type, 
+        pu.description as purpose, 
+        o.name as owner
     from property as p
     join property_type as pt
     on p.property_type_id = pt.id
@@ -21,10 +21,15 @@ class PropertyDAO extends Connection
     on p.purpose_id = pu.id
     join owner as o
     on p.owner_id = o.id
-    order by id asc
+    where p.user_id = :user_id
+    order by id asc 
     ';
 
-    return $this->select(sql: $sql, className: \App\Models\Property::class);
+    return $this->select(
+      sql: $sql,
+      className: \App\Models\Property::class,
+      values: ['user_id' => $_SESSION['user']['id']]
+    );
   }
 
   public function getById(int $id)
@@ -44,7 +49,11 @@ class PropertyDAO extends Connection
     where p.id = :id
     ';
 
-    return $this->select(sql: $sql, values: ['id' => $id], className: \App\Models\Property::class);
+    return $this->select(
+      sql: $sql,
+      values: ['id' => $id],
+      className: \App\Models\Property::class
+    );
   }
 
   public function register(Property $property)

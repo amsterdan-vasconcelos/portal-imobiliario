@@ -10,7 +10,8 @@ class Owner
     private ?string $name = null,
     private ?string $phone = null,
     private ?string $gender = null,
-    private ?int $active = null
+    private ?int $active = null,
+    private ?int $user_id = null
   ) {}
 
   public function getId()
@@ -38,13 +39,19 @@ class Owner
     return $this->active;
   }
 
+  public function getUserId()
+  {
+    return $this->user_id;
+  }
+
   public function toArray()
   {
     return [
       'name' => $this->name,
       'phone' => $this->phone,
       'gender' => $this->gender,
-      'active' => $this->active
+      'active' => $this->active,
+      'user_id' => $this->user_id
     ];
   }
 

@@ -33,8 +33,10 @@ class AuthService extends Services
         throw new \Exception('Username ou senha inválida.');
       }
 
-      $_SESSION['id'] = $user->getId();
-      $_SESSION['name'] = $user->getName();
+      $_SESSION['user'] = [
+        'id' => $user->getId(),
+        'name' => $user->getName()
+      ];
 
       header('location:' . BASE_URL . '/dashboard');
     } catch (NestedValidationException $e) {
