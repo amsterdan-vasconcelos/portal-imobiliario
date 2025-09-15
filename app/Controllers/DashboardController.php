@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+session_start();
+
 use App\Controllers\DashboardModules\DashboardOwnerController;
 use App\Controllers\DashboardModules\DashboardPropertyController;
 use App\Controllers\DashboardModules\DashboardUserController;
@@ -24,7 +26,11 @@ class DashboardController extends Controller
     private $propertyTypeService = new PropertyTypeService(),
     private $propertyImageService = new PropertyImageService(),
     private $purposeService = new PurposeService(),
-  ) {}
+  ) {
+    if (!$_SESSION['name'] && !$_SESSION['id']) {
+      header('location:' . BASE_URL . '/auth/signin');
+    }
+  }
 
   public function index()
   {

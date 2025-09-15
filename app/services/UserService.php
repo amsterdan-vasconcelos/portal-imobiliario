@@ -31,7 +31,10 @@ class UserService extends Services
     try {
       $data = array_filter($data, fn($value) => $value !== '');
       $this->registerValidate($data);
+
       unset($data['confirm_password']);
+      $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+
       $user = new User(...$data);
       $this->userDAO->register($user);
 

@@ -1,13 +1,16 @@
 .l-footer {
   background-color: var(--color-background);
   color: var(--color-text);
+  height: var(--footer-height);
 
   max-width: var(--max-width);
   padding-inline: 1rem;
-  padding-block: 4rem 2rem;
   margin-inline: auto;
 
-  > * {
+  display: grid;
+  place-items: center;
+
+  .l-footer__content {
     text-align: center;
   }
 }

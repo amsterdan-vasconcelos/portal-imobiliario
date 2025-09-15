@@ -34,6 +34,15 @@
         <li>
           <a href="#contact">Contato</a>
         </li>
+        <li
+          style="margin-left: 2rem;">
+          <a
+            href="<?= BASE_URL . '/auth/signin' ?>"
+            style=" display: flex; align-items: center;
+                 justify-content: center; gap: .5rem;">
+            <i class="fa-solid fa-right-to-bracket"></i> SignIn
+          </a>
+        </li>
       </ul>
     </nav>
   </div>

@@ -41,6 +41,16 @@ class UserDAO extends Connection
     );
   }
 
+  public function getByUsername(string $username)
+  {
+    return $this->select(
+      table: 'user',
+      condition: 'where username = :username',
+      values: ['username' => $username],
+      className: \App\Models\User::class
+    );
+  }
+
   public function register(User $user)
   {
     return $this->insert('user', $user->areAttributesFilled());

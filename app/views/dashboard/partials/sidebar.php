@@ -21,7 +21,8 @@
     </a>
   </ul>
   <div class="c-sidebar__footer">
-    <a class="c-button c-button--full c-button--logout" href="">
+    <a class="c-button c-button--full c-button--logout"
+      href="<?= BASE_URL . '/auth/signout' ?>">
       <i class="fa-solid fa-arrow-right-from-bracket"></i>
       Logout
     </a>
