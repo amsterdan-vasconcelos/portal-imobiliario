@@ -10,7 +10,11 @@ class DashboardUserController
   public function __construct(
     private UserService $userService,
     private AccessProfileService $accessProfileService
-  ) {}
+  ) {
+    if ($_SESSION['user']['access_profile'] !== 'admin') {
+      header('location:' . BASE_URL . '/');
+    }
+  }
 
   public function handle(string $param, ?int $id): array
   {

@@ -43,9 +43,16 @@ class UserDAO extends Connection
 
   public function getByUsername(string $username)
   {
+    $sql = '
+      select u.*, ap.description as access_profile
+      from user u
+      join access_profile ap
+      on u.access_profile_id = ap.id
+      where u.username = :username
+    ';
+
     return $this->select(
-      table: 'user',
-      condition: 'where username = :username',
+      sql: $sql,
       values: ['username' => $username],
       className: \App\Models\User::class
     );

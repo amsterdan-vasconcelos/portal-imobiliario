@@ -34,6 +34,7 @@ class AuthService extends Services
       }
 
       $_SESSION['user'] = [
+        'access_profile' => $user->getAccessProfile(),
         'id' => $user->getId(),
         'name' => $user->getName()
       ];

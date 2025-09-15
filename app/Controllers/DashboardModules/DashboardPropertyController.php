@@ -44,7 +44,7 @@ class DashboardPropertyController
       }
 
       unset($response['id']);
-      $result = [...$result, $response];
+      $result = [...$result, ...$response];
     }
 
     return [

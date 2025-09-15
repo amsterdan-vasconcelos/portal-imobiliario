@@ -9,6 +9,15 @@ class OwnerDAO extends Connection
 {
   public function getAll()
   {
+    $isAdmin = $_SESSION['user']['access_profile'] === 'admin';
+
+    if ($isAdmin) {
+      return $this->select(
+        table: 'owner',
+        className: \App\Models\Owner::class
+      );
+    }
+
     return $this->select(
       table: 'owner',
       condition: 'where user_id = :user_id',
