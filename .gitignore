@@ -1,3 +1,67 @@
+# -----------------------------------------
+# ⚙️ SISTEMA (Docker, build, editor, etc)
+# -----------------------------------------
+
+# Docker volumes e artefatos
+docker-compose.override.yml
+docker-compose.local.yml
+.env          # Variáveis de ambiente (confidenciais)
+.env.*        # Qualquer variação do .env
+.docker
+
+# Logs do container ou app
+*.log
+*.pid
+
+# Cache do sistema
+*.swp
+*.bak
+*.tmp
+*.old
+
+# Build local
+/vendor/
+node_modules/
 composer.lock
-/vendor
-/public/storage
+
+# Arquivos do Composer (caso gere cache)
+composer.phar
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# -----------------------------------------
+# ⚠️ PROJETO PHP
+# -----------------------------------------
+
+# Diretórios públicos de upload/cache
+/public/storage/*
+!/public/storage/.gitignore
+
+# Cache da aplicação
+/storage/*
+!/storage/.gitignore
+
+# Arquivos sensíveis
+.phpunit.result.cache
+.php_cs.cache
+*.sqlite
+*.sql
+*.key
+*.pem
+*.crt
+*.env
+
+# -----------------------------------------
+# ✅ EXCEÇÕES (mantêm estrutura)
+# -----------------------------------------
+
+# Permite manter pastas vazias (com .gitignore)
+!.gitignore
