@@ -31,7 +31,7 @@ require_once __DIR__ . '/../partials/select.php';
 
       <form
         class="l-form l-form--col-2"
-        action="<?= BASE_URL ?>/dashboard/user/update/<?= $user->getId() ?>"
+        action="/dashboard/user/update/<?= $user->getId() ?>"
         method="post">
 
         <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">

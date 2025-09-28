@@ -32,7 +32,7 @@ require_once __DIR__ . '/../partials/radio.php';
 
       <form
         class="l-form l-form--col-2"
-        action="<?= BASE_URL ?>/dashboard/owner/register" method="post">
+        action="/dashboard/owner/register" method="post">
 
         <?= Input(
           type: 'text',

@@ -2,9 +2,6 @@
 
 namespace App\DAO;
 
-use App\Models\Property;
-use DateTime;
-
 class Connection
 {
   private static $connection;
@@ -12,10 +9,10 @@ class Connection
   protected static function getConnection()
   {
     if (self::$connection === null) {
-      $dns = "mysql:host=localhost;dbname=casaweb";
+      $dns = "mysql:host=database;dbname=casaweb";
 
       try {
-        self::$connection = new \PDO($dns, 'root', '');
+        self::$connection = new \PDO($dns, 'root', 'password');
         // [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
         self::$connection->setAttribute(
           \PDO::ATTR_ERRMODE,
@@ -92,10 +89,15 @@ class Connection
     return $stmt->rowCount();
   }
 
-  protected function delete(string $table, int $id)
+  protected function delete(string $table, string $condition, array $values)
   {
-    $sql = "delete from $table where id = :id";
-    $stmt = $this->executeQuery($sql, [':id' => $id]);
+    $params = array_combine(
+      array_map(fn($key) => ":$key", array_keys($values)),
+      array_values($values)
+    );
+
+    $sql = "delete from $table $condition";
+    $stmt = $this->executeQuery($sql, $params);
     return $stmt->rowCount();
   }
 }

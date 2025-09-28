@@ -12,7 +12,7 @@ class DashboardUserController
     private AccessProfileService $accessProfileService
   ) {
     if ($_SESSION['user']['access_profile'] !== 'admin') {
-      header('location:' . BASE_URL . '/');
+      header('location: /');
     }
   }
 

@@ -64,10 +64,10 @@ require_once __DIR__ . '/../partials/alert.php';
       <div>
         <form
           style="display: flex; gap: .5rem; padding-top: 1rem;"
-          action="<?= BASE_URL . '/dashboard/owner/delete/' . $owner->getId() ?>"
+          action="<?= '/dashboard/owner/delete/' . $owner->getId() ?>"
           method="post">
           <a class="c-button c-button--dashboard c-button--full"
-            href="<?= BASE_URL ?>/dashboard/owner">
+            href="/dashboard/owner">
             Não
           </a>
           <input type="hidden" name="delete">

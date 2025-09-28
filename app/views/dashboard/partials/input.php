@@ -15,11 +15,11 @@
  */
 
 function Input(
-  string $type = 'text',
   string $name,
+  string $type = 'text',
   ?string $id = null,
   string $label = '',
-  ?string $value = null,
+  string $value = '',
   string $placeholder = '',
   bool $required = false,
   bool $readonly = false,

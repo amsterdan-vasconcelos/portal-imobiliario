@@ -12,7 +12,7 @@ function ActiveFormIcon(
   string $action,
   string|int $active
 ): string {
-  $action = BASE_URL . '/dashboard/' . $action;
+  $action =  "/dashboard/$action";
 
   $classActiveIcon = $active
     ? 'fa-solid fa-circle active'

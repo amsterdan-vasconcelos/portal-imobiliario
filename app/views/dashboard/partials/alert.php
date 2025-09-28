@@ -28,7 +28,7 @@ function Alert(
     $message = $isString ? [$message] : $message;
   }
 
-  $href = $redirect ? BASE_URL . '/dashboard/' . $redirect : '';
+  $href = $redirect ?  "/dashboard/$redirect" : '';
 
   ob_start();
 ?>

@@ -8,6 +8,7 @@ class User
 {
   private ?int $id;
   private ?string $created_at;
+  private ?string $updated_at;
   private ?string $access_profile;
 
   public function __construct(
@@ -61,6 +62,15 @@ class User
     }
 
     return $this->created_at;
+  }
+
+  public function getUpdatedAt(?string $format = null)
+  {
+    if ($format && is_string($format)) {
+      return (new DateTime($this->updated_at))->format($format);
+    }
+
+    return $this->updated_at;
   }
 
   public function getAccessProfile()

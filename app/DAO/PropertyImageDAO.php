@@ -39,6 +39,19 @@ class PropertyImageDAO extends Connection
 
   public function deleteById(int $id)
   {
-    return $this->delete('property_image', $id);
+    return $this->delete(
+      table: 'property_image',
+      condition: 'where id = :id',
+      values: ['id' => $id]
+    );
+  }
+
+  public function deleteCoverImage(int $propertyId)
+  {
+    return $this->delete(
+      table: 'property_image',
+      condition: 'where (cover_image, property_id) = (1, :property_id)',
+      values: ['property_id' => $propertyId]
+    );
   }
 }

@@ -27,7 +27,7 @@ require_once __DIR__ . '/../partials/alert.php'
 
       <div class="c-dashboard-header">
         <h1 class="c-dashboard-header__title">Usuários</h1>
-        <a href="<?= BASE_URL ?>/dashboard/user/register" class="c-dashboard-header__button">
+        <a href="/dashboard/user/register" class="c-dashboard-header__button">
           <i class="fa-solid fa-plus"></i>
           Add Usuário
         </a>
@@ -68,8 +68,8 @@ require_once __DIR__ . '/../partials/alert.php'
                 </td>
                 <td class="c-table__cell"><?= $user->getCreatedAt('d/m/y') ?></td>
                 <td class="c-table__cell">
-                  <a href="<?= BASE_URL . "/dashboard/user/update/{$user->getId()}" ?>"><i class="fa-solid fa-pen pen"></i></a>
-                  <a href="<?= BASE_URL . "/dashboard/user/delete/{$user->getId()}" ?>"><i class="fa-solid fa-trash trash"></i></a>
+                  <a href="/dashboard/user/update/<?= $user->getId() ?>"><i class="fa-solid fa-pen pen"></i></a>
+                  <a href="/dashboard/user/delete/<?= $user->getId() ?>"><i class="fa-solid fa-trash trash"></i></a>
                 </td>
               </tr>
           <?php

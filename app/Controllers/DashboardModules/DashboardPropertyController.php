@@ -34,7 +34,11 @@ class DashboardPropertyController
     $result = [];
 
     if ($_POST) {
-      $response = $this->propertyService->register($_POST);
+      $cover_image = isset($_FILES['cover_image'])
+        ? $_FILES['cover_image']
+        : null;
+
+      $response = $this->propertyService->register($_POST, $cover_image);
 
       if (isset($_FILES['images'])) {
         $this->propertyImageService->uploadMultiple(
@@ -75,6 +79,13 @@ class DashboardPropertyController
         );
       }
 
+      if (isset($_FILES['cover_image'])) {
+        $this->propertyImageService->uploadCoverImage(
+          $_FILES['cover_image'],
+          $id
+        );
+      }
+
       $result = $this->propertyService->updateById($_POST, $id);
     }
 
@@ -95,6 +106,8 @@ class DashboardPropertyController
     $result = ['property' => $property];
 
     if ($_POST) {
+      $this->propertyImageService->deleteFolderImages($id);
+
       $result = [
         ...$result,
         ...$this->propertyService->deleteById($id)
@@ -116,7 +129,7 @@ class DashboardPropertyController
     $result = [];
 
     if ($_POST) {
-      $result = $this->propertyService->updateById($_POST, $id);
+      $result = $this->propertyService->updateById(data: $_POST, id: $id);
     }
 
     $properties = $this->propertyService->getAll();

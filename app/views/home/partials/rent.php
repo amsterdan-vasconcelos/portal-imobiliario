@@ -1,9 +1,9 @@
 <?php
 
 $array = [
-  'public/imgs/rent-1.jpg',
-  'public/imgs/rent-2.jpg',
-  'public/imgs/rent-3.jpg',
+  'imgs/rent-1.jpg',
+  'imgs/rent-2.jpg',
+  'imgs/rent-3.jpg',
 ]
 
 ?>

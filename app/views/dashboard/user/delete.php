@@ -62,11 +62,11 @@ require_once __DIR__ . '/../partials/alert.php';
       <div>
         <form
           style="display: flex; gap: .5rem; padding-top: 1rem;"
-          action="<?= BASE_URL . '/dashboard/user/delete/' . $user->getId() ?>"
+          action="/dashboard/user/delete/<?= $user->getId() ?>"
           method="post">
           <a
             class="c-button c-button--dashboard c-button--full"
-            href="<?= BASE_URL ?>/dashboard/user">Não</a>
+            href="/dashboard/user">Não</a>
           <input type="hidden" name="delete">
           <button class="c-button c-button--dashboard c-button--full">Sim</button>
         </form>

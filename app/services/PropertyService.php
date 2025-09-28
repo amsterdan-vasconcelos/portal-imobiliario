@@ -6,6 +6,7 @@ use Respect\Validation\Validator as v;
 use Respect\Validation\Exceptions\NestedValidationException;
 
 use App\DAO\PropertyDAO;
+
 use App\Models\Property;
 
 class PropertyService extends Services
@@ -29,9 +30,10 @@ class PropertyService extends Services
   public function register(array $data)
   {
     try {
+      $user_id = $_SESSION['user']['id'];
       $data = array_filter($data, fn($value) => $value !== '');
       $this->registerValidate($data);
-      $data['user_id'] = $_SESSION['user']['id'];
+      $data['user_id'] = $user_id;
       $property = new Property(...$data);
       $id = $this->propertyDAO->register($property);
 
@@ -119,6 +121,7 @@ class PropertyService extends Services
     try {
       $data = array_filter($data, fn($value) => $value !== '');
       $this->updateValidate($data);
+
       $property = new Property(...$data);
       $this->propertyDAO->updateById($property, $id);
 

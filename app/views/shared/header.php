@@ -1,6 +1,6 @@
 <header class="header">
   <div class="header__container">
-    <a href="/ronaldo-rodrigues/portal-imobiliario">
+    <a href="/">
       <h1 class="header__logo">CasaWeb<span> - Imobiliária</span></h1>
     </a>
     <ul class="header__social-medias">
@@ -37,7 +37,7 @@
         <li
           style="margin-left: 2rem;">
           <a
-            href="<?= BASE_URL . '/auth/signin' ?>"
+            href="/auth/signin"
             style=" display: flex; align-items: center;
                  justify-content: center; gap: .5rem;">
             <i class="fa-solid fa-right-to-bracket"></i> SignIn

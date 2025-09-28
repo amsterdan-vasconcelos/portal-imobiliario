@@ -39,7 +39,7 @@ class AuthService extends Services
         'name' => $user->getName()
       ];
 
-      header('location:' . BASE_URL . '/dashboard');
+      header('location: /dashboard');
     } catch (NestedValidationException $e) {
       return ['error' => $e->getMessages()];
     } catch (\Exception $e) {

@@ -8,7 +8,7 @@ require_once __DIR__ . '/../dashboard/partials/alert.php';
 
 <head>
   <?php require_once __DIR__ . '/../shared/head.php' ?>
-  <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/home/index.css">
+  <link rel="stylesheet" href="/css/home/index.css">
   <title>Login - Faça seu login</title>
 </head>
 
@@ -22,7 +22,7 @@ require_once __DIR__ . '/../dashboard/partials/alert.php';
     position: relative;
     min-height: calc(100svh - (var(--footer-height) + var(--header-height)));">
     <form
-      action="<?= BASE_URL . '/auth/signin' ?>"
+      action="/auth/signin"
       method="post"
       style="
       background-color: var(--color-surface);

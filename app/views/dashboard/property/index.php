@@ -31,7 +31,7 @@ require_once __DIR__ . '/../partials/activeFormIcon.php'
 
       <div class="c-dashboard-header">
         <h1 class="c-dashboard-header__title">Propriedades</h1>
-        <a href="<?= BASE_URL ?>/dashboard/property/register" class="c-dashboard-header__button">
+        <a href="/dashboard/property/register" class="c-dashboard-header__button">
           <i class="fa-solid fa-plus"></i>
           Add Propriedade
         </a>
@@ -74,13 +74,13 @@ require_once __DIR__ . '/../partials/activeFormIcon.php'
                     ) ?>
                   </td>
                   <td class="c-table__cell">
-                    <a href="<?= BASE_URL . "/dashboard/property/details/{$property->getId()}" ?>">
+                    <a href="/dashboard/property/details/<?= $property->getId() ?>">
                       <i class="fa-solid fa-eye"></i>
                     </a>
-                    <a href="<?= BASE_URL . "/dashboard/property/update/{$property->getId()}" ?>">
+                    <a href="/dashboard/property/update/<?= $property->getId() ?>">
                       <i class="fa-solid fa-pen pen"></i>
                     </a>
-                    <a href="<?= BASE_URL . "/dashboard/property/delete/{$property->getId()}" ?>">
+                    <a href="/dashboard/property/delete/<?= $property->getId() ?>">
                       <i class="fa-solid fa-trash trash"></i>
                     </a>
                   </td>

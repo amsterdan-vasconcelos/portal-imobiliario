@@ -39,6 +39,6 @@ class AuthController extends Controller
       );
     }
 
-    header('location:' . BASE_URL . '/');
+    header('location: /');
   }
 }

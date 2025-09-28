@@ -9,6 +9,7 @@ class PropertyImage
   public function __construct(
     private ?string $name = null,
     private ?string $path = null,
+    private ?int $cover_image = null,
     private ?string $property_id = null
   ) {}
 
@@ -27,6 +28,11 @@ class PropertyImage
     return $this->path;
   }
 
+  public function getCoverImage()
+  {
+    return $this->cover_image;
+  }
+
   public function getPropertyId()
   {
     return $this->property_id;
@@ -37,6 +43,7 @@ class PropertyImage
     return [
       'name' => $this->name,
       'path' => $this->path,
+      'cover_image' => $this->cover_image,
       'property_id' => $this->property_id,
     ];
   }

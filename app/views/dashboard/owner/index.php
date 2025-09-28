@@ -29,7 +29,7 @@ require_once __DIR__ . '/../partials/alert.php';
       <div class="c-dashboard-header">
         <h1 class="c-dashboard-header__title">Proprietários</h1>
         <a
-          href="<?= BASE_URL ?>/dashboard/owner/register"
+          href="/dashboard/owner/register"
           class="c-dashboard-header__button">
           <i class="fa-solid fa-plus"></i>
           Add Proprietário
@@ -73,11 +73,11 @@ require_once __DIR__ . '/../partials/alert.php';
                 </td>
                 <td class="c-table__cell">
                   <a
-                    href="<?= BASE_URL . "/dashboard/owner/update/{$owner->getId()}" ?>">
+                    href="<?= "/dashboard/owner/update/{$owner->getId()}" ?>">
                     <i class="fa-solid fa-pen pen"></i>
                   </a>
                   <a
-                    href="<?= BASE_URL . "/dashboard/owner/delete/{$owner->getId()}" ?>">
+                    href="<?= "/dashboard/owner/delete/{$owner->getId()}" ?>">
                     <i class="fa-solid fa-trash trash"></i>
                   </a>
                 </td>

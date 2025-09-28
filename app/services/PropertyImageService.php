@@ -7,7 +7,7 @@ use App\DAO\PropertyImageDAO;
 
 class PropertyImageService
 {
-  private string $uploadDir = __DIR__ . '/../../public/storage/property-images/';
+  private string $uploadDir = '/var/www/html/storage/property-images/';
 
   public function __construct(
     private $propertyImageDAO = new PropertyImageDAO()
@@ -19,14 +19,51 @@ class PropertyImageService
 
   public function getByPropertyId($propertyId)
   {
-
     return $this->propertyImageDAO->getByPropertyId($propertyId);
+  }
+
+  /**
+   * @param array $files ($_FILES['cover_image']) formato
+   * @param int|string $propertyId
+   */
+  public function uploadCoverImage(array $file, int $propertyId)
+  {
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+      return;
+    }
+
+    $this->propertyImageDAO->deleteCoverImage($propertyId);
+
+    $tmpName = $file['tmp_name'];
+    $originalName = $file['name'];
+    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+
+    $newFileName =  'cover_image' . '.' . $extension;
+    $destination = $this->uploadDir . "$propertyId/";
+
+    if (!is_dir($destination)) {
+      mkdir($destination, 0777, true);
+    }
+
+    $destination = $destination . $newFileName;
+
+    if (move_uploaded_file($tmpName, $destination)) {
+      $imagePath = "storage/property-images/$propertyId/" . $newFileName;
+
+      $image = new PropertyImage(
+        name: $originalName,
+        path: $imagePath,
+        cover_image: 1,
+        property_id: $propertyId
+      );
+
+      $this->propertyImageDAO->register($image);
+    }
   }
 
   /**
    * @param array $files ($_FILES['images']) formato
    * @param int|string $propertyId
-   * @return PropertyImage[]
    */
   public function uploadMultiple(array $files, int $propertyId)
   {
@@ -87,6 +124,24 @@ class PropertyImageService
       if (empty($files)) {
         rmdir($propertyFolder);
       }
+    }
+  }
+
+  public function deleteFolderImages($propertyId)
+  {
+    $propertyFolder = $this->uploadDir . $propertyId . '/';
+
+    if (!is_dir($propertyFolder)) return false;
+
+    foreach (glob($propertyFolder . '/*') as $file) {
+      is_dir($file) ? $this->deleteFolderImages($file) : unlink($file);
+    }
+
+    rmdir($propertyFolder);
+
+    if (is_dir($propertyFolder)) {
+      $a = rmdir($propertyFolder);
+      dd($a);
     }
   }
 }

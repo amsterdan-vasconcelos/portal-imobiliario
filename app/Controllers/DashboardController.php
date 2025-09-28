@@ -27,8 +27,8 @@ class DashboardController extends Controller
     private $propertyImageService = new PropertyImageService(),
     private $purposeService = new PurposeService(),
   ) {
-    if (!$_SESSION['user']) {
-      header('location:' . BASE_URL . '/auth/signin');
+    if (!isset($_SESSION['user'])) {
+      header('location: /auth/signin');
     }
   }
 

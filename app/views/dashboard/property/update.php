@@ -1,5 +1,15 @@
 <?php
 
+$coverImage = array_values(array_filter(
+  $property_images,
+  fn($image) => (bool) $image->getCoverImage()
+))[0];
+
+$galeryImages = array_filter(
+  $property_images,
+  fn($image) => !(bool) $image->getCoverImage()
+);
+
 $adress = [
   [
     'labelText' => 'CEP',
@@ -93,7 +103,7 @@ require_once __DIR__ . '/../partials/input.php';
 
       <form
         class="l-form l-form--col-2"
-        action="<?= BASE_URL ?>/dashboard/property/update/<?= $property->getId() ?>"
+        action="/dashboard/property/update/<?= $property->getId() ?>"
         method="post"
         enctype="multipart/form-data">
         <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
@@ -173,6 +183,29 @@ require_once __DIR__ . '/../partials/input.php';
 
         </fieldset>
 
+        <fieldset class="c-fieldset l-form__item-span-2">
+          <legend class="c-fieldset__legend">Imagem de apresentação</legend>
+          <label class="c-label">
+            <i class="fa-solid fa-image"></i>
+            Clique para escolher a imagem que ficara no card
+            <input
+              style="display: none;"
+              data-js="cover-image-input"
+              type="file"
+              name="cover_image"
+              accept="image/*">
+          </label>
+          <div
+            data-js="cover-image-preview-container"
+            style="display: grid; place-items: center; margin-top: 1rem;">
+            <img
+              src="/<?= $coverImage->getPath() ?>"
+              style="width: 300px; aspect-ratio: 2 / 1.5; object-fit: 
+              cover; border: 1px solid rgb(204, 204, 204); 
+              border-radius: 4px; display: block;">
+          </div>
+        </fieldset>
+
         <fieldset class="c-fieldset">
           <legend class="c-fieldset__legend">Adicionar imagens na galeria</legend>
           <label class="c-label">
@@ -195,10 +228,10 @@ require_once __DIR__ . '/../partials/input.php';
         <fieldset class="c-fieldset">
           <legend class="c-fieldset__legend">Imagens da galeria</legend>
           <div data-js="existing-preview" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
-            <?php foreach ($property_images as $image): ?>
+            <?php foreach ($galeryImages as $image): ?>
               <div style="position: relative;" data-js="image-wraper">
                 <img
-                  src="<?= BASE_URL . "/public/{$image->getPath()}" ?>"
+                  src="/<?= $image->getPath() ?>"
                   style="width: 120px; height: 120px; object-fit: cover; border: 1px solid rgb(204, 204, 204); border-radius: 4px; display: block;">
                 <button
                   data-js="delete-button"
@@ -225,6 +258,11 @@ require_once __DIR__ . '/../partials/input.php';
     const imageInput = document.querySelector('[data-js="image-input"]');
     const previewContainer = document.querySelector('[data-js="preview-container"]');
     const existingPreviewContainer = document.querySelector('[data-js="existing-preview"]')
+
+    const coverImageInput =
+      document.querySelector('[data-js="cover-image-input"]');
+    const coverImagePreviewContainer =
+      document.querySelector('[data-js="cover-image-preview-container"]');
 
     let selectedFiles = [];
 
@@ -310,6 +348,30 @@ require_once __DIR__ . '/../partials/input.php';
 
     imageInput.addEventListener('change', handleChange);
     existingPreviewContainer.addEventListener('click', handleClick)
+
+    coverImageInput.addEventListener('change', (e) => {
+
+      const file = e.target.files[0]
+      const reader = new FileReader(file)
+
+      reader.onload = (e) => {
+        coverImagePreviewContainer.innerHTML = '';
+
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = file.name;
+        img.style.width = '300px'
+        img.style.aspectRatio = '2 / 1.5'
+        img.style.objectFit = 'cover';
+        img.style.border = '1px solid #ccc';
+        img.style.borderRadius = '4px';
+        img.style.display = 'block';
+
+        coverImagePreviewContainer.append(img)
+      }
+
+      reader.readAsDataURL(file)
+    });
   </script>
 </body>
 

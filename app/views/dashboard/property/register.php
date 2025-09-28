@@ -83,7 +83,7 @@ require_once __DIR__ . '/../partials/input.php';
 
     <form
       class="l-form l-form--col-2"
-      action="<?= BASE_URL ?>/dashboard/property/register"
+      action="/dashboard/property/register"
       method="post"
       enctype="multipart/form-data">
       <fieldset class="c-fieldset c-fieldset--col-2 l-form__item-span-2">
@@ -157,8 +157,10 @@ require_once __DIR__ . '/../partials/input.php';
 
       </fieldset>
 
-      <fieldset class="c-fieldset l-form__item-span-2">
-        <legend class="c-fieldset__legend">Imagens</legend>
+
+
+      <fieldset class="c-fieldset">
+        <legend class="c-fieldset__legend">Galeria de Imagens</legend>
         <label class="c-label">
           <i class="fa-solid fa-image"></i>
           Clique para escolher as imagens
@@ -175,6 +177,24 @@ require_once __DIR__ . '/../partials/input.php';
         </div>
       </fieldset>
 
+      <fieldset class="c-fieldset">
+        <legend class="c-fieldset__legend">Imagem de apresentação</legend>
+        <label class="c-label">
+          <i class="fa-solid fa-image"></i>
+          Clique para escolher a imagem que ficara no card
+          <input
+            style="display: none;"
+            data-js="cover-image-input"
+            type="file"
+            name="cover_image"
+            accept="image/*">
+        </label>
+        <div
+          data-js="cover-image-preview-container"
+          style="display: grid; place-items: center; margin-top: 1rem;">
+        </div>
+      </fieldset>
+
       <button class="c-button c-button--dashboard" type="submit">
         Adicionar
       </button>
@@ -182,7 +202,13 @@ require_once __DIR__ . '/../partials/input.php';
   </div>
   <script>
     const imageInput = document.querySelector('[data-js="image-input"]');
-    const previewContainer = document.querySelector('[data-js="preview-container"]');
+    const previewContainer =
+      document.querySelector('[data-js="preview-container"]');
+
+    const coverImageInput =
+      document.querySelector('[data-js="cover-image-input"]');
+    const coverImagePreviewContainer =
+      document.querySelector('[data-js="cover-image-preview-container"]');
 
     let selectedFiles = [];
 
@@ -251,6 +277,29 @@ require_once __DIR__ . '/../partials/input.php';
     };
 
     imageInput.addEventListener('change', handleChange);
+    coverImageInput.addEventListener('change', (e) => {
+
+      const file = e.target.files[0]
+      const reader = new FileReader(file)
+
+      reader.onload = (e) => {
+        coverImagePreviewContainer.innerHTML = '';
+
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = file.name;
+        img.style.width = '300px'
+        img.style.aspectRatio = '2 / 1.5'
+        img.style.objectFit = 'cover';
+        img.style.border = '1px solid #ccc';
+        img.style.borderRadius = '4px';
+        img.style.display = 'block';
+
+        coverImagePreviewContainer.append(img)
+      }
+
+      reader.readAsDataURL(file)
+    });
   </script>
 
 </body>
