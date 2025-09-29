@@ -3,8 +3,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.php
-    image: teste_php
-    container_name: teste_app
+    image: custom_php
+    container_name: casaweb_app
     volumes:
       - ./public:/var/www/html
       - ./:/var/www/project
@@ -12,11 +12,11 @@ services:
       - database
     working_dir: /var/www/project
     networks:
-      - php_network
+      - casaweb_network
 
   nginx:
     image: nginx:1.29.1
-    container_name: teste_nginx
+    container_name: casaweb_nginx
     ports:
       - "8080:80"
     volumes:
@@ -25,24 +25,24 @@ services:
     depends_on:
       - app
     networks:
-      - php_network
+      - casaweb_network
 
   database:
     image: mysql:8.4.6
-    container_name: teste_database
+    container_name: casaweb_database
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: teste
-      MYSQL_USER: teste
-      MYSQL_PASSWORD: teste
+      MYSQL_DATABASE: casaweb
+      MYSQL_USER: casaweb
+      MYSQL_PASSWORD: casaweb
     volumes:
       - ./.docker/mysql_data:/var/lib/mysql
     networks:
-      - php_network
+      - casaweb_network
 
 networks:
-  php_network:
+  casaweb_network:
     driver: bridge
-    name: php_network
+    name: casaweb_network
