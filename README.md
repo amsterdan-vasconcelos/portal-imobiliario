@@ -34,12 +34,12 @@ O projeto serve como base para estudar arquitetura backend moderna e integraçã
 
 ## 💻 Principais Recursos
 
-🧱 Arquitetura MVC
-🐘 PHP para a lógica de aplicação e integração backend
-🐳 Docker para ambiente de desenvolvimento isolado e reprodutível
-🌐 Nginx como servidor web e proxy reverso
-🗄️ c para persistência e modelagem dos dados
-⚙️ Boas práticas de organização e escalabilidade de código
+- 🧱 Arquitetura MVC
+- 🐘 PHP para a lógica de aplicação e integração backend
+- 🐳 Docker para ambiente de desenvolvimento isolado e reprodutível
+- 🌐 Nginx como servidor web e proxy reverso
+- 🗄️ c para persistência e modelagem dos dados
+- ⚙️ Boas práticas de organização e escalabilidade de código
 
 ---
 
