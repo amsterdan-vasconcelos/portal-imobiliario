@@ -9,7 +9,7 @@
 <h1 align="center">Portal Imobiliário</h1>
 
 <p align="center">Aplicação desenvolvida com o objetivo de aprender PHP, Docker, Nginx e MySQL, aproveitando o modelo MVC e boas práticas de desenvolvimento.
-O projeto serve como base para estudar arquitetura backend moderna e integração com serviços externos, mantendo uma estrutura limpa e escalável..</p>
+O projeto serve como base para estudar arquitetura backend moderna e integração com serviços externos, mantendo uma estrutura limpa e escalável.</p>
 
 ---
 
